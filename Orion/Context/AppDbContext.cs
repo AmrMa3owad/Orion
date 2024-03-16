@@ -9,10 +9,9 @@ namespace Orion.Context
             DbContextOptions<AppDbContext> options)
             : base(options)
         {
-        }sefafafe
+        }
 
-        public DbSet<Test> Tests { get; set; }
-
+        public DbSet<Test> ests { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.UseSerialColumns();
