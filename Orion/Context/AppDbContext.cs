@@ -11,7 +11,7 @@ namespace Orion.Context
         {
         }
 
-        public DbSet<Test> ests { get; set; }
+        public DbSet<Test> Tests { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.UseSerialColumns();
