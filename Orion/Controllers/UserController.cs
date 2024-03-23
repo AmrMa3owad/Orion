@@ -2,21 +2,21 @@
 using Orion.Context;
 using Orion.Models;
 
-namespace YourNamespace.Controllers
+namespace Orion.Controllers
 {
-    public class TestController : Controller
+    public class UserController : Controller
     {
         private readonly AppDbContext _context;
 
-        public TestController(AppDbContext context)
+        public UserController(AppDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Get()
         {
-            var tests = _context.Tests.ToList();
-            return View(tests);
+            var users = _context.Users.ToList();
+            return View(users);
         }
 
         public IActionResult Create()
@@ -26,15 +26,15 @@ namespace YourNamespace.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Test test)
+        public IActionResult Create(User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Tests.Add(test);
+                _context.Users.Add(user);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(test);
+            return View(user);
         }
 
         public IActionResult Edit(int? id)
@@ -44,30 +44,30 @@ namespace YourNamespace.Controllers
                 return NotFound();
             }
 
-            var test = _context.Tests.Find(id);
-            if (test == null)
+            var user = _context.Users.Find(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            return View(test);
+            return View(user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Test test)
+        public IActionResult Edit(int id, User user)
         {
-            if (id != test.Id)
+            if (id != user.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                _context.Update(test);
+                _context.Update(user);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(test);
+            return View(user);
         }
 
         public IActionResult Delete(int? id)
@@ -77,21 +77,21 @@ namespace YourNamespace.Controllers
                 return NotFound();
             }
 
-            var test = _context.Tests.FirstOrDefault(m => m.Id == id);
-            if (test == null)
+            var user = _context.Users.FirstOrDefault(m => m.Id == id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(test);
+            return View(user);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var test = _context.Tests.Find(id);
-            _context.Tests.Remove(test);
+            var user = _context.Users.Find(id);
+            _context.Users.Remove(user);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
