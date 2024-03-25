@@ -1,23 +1,23 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Orion.Context;
-using Orion.Controllers;
 using Orion.Models;
 
 namespace Orion.Pages
 {
     public class UserModel : PageModel
     {
-        private readonly UserController _userController;
-        public UserModel(UserController userController)
+        private readonly AppDbContext _context;
+
+        public UserModel(AppDbContext context)
         {
-            _userController = userController;
+            _context = context;
         }
 
-        public List<User> Users;
+        public List<User> Users { get; set; }
+
         public void OnGet()
         {
-           Users = (List<User>)_userController.Get();
+            Users = _context.Users.ToList();
         }
     }
 }

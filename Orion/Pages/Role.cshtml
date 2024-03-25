@@ -1,20 +1,27 @@
 ﻿@page
 @model Orion.Pages.RoleModel
-@{
-}
+
 <table>
     <thead>
-        <th>Name</th><br>
-        <th>Permissions</th><br>
+        <tr>
+            <th>Name</th>
+            <th>Permissions</th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var item in (Model as RoleModel).Roles)
-    {
-        <tr>
-            <td>@Html.DisplayFor(m => item.Name)</td>
-            <td>@Html.DisplayFor(m => item.RolePermissions)</td>
-        </tr>
-    }
+        @foreach (var item in Model.Roles)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>
+                    <ul>
+                        @foreach (var permission in item.RolePermissions)
+                        {
+                            <li>@permission.Permission.Name</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        }
     </tbody>
-
 </table>

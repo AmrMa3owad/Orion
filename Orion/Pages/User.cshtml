@@ -1,22 +1,22 @@
 ﻿@page
 @model Orion.Pages.UserModel
-@{
-}
+
 <div>
-<table>
-    <thead>
-        <th>Role</th><br>
-        <th>Name</th><br>
-    </thead>
-    <tbody>
-    @foreach (var item in (Model as UserModel).Users)
-    {
-        <tr>
-            <td>@Html.DisplayFor(m => item.Role)</td>
-            <td>@Html.DisplayFor(m => item.Name)</td>
-        </tr>
-    }
-    </tbody>
-        
-</table>
+    <table>
+        <thead>
+            <tr>
+                <th>Role</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Users)
+            {
+                <tr>
+                    <td>@item.Role.Name</td> 
+                    <td>@item.Name</td> 
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
