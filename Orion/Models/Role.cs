@@ -1,6 +1,6 @@
 ﻿namespace Orion.Models;
 
-public class Role:BaseEntity
+public class Role:BaseEntity<int>
 {
     public Role()
     {

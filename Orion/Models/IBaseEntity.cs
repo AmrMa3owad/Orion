@@ -1,7 +1,11 @@
-﻿namespace Orion.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-public interface IBaseEntity
+namespace Orion.Models;
+
+public interface IBaseEntity<T>
 {
-    int Id { get; set; }
-    public string Name { get; set; }
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public T Id { get; set; }
 }

@@ -12,7 +12,7 @@
         @foreach (var item in Model.Roles)
         {
             <tr>
-                <td>@item.Name</td>
+                @* <td>@item.Name</td>
                 <td>
                     <ul>
                         @foreach (var permission in item.RolePermissions)
@@ -20,7 +20,7 @@
                             <li>@permission.Permission.Name</li>
                         }
                     </ul>
-                </td>
+                </td> *@
             </tr>
         }
     </tbody>

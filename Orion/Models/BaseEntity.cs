@@ -3,10 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Orion.Models;
 
-public class BaseEntity : IBaseEntity
+public class BaseEntity<IType> : IBaseEntity<IType>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
-    public string Name { get; set; }
+    public IType Id { get; set; }
 }

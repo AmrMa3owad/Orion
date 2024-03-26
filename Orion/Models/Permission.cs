@@ -1,7 +1,7 @@
 ﻿
 namespace Orion.Models;
 
-public class Permission:BaseEntity
+public class Permission:BaseEntity<int>
 {
         public Permission()
         {
