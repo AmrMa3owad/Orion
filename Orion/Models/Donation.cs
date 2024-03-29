@@ -4,6 +4,10 @@ namespace Orion.Models
 {
     public class Donation : BaseEntity<int>
     {
+        public Donation()
+        {
+            Sponsor = new HashSet<Sponsor>();
+        }
         public DonationType DonationType { get; set; }
         public double DonationQuantity { get; set; }
         public DateTime DonationTime { get; set; }
@@ -11,5 +15,6 @@ namespace Orion.Models
         public int CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }
+        public virtual ICollection<Sponsor> Sponsor { get; set; }
     }
 }

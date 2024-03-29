@@ -4,5 +4,6 @@
     {
         public int PaymentAmount { get; set; }
         public string PaymentMethod { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
