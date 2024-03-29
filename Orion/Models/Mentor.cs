@@ -1,8 +1,8 @@
-﻿using Orion.Models.Common;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Orion.Models
 {
-    public class Mentor : User
+    public class Mentor : IdentityUser<int>
     {
         public string MentorArea { get; set; }
         public int OrphanNumber { get; set; }

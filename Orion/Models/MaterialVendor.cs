@@ -1,6 +1,8 @@
-﻿namespace Orion.Models
+﻿using Orion.Models.Common;
+
+namespace Orion.Models
 {
-    public class MaterialVendor
+    public class MaterialVendor : BaseEntity<int>
     {
         public int MaterialId { get; set; }
         public int VendorId { get; set; }

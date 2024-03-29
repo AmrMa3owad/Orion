@@ -1,6 +1,8 @@
-﻿namespace Orion.Models
+﻿using Orion.Models.Common;
+
+namespace Orion.Models
 {
-    public class Website
+    public class Website : BaseEntity<int>
     {
         public Website()
         {

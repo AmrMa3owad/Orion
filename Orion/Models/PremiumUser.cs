@@ -1,8 +1,8 @@
-﻿using Orion.Models.Common;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Orion.Models
 {
-    public class PremiumUser : User
+    public class PremiumUser : IdentityUser<int>
     {
         public int Fees { get; set; }
         public int PreCommunityId { get; set; }

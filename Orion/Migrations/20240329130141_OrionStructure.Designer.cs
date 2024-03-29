@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Orion.Context;
@@ -11,9 +12,11 @@ using Orion.Context;
 namespace Orion.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240329130141_OrionStructure")]
+    partial class OrionStructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,81 +38,6 @@ namespace Orion.Migrations
                     b.HasIndex("EventsId");
 
                     b.ToTable("CustomerEvent");
-                });
-
-            modelBuilder.Entity("Orion.Models.Above12", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Earnings")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("OrphanageId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrphansNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ProductType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrphanageId");
-
-                    b.ToTable("Above12s");
-                });
-
-            modelBuilder.Entity("Orion.Models.Admin", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DeviceId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("EmployeeDateOfJoin")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("EmployeeInsurance")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeePension")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeQualifications")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeRole")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("EmployeeSalary")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeeStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("WebsiteId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WebsiteId")
-                        .IsUnique();
-
-                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("Orion.Models.Advertisement", b =>
@@ -154,7 +82,7 @@ namespace Orion.Migrations
                     b.ToTable("Booths");
                 });
 
-            modelBuilder.Entity("Orion.Models.BoothOrder", b =>
+            modelBuilder.Entity("Orion.Models.Common.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,30 +90,71 @@ namespace Orion.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BoothId")
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<int>("OrderAmount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("OrderComments")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("OrderDate")
+                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("OrderPrice")
-                        .HasColumnType("integer");
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("text");
 
-                    b.Property<int>("OrderQuantity")
-                        .HasColumnType("integer");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("character varying(13)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("text");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BoothId");
+                    b.ToTable("Users");
 
-                    b.ToTable("BoothOrders");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Orion.Models.Craft", b =>
@@ -207,81 +176,6 @@ namespace Orion.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Crafts");
-                });
-
-            modelBuilder.Entity("Orion.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<int>("DonationId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("WebsiteId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DonationId")
-                        .IsUnique();
-
-                    b.HasIndex("PaymentId")
-                        .IsUnique();
-
-                    b.HasIndex("WebsiteId");
-
-                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Orion.Models.CustomerAdvertisement", b =>
@@ -328,92 +222,6 @@ namespace Orion.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("CustomerProducts");
-                });
-
-            modelBuilder.Entity("Orion.Models.Delivery", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("DeliveryLicense")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DeliveryShift")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("EmployeeDateOfJoin")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("EmployeeInsurance")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeePension")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeQualifications")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeRole")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("EmployeeSalary")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeeStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("VechileNumber")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Deliveries");
-                });
-
-            modelBuilder.Entity("Orion.Models.DeliveryOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DeliveryId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrderAmount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("OrderComments")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("OrderPrice")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrderQuantity")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("ShippingFees")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DeliveryId");
-
-                    b.ToTable("DeliveryOrders");
                 });
 
             modelBuilder.Entity("Orion.Models.Device", b =>
@@ -484,86 +292,6 @@ namespace Orion.Migrations
                     b.ToTable("Donations");
                 });
 
-            modelBuilder.Entity("Orion.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("EmployeeDateOfJoin")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("EmployeeInsurance")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeePension")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeQualifications")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeRole")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("EmployeeSalary")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeeStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employees");
-                });
-
             modelBuilder.Entity("Orion.Models.Event", b =>
                 {
                     b.Property<int>("Id")
@@ -619,76 +347,6 @@ namespace Orion.Migrations
                     b.ToTable("Feedbacks");
                 });
 
-            modelBuilder.Entity("Orion.Models.Freelancer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Earnings")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("OrphanageId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrphansNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ProductType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrphanageId");
-
-                    b.ToTable("Freelancers");
-                });
-
             modelBuilder.Entity("Orion.Models.Material", b =>
                 {
                     b.Property<int>("Id")
@@ -735,121 +393,6 @@ namespace Orion.Migrations
                     b.ToTable("MaterialVendors");
                 });
 
-            modelBuilder.Entity("Orion.Models.Mentor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<int>("CraftId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("MentorArea")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("OrphanNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("VisitNumber")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CraftId");
-
-                    b.ToTable("Mentors");
-                });
-
-            modelBuilder.Entity("Orion.Models.OfficeWorker", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DeviceId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("EmployeeDateOfJoin")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("EmployeeInsurance")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeePension")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeQualifications")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeRole")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("EmployeeSalary")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeeStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("OfficeWorkerDepartment")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OfficeWorkers");
-                });
-
             modelBuilder.Entity("Orion.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -860,6 +403,11 @@ namespace Orion.Migrations
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(13)
+                        .HasColumnType("character varying(13)");
 
                     b.Property<int>("OrderAmount")
                         .HasColumnType("integer");
@@ -883,6 +431,10 @@ namespace Orion.Migrations
                         .IsUnique();
 
                     b.ToTable("Orders");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Order");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Orion.Models.Orphanage", b =>
@@ -943,69 +495,6 @@ namespace Orion.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PreCommunities");
-                });
-
-            modelBuilder.Entity("Orion.Models.PremiumUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("Fees")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("PreCommunityId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PreCommunityId");
-
-                    b.ToTable("PremiumUsers");
                 });
 
             modelBuilder.Entity("Orion.Models.Product", b =>
@@ -1139,72 +628,6 @@ namespace Orion.Migrations
                     b.ToTable("SponsorAdvertisements");
                 });
 
-            modelBuilder.Entity("Orion.Models.Supervisor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("EmployeeDateOfJoin")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("EmployeeInsurance")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeePension")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeQualifications")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EmployeeRole")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("EmployeeSalary")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EmployeeStatus")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Supervisors");
-                });
-
-            modelBuilder.Entity("Orion.Models.Under12", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Earnings")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OrphansNumber")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ProductType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("SupervisorId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SupervisorId");
-
-                    b.ToTable("Under12s");
-                });
-
             modelBuilder.Entity("Orion.Models.Vendor", b =>
                 {
                     b.Property<int>("Id")
@@ -1251,6 +674,237 @@ namespace Orion.Migrations
                     b.ToTable("Websites");
                 });
 
+            modelBuilder.Entity("Orion.Models.Customer", b =>
+                {
+                    b.HasBaseType("Orion.Models.Common.User");
+
+                    b.Property<int>("DonationId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PaymentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WebsiteId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("DonationId")
+                        .IsUnique();
+
+                    b.HasIndex("PaymentId")
+                        .IsUnique();
+
+                    b.HasIndex("WebsiteId");
+
+                    b.ToTable("Users", t =>
+                        {
+                            t.Property("WebsiteId")
+                                .HasColumnName("Customer_WebsiteId");
+                        });
+
+                    b.HasDiscriminator().HasValue("Customer");
+                });
+
+            modelBuilder.Entity("Orion.Models.Employee", b =>
+                {
+                    b.HasBaseType("Orion.Models.Common.User");
+
+                    b.Property<DateTime>("EmployeeDateOfJoin")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("EmployeeInsurance")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EmployeePension")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EmployeeQualifications")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EmployeeRole")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("EmployeeSalary")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EmployeeStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Employee");
+                });
+
+            modelBuilder.Entity("Orion.Models.Freelancer", b =>
+                {
+                    b.HasBaseType("Orion.Models.Common.User");
+
+                    b.Property<int>("Earnings")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OrphanageId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OrphansNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ProductType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasIndex("OrphanageId");
+
+                    b.HasDiscriminator().HasValue("Freelancer");
+                });
+
+            modelBuilder.Entity("Orion.Models.Mentor", b =>
+                {
+                    b.HasBaseType("Orion.Models.Common.User");
+
+                    b.Property<int>("CraftId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MentorArea")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("OrphanNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("VisitNumber")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("CraftId");
+
+                    b.HasDiscriminator().HasValue("Mentor");
+                });
+
+            modelBuilder.Entity("Orion.Models.PremiumUser", b =>
+                {
+                    b.HasBaseType("Orion.Models.Common.User");
+
+                    b.Property<int>("Fees")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PreCommunityId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("PreCommunityId");
+
+                    b.HasDiscriminator().HasValue("PremiumUser");
+                });
+
+            modelBuilder.Entity("Orion.Models.BoothOrder", b =>
+                {
+                    b.HasBaseType("Orion.Models.Order");
+
+                    b.Property<int>("BoothId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("BoothId");
+
+                    b.HasDiscriminator().HasValue("BoothOrder");
+                });
+
+            modelBuilder.Entity("Orion.Models.DeliveryOrder", b =>
+                {
+                    b.HasBaseType("Orion.Models.Order");
+
+                    b.Property<int>("DeliveryId")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("ShippingFees")
+                        .HasColumnType("double precision");
+
+                    b.HasIndex("DeliveryId");
+
+                    b.HasDiscriminator().HasValue("DeliveryOrder");
+                });
+
+            modelBuilder.Entity("Orion.Models.Admin", b =>
+                {
+                    b.HasBaseType("Orion.Models.Employee");
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WebsiteId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("WebsiteId")
+                        .IsUnique();
+
+                    b.HasDiscriminator().HasValue("Admin");
+                });
+
+            modelBuilder.Entity("Orion.Models.Delivery", b =>
+                {
+                    b.HasBaseType("Orion.Models.Employee");
+
+                    b.Property<string>("DeliveryLicense")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DeliveryShift")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("VechileNumber")
+                        .HasColumnType("integer");
+
+                    b.HasDiscriminator().HasValue("Delivery");
+                });
+
+            modelBuilder.Entity("Orion.Models.OfficeWorker", b =>
+                {
+                    b.HasBaseType("Orion.Models.Employee");
+
+                    b.Property<int>("DeviceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("OfficeWorkerDepartment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.ToTable("Users", t =>
+                        {
+                            t.Property("DeviceId")
+                                .HasColumnName("OfficeWorker_DeviceId");
+                        });
+
+                    b.HasDiscriminator().HasValue("OfficeWorker");
+                });
+
+            modelBuilder.Entity("Orion.Models.Supervisor", b =>
+                {
+                    b.HasBaseType("Orion.Models.Employee");
+
+                    b.HasDiscriminator().HasValue("Supervisor");
+                });
+
+            modelBuilder.Entity("Orion.Models.Above12", b =>
+                {
+                    b.HasBaseType("Orion.Models.Freelancer");
+
+                    b.HasDiscriminator().HasValue("Above12");
+                });
+
+            modelBuilder.Entity("Orion.Models.Under12", b =>
+                {
+                    b.HasBaseType("Orion.Models.Freelancer");
+
+                    b.Property<int>("SupervisorId")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.HasDiscriminator().HasValue("Under12");
+                });
+
             modelBuilder.Entity("CustomerEvent", b =>
                 {
                     b.HasOne("Orion.Models.Customer", null)
@@ -1266,24 +920,6 @@ namespace Orion.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Orion.Models.Above12", b =>
-                {
-                    b.HasOne("Orion.Models.Orphanage", null)
-                        .WithMany("Above12s")
-                        .HasForeignKey("OrphanageId");
-                });
-
-            modelBuilder.Entity("Orion.Models.Admin", b =>
-                {
-                    b.HasOne("Orion.Models.Website", "Website")
-                        .WithOne("Admin")
-                        .HasForeignKey("Orion.Models.Admin", "WebsiteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Website");
-                });
-
             modelBuilder.Entity("Orion.Models.Booth", b =>
                 {
                     b.HasOne("Orion.Models.Event", "Event")
@@ -1293,44 +929,6 @@ namespace Orion.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
-                });
-
-            modelBuilder.Entity("Orion.Models.BoothOrder", b =>
-                {
-                    b.HasOne("Orion.Models.Booth", "Booth")
-                        .WithMany("BoothOrders")
-                        .HasForeignKey("BoothId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Booth");
-                });
-
-            modelBuilder.Entity("Orion.Models.Customer", b =>
-                {
-                    b.HasOne("Orion.Models.Donation", "Donation")
-                        .WithOne("Customer")
-                        .HasForeignKey("Orion.Models.Customer", "DonationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Orion.Models.Payment", "Payment")
-                        .WithOne("Customer")
-                        .HasForeignKey("Orion.Models.Customer", "PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Orion.Models.Website", "Website")
-                        .WithMany("Customers")
-                        .HasForeignKey("WebsiteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Donation");
-
-                    b.Navigation("Payment");
-
-                    b.Navigation("Website");
                 });
 
             modelBuilder.Entity("Orion.Models.CustomerAdvertisement", b =>
@@ -1369,17 +967,6 @@ namespace Orion.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("Orion.Models.DeliveryOrder", b =>
-                {
-                    b.HasOne("Orion.Models.Delivery", "Delivery")
-                        .WithMany("DeliveryOrders")
-                        .HasForeignKey("DeliveryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Delivery");
                 });
 
             modelBuilder.Entity("Orion.Models.Device", b =>
@@ -1428,17 +1015,6 @@ namespace Orion.Migrations
                     b.Navigation("OfficeWorker");
                 });
 
-            modelBuilder.Entity("Orion.Models.Freelancer", b =>
-                {
-                    b.HasOne("Orion.Models.Orphanage", "Orphanage")
-                        .WithMany("Freelancers")
-                        .HasForeignKey("OrphanageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Orphanage");
-                });
-
             modelBuilder.Entity("Orion.Models.MaterialVendor", b =>
                 {
                     b.HasOne("Orion.Models.Material", "Material")
@@ -1458,17 +1034,6 @@ namespace Orion.Migrations
                     b.Navigation("Vendor");
                 });
 
-            modelBuilder.Entity("Orion.Models.Mentor", b =>
-                {
-                    b.HasOne("Orion.Models.Craft", "Craft")
-                        .WithMany("Mentors")
-                        .HasForeignKey("CraftId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Craft");
-                });
-
             modelBuilder.Entity("Orion.Models.Order", b =>
                 {
                     b.HasOne("Orion.Models.Customer", "Customer")
@@ -1478,17 +1043,6 @@ namespace Orion.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("Orion.Models.PremiumUser", b =>
-                {
-                    b.HasOne("Orion.Models.PreCommunity", "PreCommunity")
-                        .WithMany("PremiumUsers")
-                        .HasForeignKey("PreCommunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PreCommunity");
                 });
 
             modelBuilder.Entity("Orion.Models.Product", b =>
@@ -1556,17 +1110,6 @@ namespace Orion.Migrations
                     b.Navigation("Sponsor");
                 });
 
-            modelBuilder.Entity("Orion.Models.Under12", b =>
-                {
-                    b.HasOne("Orion.Models.Supervisor", "Supervisor")
-                        .WithMany("Under12s")
-                        .HasForeignKey("SupervisorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Supervisor");
-                });
-
             modelBuilder.Entity("Orion.Models.Website", b =>
                 {
                     b.HasOne("Orion.Models.OfficeWorker", "OfficeWorker")
@@ -1578,17 +1121,108 @@ namespace Orion.Migrations
                     b.Navigation("OfficeWorker");
                 });
 
-            modelBuilder.Entity("Orion.Models.Above12", b =>
+            modelBuilder.Entity("Orion.Models.Customer", b =>
                 {
-                    b.Navigation("Products");
+                    b.HasOne("Orion.Models.Donation", "Donation")
+                        .WithOne("Customer")
+                        .HasForeignKey("Orion.Models.Customer", "DonationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Orion.Models.Payment", "Payment")
+                        .WithOne("Customer")
+                        .HasForeignKey("Orion.Models.Customer", "PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Orion.Models.Website", "Website")
+                        .WithMany("Customers")
+                        .HasForeignKey("WebsiteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Donation");
+
+                    b.Navigation("Payment");
+
+                    b.Navigation("Website");
+                });
+
+            modelBuilder.Entity("Orion.Models.Freelancer", b =>
+                {
+                    b.HasOne("Orion.Models.Orphanage", "Orphanage")
+                        .WithMany("Freelancers")
+                        .HasForeignKey("OrphanageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Orphanage");
+                });
+
+            modelBuilder.Entity("Orion.Models.Mentor", b =>
+                {
+                    b.HasOne("Orion.Models.Craft", "Craft")
+                        .WithMany("Mentors")
+                        .HasForeignKey("CraftId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Craft");
+                });
+
+            modelBuilder.Entity("Orion.Models.PremiumUser", b =>
+                {
+                    b.HasOne("Orion.Models.PreCommunity", "PreCommunity")
+                        .WithMany("PremiumUsers")
+                        .HasForeignKey("PreCommunityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PreCommunity");
+                });
+
+            modelBuilder.Entity("Orion.Models.BoothOrder", b =>
+                {
+                    b.HasOne("Orion.Models.Booth", "Booth")
+                        .WithMany("BoothOrders")
+                        .HasForeignKey("BoothId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booth");
+                });
+
+            modelBuilder.Entity("Orion.Models.DeliveryOrder", b =>
+                {
+                    b.HasOne("Orion.Models.Delivery", "Delivery")
+                        .WithMany("DeliveryOrders")
+                        .HasForeignKey("DeliveryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Delivery");
                 });
 
             modelBuilder.Entity("Orion.Models.Admin", b =>
                 {
-                    b.Navigation("Device")
+                    b.HasOne("Orion.Models.Website", "Website")
+                        .WithOne("Admin")
+                        .HasForeignKey("Orion.Models.Admin", "WebsiteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Feedbacks");
+                    b.Navigation("Website");
+                });
+
+            modelBuilder.Entity("Orion.Models.Under12", b =>
+                {
+                    b.HasOne("Orion.Models.Supervisor", "Supervisor")
+                        .WithMany("Under12s")
+                        .HasForeignKey("SupervisorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supervisor");
                 });
 
             modelBuilder.Entity("Orion.Models.Advertisement", b =>
@@ -1606,23 +1240,6 @@ namespace Orion.Migrations
             modelBuilder.Entity("Orion.Models.Craft", b =>
                 {
                     b.Navigation("Mentors");
-                });
-
-            modelBuilder.Entity("Orion.Models.Customer", b =>
-                {
-                    b.Navigation("CustomerAdvertisements");
-
-                    b.Navigation("CustomerProducts");
-
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("Order")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Orion.Models.Delivery", b =>
-                {
-                    b.Navigation("DeliveryOrders");
                 });
 
             modelBuilder.Entity("Orion.Models.Donation", b =>
@@ -1648,20 +1265,8 @@ namespace Orion.Migrations
                     b.Navigation("MaterialVendors");
                 });
 
-            modelBuilder.Entity("Orion.Models.OfficeWorker", b =>
-                {
-                    b.Navigation("Device")
-                        .IsRequired();
-
-                    b.Navigation("Feedbacks");
-
-                    b.Navigation("Websites");
-                });
-
             modelBuilder.Entity("Orion.Models.Orphanage", b =>
                 {
-                    b.Navigation("Above12s");
-
                     b.Navigation("Freelancers");
                 });
 
@@ -1686,13 +1291,6 @@ namespace Orion.Migrations
                     b.Navigation("SponsorAdvertisements");
                 });
 
-            modelBuilder.Entity("Orion.Models.Supervisor", b =>
-                {
-                    b.Navigation("Products");
-
-                    b.Navigation("Under12s");
-                });
-
             modelBuilder.Entity("Orion.Models.Vendor", b =>
                 {
                     b.Navigation("MaterialVendors");
@@ -1704,6 +1302,53 @@ namespace Orion.Migrations
                         .IsRequired();
 
                     b.Navigation("Customers");
+                });
+
+            modelBuilder.Entity("Orion.Models.Customer", b =>
+                {
+                    b.Navigation("CustomerAdvertisements");
+
+                    b.Navigation("CustomerProducts");
+
+                    b.Navigation("Feedbacks");
+
+                    b.Navigation("Order")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Orion.Models.Admin", b =>
+                {
+                    b.Navigation("Device")
+                        .IsRequired();
+
+                    b.Navigation("Feedbacks");
+                });
+
+            modelBuilder.Entity("Orion.Models.Delivery", b =>
+                {
+                    b.Navigation("DeliveryOrders");
+                });
+
+            modelBuilder.Entity("Orion.Models.OfficeWorker", b =>
+                {
+                    b.Navigation("Device")
+                        .IsRequired();
+
+                    b.Navigation("Feedbacks");
+
+                    b.Navigation("Websites");
+                });
+
+            modelBuilder.Entity("Orion.Models.Supervisor", b =>
+                {
+                    b.Navigation("Products");
+
+                    b.Navigation("Under12s");
+                });
+
+            modelBuilder.Entity("Orion.Models.Above12", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

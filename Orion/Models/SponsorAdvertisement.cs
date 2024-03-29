@@ -1,6 +1,8 @@
-﻿namespace Orion.Models
+﻿using Orion.Models.Common;
+
+namespace Orion.Models
 {
-    public class SponsorAdvertisement
+    public class SponsorAdvertisement : BaseEntity<int>
     {
         public int SponsorId { get; set; }
         public int AdvertisementId { get; set; }

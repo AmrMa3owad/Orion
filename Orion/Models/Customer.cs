@@ -1,8 +1,8 @@
-﻿using Orion.Models.Common;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Orion.Models
 {
-    public class Customer : User
+    public class Customer : IdentityUser<int>
     {
         public Customer()
         {

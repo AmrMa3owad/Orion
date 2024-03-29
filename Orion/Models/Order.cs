@@ -2,7 +2,7 @@
 
 namespace Orion.Models
 {
-    public class Order : BaseEntity<int>
+    public class Order : BaseEntity<int> , IOrder
     {
         
         public int OrderPrice { get; set; }

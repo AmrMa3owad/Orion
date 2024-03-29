@@ -13,11 +13,11 @@ namespace Orion.Pages
             _context = context;
         }
 
-        public List<User> Users { get; set; }
+        //public List<User> Users { get; set; }
 
-        public void OnGet()
-        {
-            Users = _context.Users.ToList();
-        }
+        //public void OnGet()
+        //{
+        //    Users = _context.Users.ToList();
+        //}
     }
 }
