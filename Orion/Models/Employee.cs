@@ -1,6 +1,8 @@
-﻿namespace Orion.Models
+﻿using Orion.Models.Common;
+
+namespace Orion.Models
 {
-    public class Employee : BaseEntity<int>
+    public class Employee : User
     {
         public string EmployeePension { get; set; }
         public int EmployeeInsurance { get; set; }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Orion.Context;
-using Orion.Models;
+using Orion.Models.Common;
 
 namespace Orion.Controllers
 {

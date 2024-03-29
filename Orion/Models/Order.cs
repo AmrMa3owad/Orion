@@ -1,4 +1,6 @@
-﻿namespace Orion.Models
+﻿using Orion.Models.Common;
+
+namespace Orion.Models
 {
     public class Order : BaseEntity<int>
     {
@@ -8,6 +10,7 @@
         public DateTime OrderDate { get; set; }
         public int OrderAmount { get; set; }
         public string OrderComments { get; set; }
+        public int CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }
 

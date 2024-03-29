@@ -1,24 +1,28 @@
-﻿namespace Orion.Models
+﻿using Orion.Models.Common;
+
+namespace Orion.Models
 {
-    public class Customer :BaseEntity<int>
+    public class Customer : User
     {
         public Customer()
         {
-            CustomerProduct = new HashSet<CustomerProduct>();
-            CustomerAdvertisement = new HashSet<CustomerAdvertisement>();
-            Event = new HashSet<Event>();
-            Feedback = new HashSet<Feedback>();
+            CustomerProducts = new HashSet<CustomerProduct>();
+            CustomerAdvertisements = new HashSet<CustomerAdvertisement>();
+            Events = new HashSet<Event>();
+            Feedbacks = new HashSet<Feedback>();
         }
-
         public int DonationId { get; set; }
-        public virtual Donation Donation { get; set; }
-        public virtual ICollection<CustomerProduct> CustomerProduct { get; set; }
-        public virtual ICollection<CustomerAdvertisement> CustomerAdvertisement { get; set; }
+        public int PaymentId { get; set; }
+        public int OrderId { get; set; }
+        public int WebsiteId { get; set; }
+
+        public virtual Donation Donation { get; set; }       
         public virtual Payment Payment { get; set; }
-        public virtual ICollection<Event> Event { get; set; }
         public virtual Order Order { get; set; }
         public virtual Website Website { get; set; }
-        public virtual ICollection<Feedback> Feedback { get; set; }
-
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
+        public virtual ICollection<CustomerProduct> CustomerProducts { get; set; }
+        public virtual ICollection<CustomerAdvertisement> CustomerAdvertisements { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Orion.Models;
+using Orion.Models.Common;
 
 namespace Orion.Context
 {
@@ -11,9 +12,7 @@ namespace Orion.Context
         {
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
-        public DbSet<RolePermission> RolePermissions { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.UseSerialColumns();

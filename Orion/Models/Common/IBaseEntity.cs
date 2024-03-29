@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Orion.Models;
+namespace Orion.Models.Common;
 
 public interface IBaseEntity<T>
 {

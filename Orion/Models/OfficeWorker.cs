@@ -1,17 +1,17 @@
 ﻿namespace Orion.Models
 {
-    public class OfficeWorker : BaseEntity<int>
+    public class OfficeWorker : Employee
     {
         public OfficeWorker()
         {
-            Website = new HashSet<Website>();
-            Feedback = new HashSet<Feedback>();
+            Websites = new HashSet<Website>();
+            Feedbacks = new HashSet<Feedback>();
         }
         public string OfficeWorkerDepartment { get; set; }
-        public virtual ICollection<Website> Website { get; set; }
-        public virtual ICollection<Feedback> Feedback { get; set; }
+        public int DeviceId { get; set; }
+
         public virtual Device Device { get; set; }
-
-
+        public virtual ICollection<Website> Websites { get; set; }
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

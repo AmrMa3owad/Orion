@@ -1,9 +1,11 @@
-﻿namespace Orion.Models
+﻿using Orion.Models.Common;
+
+namespace Orion.Models
 {
-    public class Mentor : BaseEntity<int>
+    public class Mentor : User
     {
         public string MentorArea { get; set; }
-        public int OrphansNumber { get; set; }
+        public int OrphanNumber { get; set; }
         public int VisitNumber { get; set; }
         public int CraftId { get; set; }
 

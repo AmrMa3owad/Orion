@@ -1,4 +1,5 @@
-﻿using Orion.Models.Enums;
+﻿using Orion.Models.Common;
+using Orion.Models.Enums;
 
 namespace Orion.Models
 {
@@ -6,7 +7,7 @@ namespace Orion.Models
     {
         public Donation()
         {
-            Sponsor = new HashSet<Sponsor>();
+            Sponsors = new HashSet<Sponsor>();
         }
         public DonationType DonationType { get; set; }
         public double DonationQuantity { get; set; }
@@ -15,6 +16,6 @@ namespace Orion.Models
         public int CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }
-        public virtual ICollection<Sponsor> Sponsor { get; set; }
+        public virtual ICollection<Sponsor> Sponsors { get; set; }
     }
 }

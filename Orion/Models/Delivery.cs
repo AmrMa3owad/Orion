@@ -1,15 +1,15 @@
 ﻿namespace Orion.Models
 {
-    public class Delivery : BaseEntity<int>
+    public class Delivery : Employee
     {
         public Delivery()
         {
-            DeliveryOrder = new HashSet<DeliveryOrder>();
+            DeliveryOrders = new HashSet<DeliveryOrder>();
         }
         public string DeliveryShift { get; set; }
         public int VechileNumber { get; set; }
         public string DeliveryLicense { get; set; }
 
-        public virtual ICollection<DeliveryOrder> DeliveryOrder { get; set; }
+        public virtual ICollection<DeliveryOrder> DeliveryOrders { get; set; }
     }
 }
