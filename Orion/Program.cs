@@ -1,17 +1,21 @@
 using Microsoft.EntityFrameworkCore;
 using Orion.Context;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddMvc();
 builder.Services.AddDbContext<AppDbContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("OrionDB")));
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orion", Version = "v1" });
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -26,6 +30,16 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseSwagger();
+
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Orion v1");
+    c.RoutePrefix = string.Empty;
+});
+
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();
