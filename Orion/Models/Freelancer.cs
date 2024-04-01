@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Orion.Models.Common;
+﻿using Orion.Models.Common;
 
 namespace Orion.Models
 {
-    public class Freelancer : IdentityUser<int> , IFreelancer
+    public class Freelancer : BaseEntity<int>, IFreelancer
     {
         public int Earnings { get; set; }
         public int OrphansNumber { get; set; }

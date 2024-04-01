@@ -1,6 +1,6 @@
 ﻿namespace Orion.Models.Enums
 {
-    public enum DonationType
+    public enum DonationTypes
     {
         Monetary = 1,
         Volunteer= 2,

@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Orion.Models.Common;
+﻿using Orion.Models.Common;
 
 namespace Orion.Models
 {
-    public class Employee : IdentityUser<int> , IEmployee
+    public class Employee : BaseEntity<int>, IEmployee
     {
         public string EmployeePension { get; set; }
         public int EmployeeInsurance { get; set; }

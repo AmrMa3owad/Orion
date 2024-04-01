@@ -9,7 +9,7 @@ namespace Orion.Models
         {
             Sponsors = new HashSet<Sponsor>();
         }
-        public DonationType DonationType { get; set; }
+        public DonationTypes DonationType { get; set; }
         public double DonationQuantity { get; set; }
         public DateTime DonationTime { get; set; }
         public string DonationMethod { get; set; }
