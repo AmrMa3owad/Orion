@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Orion.Models;
 using Orion.Models.Common;
-using Orion.Models.Identity;
 
 namespace Orion.Context
 {
@@ -43,9 +42,9 @@ namespace Orion.Context
         public DbSet<SponsorAdvertisement> SponsorAdvertisements { get; set; }
         public DbSet<Supervisor> Supervisors { get; set; }
         public DbSet<Under12> Under12s { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Website> Websites { get; set; }
-        public DbSet<ApplicationUser> Users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

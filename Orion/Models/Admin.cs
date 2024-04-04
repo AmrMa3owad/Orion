@@ -2,7 +2,7 @@
 
 namespace Orion.Models
 {
-    public class Admin : BaseEntity<int> , IEmployee
+    public class Admin : BaseEntity<int> , IEmployee 
     {
         public Admin()
         {
