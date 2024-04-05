@@ -1,14 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Orion.Models.Common;
+﻿using Orion.Models.Common;
 
 namespace Orion.Models
 {
-    public class User : IdentityUser<int> , IUser
+    public class User : BaseUser<int>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Gender { get; set; }
-        public string Address { get; set; }
-        public DateTime BirthDate { get; set; }
     }
 }

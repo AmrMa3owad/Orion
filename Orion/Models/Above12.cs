@@ -2,15 +2,12 @@
 
 namespace Orion.Models
 {
-    public class Above12 : BaseEntity<int> , IFreelancer
+    public class Above12 : BaseFreelancer<int>
     {
         public Above12()
         {
             Products = new HashSet<Product>();
         }
-        public int Earnings { get; set; }
-        public int OrphansNumber { get; set; }
-        public string ProductType { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
     }

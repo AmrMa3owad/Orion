@@ -2,7 +2,7 @@
 
 namespace Orion.Models
 {
-    public class PremiumUser : BaseEntity<int>
+    public class PremiumUser : BaseUser<int>
     {
         public int Fees { get; set; }
         public int PreCommunityId { get; set; }

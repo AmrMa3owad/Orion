@@ -2,7 +2,7 @@
 
 namespace Orion.Models
 {
-    public class Customer : BaseEntity<int>
+    public class Customer : BaseUser<int>
     {
         public Customer()
         {
