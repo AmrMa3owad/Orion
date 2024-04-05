@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Orion.Models;
-using Orion.Models.Common;
 
 namespace Orion.Context
 {

@@ -1,5 +1,4 @@
 ﻿using Orion.Models.Common;
-using Orion.Models.Enums;
 
 namespace Orion.Models
 {
