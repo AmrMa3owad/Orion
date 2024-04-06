@@ -1,11 +1,11 @@
 ﻿using Orion.Context;
-using Orion.Models;
 using Orion.Infrastructure.Common;
+using Orion.Domain.Models;
 
 namespace Orion.Infrastructure.Services
 {
     public class Above12Service
-        : BaseService<Above12, int>,
+        : BaseFreelancerService<Above12, int>,
             IAbove12Service
     {
         public Above12Service(

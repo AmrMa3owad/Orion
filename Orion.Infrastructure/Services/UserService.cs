@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Orion.Context;
 using Orion.Infrastructure.Common;
-using Orion.Models;
+using Orion.Domain.Models;
 
 namespace Orion.Infrastructure.Services
 {
@@ -165,17 +165,17 @@ namespace Orion.Infrastructure.Services
             return UserManager.HasPasswordAsync(user);
         }
 
-        Task<bool> IBaseService<User, int>.Delete(User entity)
+        Task<bool> IBaseUserService<User, int>.Delete(User entity)
         {
             throw new NotImplementedException();
         }
 
-        Task<User> IBaseService<User, int>.Create(User entity)
+        Task<User> IBaseUserService<User, int>.Create(User entity)
         {
             throw new NotImplementedException();
         }
 
-        Task<bool> IBaseService<User, int>.Update(User entity)
+        Task<bool> IBaseUserService<User, int>.Update(User entity)
         {
             throw new NotImplementedException();
         }

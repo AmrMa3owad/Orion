@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Orion.Models;
+using Orion.Domain.Models;
 using Orion.Infrastructure.Common;
 
 namespace Orion.Infrastructure.Services
 {
-    public interface IUserService : IBaseService<User, int>
+    public interface IUserService : IBaseUserService<User, int>
     {
         public Task<IdentityResult> Create(User entity, string password);
         new Task<IdentityResult> Create(User entity);

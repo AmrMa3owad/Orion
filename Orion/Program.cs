@@ -1,13 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using Orion.Context;
 using Microsoft.OpenApi.Models;
+using Orion.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddMvc();
-builder.Services.AddDbContext<AppDbContext>(
-    o => o.UseNpgsql(builder.Configuration.GetConnectionString("OrionDB")));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("OrionDB")));
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -19,7 +19,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

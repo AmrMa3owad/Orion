@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Orion.Context;
+using Orion.Domain.Models.Common;
 
 namespace Orion.Infrastructure.Common
 {
-    public class BaseService<T, IType> : IBaseService<T, IType>  
+    public class BaseService<T, IType> : IBaseService<T, IType> where T : BaseEntity<IType>
     {
         protected readonly AppDbContext Context;
 

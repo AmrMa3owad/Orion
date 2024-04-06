@@ -1,5 +1,5 @@
 ﻿using Orion.Context;
-using Orion.Models;
+using Orion.Domain.Models;
 using Orion.Infrastructure.Common;
 
 namespace Orion.Infrastructure.Services

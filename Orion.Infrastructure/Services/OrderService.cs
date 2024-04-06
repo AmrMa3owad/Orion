@@ -1,11 +1,11 @@
 ﻿using Orion.Context;
 using Orion.Infrastructure.Common;
-using Orion.Models;
+using Orion.Domain.Models;
 
 namespace Orion.Infrastructure.Services
 {
     public class OrderService
-        : BaseService<Order, int>,
+        : BaseOrderService<Order, int>,
             IOrderService
     {
         public OrderService(

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Orion.Context;
-using Orion.Models.Common;
 
 namespace Orion.Pages
 {

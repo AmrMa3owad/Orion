@@ -1,11 +1,11 @@
 ﻿using Orion.Context;
 using Orion.Infrastructure.Common;
-using Orion.Models;
+using Orion.Domain.Models;
 
 namespace Orion.Infrastructure.Services
 {
     public class SupervisorService
-        : BaseService<Supervisor, int>,
+        : BaseEmployeeService<Supervisor, int>,
             ISupervisorService
     {
         public SupervisorService(
