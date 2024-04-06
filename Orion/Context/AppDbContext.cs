@@ -48,7 +48,7 @@ namespace Orion.Context
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.UseSerialColumns();
+            base.OnModelCreating(builder);
 
             builder.Entity<Admin>()
                .HasOne(a => a.Device)
