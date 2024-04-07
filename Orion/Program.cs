@@ -17,7 +17,7 @@ builder.Services.ConfigureHttpContext();
 builder.Services.ConfigureApiVersions();
 builder.Services.ConfigureWebApi(builder.Configuration);
 builder.Services.ConfigureDbContext(builder.Configuration);
-builder.Services.ConfigureJWT(builder.Configuration);
+//builder.Services.ConfigureJWT(builder.Configuration);
 builder.Services.ConfigureMapper();
 builder.Services.ConfigureEmailSender(builder.Configuration);
 
