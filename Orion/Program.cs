@@ -1,6 +1,8 @@
+using Doablelink.FSM.WebApi.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Orion.Context;
+using Orion.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,16 @@ builder.Services.AddRazorPages();
 builder.Services.AddMvc();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OrionDB")));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.ConfigureMapper();
+builder.Services.AddControllers();
+builder.Services.ConfigureHttpContext();
+builder.Services.ConfigureApiVersions();
+builder.Services.ConfigureWebApi(builder.Configuration);
+builder.Services.ConfigureDbContext(builder.Configuration);
+builder.Services.ConfigureJWT(builder.Configuration);
+builder.Services.ConfigureMapper();
+builder.Services.ConfigureEmailSender(builder.Configuration);
 
 builder.Services.AddSwaggerGen(c =>
 {
