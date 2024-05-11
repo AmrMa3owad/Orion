@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Orion.Context;
 using Orion.Domain.Models;
 
@@ -6,6 +7,8 @@ namespace Orion.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+
     public class AdvertisementController : ControllerBase
     {
         private readonly AppDbContext _context;

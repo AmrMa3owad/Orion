@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Orion.Context\Orion.Context.csproj" />
-    <ProjectReference Include="..\Orion\Orion.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Orion.Context;
 using Orion.Extensions;
+using Orion.Infrastructure.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureMapper();
 builder.Services.AddControllers();
 builder.Services.ConfigureHttpContext();
+builder.Services.ConfigureInfrastructure();
 builder.Services.ConfigureApiVersions();
 builder.Services.ConfigureWebApi(builder.Configuration);
 builder.Services.ConfigureDbContext(builder.Configuration);
