@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Orion.Domain.Models.Common;
+﻿using Orion.Domain.Models.Common;
 
 namespace Orion.Domain.Models
 {
-    public class User : IdentityUser<int>, IBaseIdentity
+    public class User : BaseEntity<int>
     {
         public User()
         {
