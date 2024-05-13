@@ -5,7 +5,7 @@ using Orion.Domain.Models;
 namespace Orion.Infrastructure.Services
 {
     public class Above12Service
-        : BaseFreelancerService<Above12, int>,
+        : BaseService<Above12, int>,
             IAbove12Service
     {
         public Above12Service(

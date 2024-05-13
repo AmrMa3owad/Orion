@@ -5,7 +5,7 @@ using Orion.Infrastructure.Common;
 namespace Orion.Infrastructure.Services
 {
     public class AdminService
-        : BaseEmployeeService<Admin, int>,
+        : BaseService<Admin, int>,
             IAdminService
     {
         public AdminService(

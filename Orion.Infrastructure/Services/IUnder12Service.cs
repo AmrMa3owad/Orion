@@ -4,7 +4,7 @@ using Orion.Infrastructure.Common;
 namespace Orion.Infrastructure.Services
 {
     public interface IUnder12Service :
-        IBaseFreelancerService<Under12, int>
+        IBaseService<Under12, int>
     {
     }
 }

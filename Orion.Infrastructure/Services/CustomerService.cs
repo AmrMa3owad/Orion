@@ -5,7 +5,7 @@ using Orion.Infrastructure.Common;
 namespace Orion.Infrastructure.Services
 {
     public class CustomerService
-        : BaseUserService<Customer, int>,
+        : BaseService<Customer, int>,
             ICustomerService
     {
         public CustomerService(

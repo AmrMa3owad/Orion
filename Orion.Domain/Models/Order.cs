@@ -2,13 +2,18 @@
 
 namespace Orion.Domain.Models
 {
-    public class Order : BaseOrder<int>
+    public class Order : BaseEntity<int>
     {
         public Order()
         {
             BoothOrders = new HashSet<BoothOrder>();
             DeliveryOrders = new HashSet<DeliveryOrder>();
         }
+        public int OrderPrice { get; set; }
+        public int OrderQuantity { get; set; }
+        public DateTime OrderDate { get; set; }
+        public int OrderAmount { get; set; }
+        public string OrderComments { get; set; }
         public int CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }

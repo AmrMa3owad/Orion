@@ -4,7 +4,7 @@ using Orion.Infrastructure.Common;
 namespace Orion.Infrastructure.Services
 {
     public interface IPremiumUserService :
-        IBaseUserService<PremiumUser, int>
+        IBaseService<PremiumUser, int>
     {
     }
 }

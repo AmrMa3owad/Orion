@@ -2,7 +2,7 @@
 
 namespace Orion.Domain.Models
 {
-    public class Mentor : BaseUser<int>
+    public class Mentor : BaseEntity<int>
     {
         public string MentorArea { get; set; }
         public int OrphanNumber { get; set; }

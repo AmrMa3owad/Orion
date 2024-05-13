@@ -5,7 +5,7 @@ using Orion.Domain.Models;
 namespace Orion.Infrastructure.Services
 {
     public class PremiumUserService
-        : BaseUserService<PremiumUser, int>,
+        : BaseService<PremiumUser, int>,
             IPremiumUserService
     {
         public PremiumUserService(

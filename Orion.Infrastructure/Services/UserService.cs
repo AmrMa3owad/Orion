@@ -1,183 +1,183 @@
-﻿//using Microsoft.EntityFrameworkCore;
-//using Orion.Context;
-//using Orion.Infrastructure.Common;
-//using Orion.Domain.Models;
-//using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.EntityFrameworkCore;
+using Orion.Context;
+using Orion.Infrastructure.Common;
+using Orion.Domain.Models;
+using Microsoft.AspNetCore.Identity;
 
-//namespace Orion.Infrastructure.Services
-//{
-//    public class UserService : IUserService
-//    {
-//        private readonly UserManager<User> UserManager;
+namespace Orion.Infrastructure.Services
+{
+    public class UserService : IUserService
+    {
+        private readonly UserManager<User> UserManager;
 
-//        private readonly AppDbContext Context;
-//        public UserService(
-//            UserManager<User> userManager,
-//            AppDbContext dbContext
-//            )
-//        {
-//            UserManager = userManager;
-//            Context = dbContext;
-//        }
+        private readonly AppDbContext Context;
+        public UserService(
+            UserManager<User> userManager,
+            AppDbContext dbContext
+            )
+        {
+            UserManager = userManager;
+            Context = dbContext;
+        }
 
-//        public async Task<IdentityResult> Create(User entity)
-//        {
-//            IdentityResult identityResult = await UserManager.CreateAsync(entity);
+        public async Task<IdentityResult> Create(User entity)
+        {
+            IdentityResult identityResult = await UserManager.CreateAsync(entity);
 
-//            return identityResult;
-        
-//    }
+            return identityResult;
 
-//        public async Task<IdentityResult> Create(User entity, string password)
-//        {
-//            IdentityResult identityResult = await UserManager.CreateAsync(entity, password);
+        }
 
-//            return identityResult;
-//        }
+        public async Task<IdentityResult> Create(User entity, string password)
+        {
+            IdentityResult identityResult = await UserManager.CreateAsync(entity, password);
 
-//        public async Task<IdentityResult> Delete(User entity)
-//        {
-//            IdentityResult identityResult = await UserManager.DeleteAsync(entity);
-//            return identityResult;
-//        }
+            return identityResult;
+        }
 
-//        public Task<User?> Get(int id, CancellationToken cancellationToken)
-//        {
-//            return UserManager.Users
-//                .Where(x => x.Id == id)               
-//                .SingleOrDefaultAsync();
-//        }
+        public async Task<IdentityResult> Delete(User entity)
+        {
+            IdentityResult identityResult = await UserManager.DeleteAsync(entity);
+            return identityResult;
+        }
 
-//        public IQueryable<User> GetAll(CancellationToken cancellationToken)
-//        {
-//            return UserManager.Users.AsQueryable();
-//        }
+        public Task<User?> Get(int id, CancellationToken cancellationToken)
+        {
+            return UserManager.Users
+                .Where(x => x.Id == id)
+                .SingleOrDefaultAsync();
+        }
 
-//        public async Task<User?> GetByEmail(string email, CancellationToken cancellationToken)
-//        {
-//            User userCheck = await UserManager
-//                .FindByEmailAsync(email);
-//            return userCheck;
-//        }
-//        public async Task<SignInResult> SignIn(string email, string password, CancellationToken cancellationToken)
-//        {
-//            User user = await GetByEmail(email, cancellationToken);
-//            bool lockedOut = await UserManager.IsLockedOutAsync(user);
-//            bool emailConfirmed = await UserManager.IsEmailConfirmedAsync(user);
+        public IQueryable<User> GetAll(CancellationToken cancellationToken)
+        {
+            return UserManager.Users.AsQueryable();
+        }
 
-//            if (!emailConfirmed)
-//            {
-//                return SignInResult.NotAllowed;
-//                // return Email Not comfirmed
-//            }
-//            else if (lockedOut)
-//            {
-//                return SignInResult.LockedOut;
+        public async Task<User?> GetByEmail(string email, CancellationToken cancellationToken)
+        {
+            User userCheck = await UserManager
+                .FindByEmailAsync(email);
+            return userCheck;
+        }
+        public async Task<SignInResult> SignIn(string email, string password, CancellationToken cancellationToken)
+        {
+            User user = await GetByEmail(email, cancellationToken);
+            bool lockedOut = await UserManager.IsLockedOutAsync(user);
+            bool emailConfirmed = await UserManager.IsEmailConfirmedAsync(user);
 
-//                // return lockedOut
-//            }
-//            else
-//            {
-//                bool correctPassword
-//                               = await UserManager.CheckPasswordAsync(user, password);
+            if (!emailConfirmed)
+            {
+                return SignInResult.NotAllowed;
+                // return Email Not comfirmed
+            }
+            else if (lockedOut)
+            {
+                return SignInResult.LockedOut;
 
-//                return correctPassword ? SignInResult.Success : SignInResult.Failed;
-//            }
-//        }
+                // return lockedOut
+            }
+            else
+            {
+                bool correctPassword
+                               = await UserManager.CheckPasswordAsync(user, password);
 
-//        public async Task<User?> GetByUserNameAndPassword(string email, string password, CancellationToken cancellationToken)
-//        {
+                return correctPassword ? SignInResult.Success : SignInResult.Failed;
+            }
+        }
 
-//            var userCheck = await UserManager.FindByEmailAsync(email);
-//            if (userCheck != null)
-//            {
-//                PasswordVerificationResult passwordCheck
-//                    = UserManager
-//                    .PasswordHasher
-//                    .VerifyHashedPassword(userCheck, userCheck.Password, password);
+        public async Task<User?> GetByUserNameAndPassword(string email, string password, CancellationToken cancellationToken)
+        {
 
-//                if (passwordCheck == PasswordVerificationResult.Success)
-//                {
-//                    return userCheck;
-//                }
-//            }
+            var userCheck = await UserManager.FindByEmailAsync(email);
+            if (userCheck != null)
+            {
+                PasswordVerificationResult passwordCheck
+                    = UserManager
+                    .PasswordHasher
+                    .VerifyHashedPassword(userCheck, userCheck.Password, password);
 
-//            return null;
-//        }
+                if (passwordCheck == PasswordVerificationResult.Success)
+                {
+                    return userCheck;
+                }
+            }
 
-//        public async Task<IdentityResult> Update(User entity)
-//        {
-//            Context.Users.Update(entity);
-//            Context.SaveChanges();
+            return null;
+        }
 
-//            IdentityResult result = await UserManager.UpdateAsync(entity);
-//            return result;
-//        }      
-//        public Task<string> GenerateEmailConfirmationToken(
-//            User user)
-//        {
-//            return UserManager.GenerateEmailConfirmationTokenAsync(user);
-//        }
+        public async Task<IdentityResult> Update(User entity)
+        {
+            Context.Users.Update(entity);
+            Context.SaveChanges();
 
-//        public Task<IdentityResult> ConfirmEmailAsync(User user,
-//          string token)
-//        {
-//            return UserManager.ConfirmEmailAsync(user, token);
-//        }
+            IdentityResult result = await UserManager.UpdateAsync(entity);
+            return result;
+        }
+        public Task<string> GenerateEmailConfirmationToken(
+            User user)
+        {
+            return UserManager.GenerateEmailConfirmationTokenAsync(user);
+        }
 
-//        public Task<string> GeneratePasswordResetToken(
-//            User user)
-//        {
-//            return UserManager.GeneratePasswordResetTokenAsync(user);
-//        }
+        public Task<IdentityResult> ConfirmEmailAsync(User user,
+          string token)
+        {
+            return UserManager.ConfirmEmailAsync(user, token);
+        }
 
-//        public Task<IdentityResult> ResetPassword(User user,
-//          string token, string password)
-//        {
-//            return UserManager.ResetPasswordAsync(user, token, password);
-//        }
+        public Task<string> GeneratePasswordResetToken(
+            User user)
+        {
+            return UserManager.GeneratePasswordResetTokenAsync(user);
+        }
 
-//        public Task<IdentityResult> AddPassword(
-//            User user,
-//          string password)
-//        {
-//            return UserManager.AddPasswordAsync(user, password);
-//        }
+        public Task<IdentityResult> ResetPassword(User user,
+          string token, string password)
+        {
+            return UserManager.ResetPasswordAsync(user, token, password);
+        }
 
-//        public Task<IdentityResult> ChangePassword(
-//       User user,
-//       string currentPassword,
-//     string newPassword)
-//        {
-//            return UserManager.ChangePasswordAsync(user, currentPassword, newPassword);
-//        }
+        public Task<IdentityResult> AddPassword(
+            User user,
+          string password)
+        {
+            return UserManager.AddPasswordAsync(user, password);
+        }
 
-//        public Task<bool> CheckPassword(
-//            User user,
-//          string password)
-//        {
-//            return UserManager.CheckPasswordAsync(user, password);
-//        }
+        public Task<IdentityResult> ChangePassword(
+       User user,
+       string currentPassword,
+     string newPassword)
+        {
+            return UserManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        }
 
-//        public Task<bool> CheckHasPassword(
-//       User user)
-//        {
-//            return UserManager.HasPasswordAsync(user);
-//        }
+        public Task<bool> CheckPassword(
+            User user,
+          string password)
+        {
+            return UserManager.CheckPasswordAsync(user, password);
+        }
 
-//        Task<bool> IBaseUserService<User, int>.Delete(User entity)
-//        {
-//            throw new NotImplementedException();
-//        }
+        public Task<bool> CheckHasPassword(
+       User user)
+        {
+            return UserManager.HasPasswordAsync(user);
+        }
 
-//        Task<User> IBaseUserService<User, int>.Create(User entity)
-//        {
-//            throw new NotImplementedException();
-//        }
+        Task<bool> IBaseService<User, int>.Delete(User entity)
+        {
+            throw new NotImplementedException();
+        }
 
-//        Task<bool> IBaseUserService<User, int>.Update(User entity)
-//        {
-//            throw new NotImplementedException();
-//        }
-//    }
-//}
+        Task<User> IBaseService<User, int>.Create(User entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<bool> IBaseService<User, int>.Update(User entity)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

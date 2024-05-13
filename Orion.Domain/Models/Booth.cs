@@ -10,7 +10,7 @@ namespace Orion.Domain.Models
         }
         public int BoothNumber { get; set; }
         public int BoothCapacity { get; set; }
-        public int EventId { get; set; }
+        public int? EventId { get; set; }
 
         public virtual Event Event { get; set; }
         public virtual ICollection<BoothOrder> BoothOrders { get; set; }

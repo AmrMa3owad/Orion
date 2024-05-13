@@ -5,7 +5,7 @@ using Orion.Domain.Models;
 namespace Orion.Infrastructure.Services
 {
     public class OrderService
-        : BaseOrderService<Order, int>,
+        : BaseService<Order, int>,
             IOrderService
     {
         public OrderService(

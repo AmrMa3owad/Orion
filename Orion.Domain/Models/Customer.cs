@@ -2,7 +2,7 @@
 
 namespace Orion.Domain.Models
 {
-    public class Customer : BaseUser<int>
+    public class Customer : BaseEntity<int>
     {
         public Customer()
         {
@@ -10,10 +10,11 @@ namespace Orion.Domain.Models
             CustomerAdvertisements = new HashSet<CustomerAdvertisement>();
             Events = new HashSet<Event>();
             Feedbacks = new HashSet<Feedback>();
+            UserCustomers = new HashSet<UserCustomer>();
         }
-        public int DonationId { get; set; }
-        public int PaymentId { get; set; }
-        public int OrderId { get; set; }
+        public int? DonationId { get; set; }
+        public int? PaymentId { get; set; }
+        public int? OrderId { get; set; }
         public int WebsiteId { get; set; }
 
         public virtual Donation Donation { get; set; }       
@@ -24,5 +25,7 @@ namespace Orion.Domain.Models
         public virtual ICollection<CustomerProduct> CustomerProducts { get; set; }
         public virtual ICollection<CustomerAdvertisement> CustomerAdvertisements { get; set; }
         public virtual ICollection<Event> Events { get; set; }
+        public virtual ICollection<UserCustomer> UserCustomers { get; set; }
+
     }
 }

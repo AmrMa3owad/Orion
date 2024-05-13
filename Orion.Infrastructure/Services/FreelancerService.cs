@@ -5,7 +5,7 @@ using Orion.Infrastructure.Common;
 namespace Orion.Infrastructure.Services
 {
     public class FreelancerService
-        : BaseUserService<Freelancer, int>,
+        : BaseService<Freelancer, int>,
             IFreelancerService
     {
         public FreelancerService(
