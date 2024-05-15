@@ -36,7 +36,7 @@ namespace Orion.Infrastructure.Common
         public async Task<bool> Delete(T entity)
         {
             entity.Deleted = true;
-            Context.Update(entity);
+            Context.Remove(entity);
             if (SaveChanges())
             {
                 return true;

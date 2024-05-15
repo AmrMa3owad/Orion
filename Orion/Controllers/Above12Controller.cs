@@ -1,10 +1,10 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Orion.Context;
+using Orion.Common;
 using Orion.Domain.Models;
-using Orion.Handlers;
 using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
@@ -30,47 +30,69 @@ namespace Orion.Controllers
             return bookings;
         }
 
-        //[HttpPost]
-        //public IActionResult Create(Above12 above12)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Above12s.Add(above12);
-        //        _context.SaveChanges();
-        //        return Ok(above12);
-        //    }
-        //    return BadRequest(ModelState);
-        //}
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Above12>> Get(int id)
+        {
+            ApiResponse<Above12> response = new ApiResponse<Above12>();
+            Above12 above12 = await _above12Service
+                .Get(id, new CancellationToken());
 
-        //[HttpPut("{id}")]
-        //public IActionResult Edit(int id, Above12 above12)
-        //{
-        //    if (id != above12.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+            if (above12 != null)
+            {
+                response.Data = above12;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Update(above12);
-        //        _context.SaveChanges();
-        //        return NoContent();
-        //    }
-        //    return BadRequest(ModelState);
-        //}
+            return response;
+        }
 
-        //[HttpDelete("{id}")]
-        //public IActionResult Delete(int id)
-        //{
-        //    var above12 = _context.Above12s.Find(id);
-        //    if (above12 == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        public async Task<ApiResponse<Above12>> Create(Above12 model)
+        {
+            ApiResponse<Above12> response = new ApiResponse<Above12>();
 
-        //    _context.Above12s.Remove(above12);
-        //    _context.SaveChanges();
-        //    return NoContent();
-        //}
+            model = await _above12Service.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
+            }
+
+            return response;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ApiResponse<bool>> Delete(int id)
+        {
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
+            {
+                Above12 entity = await _above12Service
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _above12Service.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
+        }
     }
 }
