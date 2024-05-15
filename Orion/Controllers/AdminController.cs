@@ -1,7 +1,10 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
@@ -11,60 +14,86 @@ namespace Orion.Controllers
 
     public class AdminController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IAdminService _adminService;
 
-        public AdminController(AppDbContext context)
+        public AdminController(IAdminService adminService)
         {
-            _context = context;
+            _adminService = adminService;
         }
 
         [HttpGet]
-        public IEnumerable<Admin> Get()
+        public async Task<List<Admin>> Get()
         {
-            return _context.Admins.ToList();
+            List<Admin> bookings = await _adminService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Admin>> Get(int id)
+        {
+            ApiResponse<Admin> response = new ApiResponse<Admin>();
+            Admin admin = await _adminService
+                .Get(id, new CancellationToken());
+
+            if (admin != null)
+            {
+                response.Data = admin;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Admin admin)
+        public async Task<ApiResponse<Admin>> Create(Admin model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Admins.Add(admin);
-                _context.SaveChanges();
-                return Ok(admin);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Admin> response = new ApiResponse<Admin>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Admin admin)
-        {
-            if (id != admin.Id)
+            model = await _adminService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(admin);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
+
         {
-            var admin = _context.Admins.Find(id);
-            if (admin == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Admin entity = await _adminService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _adminService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Admins.Remove(admin);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }
