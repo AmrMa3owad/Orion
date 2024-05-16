@@ -1,9 +1,11 @@
-﻿namespace Orion.Handlers
-{
-    public interface ITokenHandler
-    {
-        //public string GenerateJSONWebToken(UserDTO userInfo
-        //    , List<string> roleNames = null
-        //    , List<string> permissions = null);
-    }
-}
+﻿//using Orion.Domain.Models;
+
+//namespace Orion.Handlers
+//{
+//    public interface ITokenHandler
+//    {
+//        public string GenerateJSONWebToken(User userInfo
+//            , List<string> roleNames = null
+//            , List<string> permissions = null);
+//    }
+//}

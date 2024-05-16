@@ -7,7 +7,7 @@ namespace Orion.Extensions
         public static void ConfigureWebApi(this IServiceCollection services,IConfiguration configuration)
         {
             services.AddSingleton<IConfiguration>(configuration);
-            services.AddScoped<ITokenHandler, TokenHandler>();
+            //services.AddScoped<ITokenHandler, TokenHandler>();
         }
     }
 }
