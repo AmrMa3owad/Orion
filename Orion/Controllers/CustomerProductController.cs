@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class CustomerProductController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ICustomerProductService _customerProductService;
 
-        public CustomerProductController(AppDbContext context)
+        public CustomerProductController(ICustomerProductService customerProductService)
         {
-            _context = context;
+            _customerProductService = customerProductService;
         }
 
         [HttpGet]
-        public IEnumerable<CustomerProduct> Get()
+        public async Task<List<CustomerProduct>> Get()
         {
-            return _context.CustomerProducts.ToList();
+            List<CustomerProduct> bookings = await _customerProductService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<CustomerProduct>> Get(int id)
+        {
+            ApiResponse<CustomerProduct> response = new ApiResponse<CustomerProduct>();
+            CustomerProduct customerProduct = await _customerProductService
+                .Get(id, new CancellationToken());
+
+            if (customerProduct != null)
+            {
+                response.Data = customerProduct;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(CustomerProduct CustomerProduct)
+        public async Task<ApiResponse<CustomerProduct>> Create(CustomerProduct model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.CustomerProducts.Add(CustomerProduct);
-                _context.SaveChanges();
-                return Ok(CustomerProduct);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<CustomerProduct> response = new ApiResponse<CustomerProduct>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, CustomerProduct CustomerProduct)
-        {
-            if (id != CustomerProduct.Id)
+            model = await _customerProductService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(CustomerProduct);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var CustomerProduct = _context.CustomerProducts.Find(id);
-            if (CustomerProduct == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                CustomerProduct entity = await _customerProductService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _customerProductService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.CustomerProducts.Remove(CustomerProduct);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

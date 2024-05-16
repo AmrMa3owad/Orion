@@ -1,70 +1,98 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]
 
     public class AdvertisementController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IAdvertisementService _advertisementService;
 
-        public AdvertisementController(AppDbContext context)
+        public AdvertisementController(IAdvertisementService advertisementService)
         {
-            _context = context;
+            _advertisementService = advertisementService;
         }
 
         [HttpGet]
-        public IEnumerable<Advertisement> Get()
+        public async Task<List<Advertisement>> Get()
         {
-            return _context.Advertisements.ToList();
+            List<Advertisement> bookings = await _advertisementService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Advertisement>> Get(int id)
+        {
+            ApiResponse<Advertisement> response = new ApiResponse<Advertisement>();
+            Advertisement advertisement = await _advertisementService
+                .Get(id, new CancellationToken());
+
+            if (advertisement != null)
+            {
+                response.Data = advertisement;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Advertisement advertisement)
+        public async Task<ApiResponse<Advertisement>> Create(Advertisement model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Advertisements.Add(advertisement);
-                _context.SaveChanges();
-                return Ok(advertisement);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Advertisement> response = new ApiResponse<Advertisement>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Advertisement advertisement)
-        {
-            if (id != advertisement.Id)
+            model = await _advertisementService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(advertisement);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var advertisement = _context.Advertisements.Find(id);
-            if (advertisement == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Advertisement entity = await _advertisementService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _advertisementService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Advertisements.Remove(advertisement);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

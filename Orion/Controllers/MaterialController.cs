@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class MaterialController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IMaterialService _materialService;
 
-        public MaterialController(AppDbContext context)
+        public MaterialController(IMaterialService materialService)
         {
-            _context = context;
+            _materialService = materialService;
         }
 
         [HttpGet]
-        public IEnumerable<Material> Get()
+        public async Task<List<Material>> Get()
         {
-            return _context.Materials.ToList();
+            List<Material> bookings = await _materialService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Material>> Get(int id)
+        {
+            ApiResponse<Material> response = new ApiResponse<Material>();
+            Material material = await _materialService
+                .Get(id, new CancellationToken());
+
+            if (material != null)
+            {
+                response.Data = material;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Material Material)
+        public async Task<ApiResponse<Material>> Create(Material model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Materials.Add(Material);
-                _context.SaveChanges();
-                return Ok(Material);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Material> response = new ApiResponse<Material>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Material Material)
-        {
-            if (id != Material.Id)
+            model = await _materialService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Material);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
-        
+
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Material = _context.Materials.Find(id);
-            if (Material == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Material entity = await _materialService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _materialService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Materials.Remove(Material);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class DeliveryController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IDeliveryService _deliveryService;
 
-        public DeliveryController(AppDbContext context)
+        public DeliveryController(IDeliveryService deliveryService)
         {
-            _context = context;
+            _deliveryService = deliveryService;
         }
 
         [HttpGet]
-        public IEnumerable<Delivery> Get()
+        public async Task<List<Delivery>> Get()
         {
-            return _context.Deliveries.ToList();
+            List<Delivery> bookings = await _deliveryService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Delivery>> Get(int id)
+        {
+            ApiResponse<Delivery> response = new ApiResponse<Delivery>();
+            Delivery delivery = await _deliveryService
+                .Get(id, new CancellationToken());
+
+            if (delivery != null)
+            {
+                response.Data = delivery;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Delivery Delivery)
+        public async Task<ApiResponse<Delivery>> Create(Delivery model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Deliveries.Add(Delivery);
-                _context.SaveChanges();
-                return Ok(Delivery);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Delivery> response = new ApiResponse<Delivery>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Delivery Delivery)
-        {
-            if (id != Delivery.Id)
+            model = await _deliveryService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Delivery);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Delivery = _context.Deliveries.Find(id);
-            if (Delivery == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Delivery entity = await _deliveryService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _deliveryService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Deliveries.Remove(Delivery);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class BoothController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IBoothService _boothService;
 
-        public BoothController(AppDbContext context)
+        public BoothController(IBoothService boothService)
         {
-            _context = context;
+            _boothService = boothService;
         }
 
         [HttpGet]
-        public IEnumerable<Booth> Get()
+        public async Task<List<Booth>> Get()
         {
-            return _context.Booths.ToList();
+            List<Booth> bookings = await _boothService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Booth>> Get(int id)
+        {
+            ApiResponse<Booth> response = new ApiResponse<Booth>();
+            Booth booth = await _boothService
+                .Get(id, new CancellationToken());
+
+            if (booth != null)
+            {
+                response.Data = booth;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Booth Booth)
+        public async Task<ApiResponse<Booth>> Create(Booth model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Booths.Add(Booth);
-                _context.SaveChanges();
-                return Ok(Booth);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Booth> response = new ApiResponse<Booth>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Booth Booth)
-        {
-            if (id != Booth.Id)
+            model = await _boothService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Booth);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Booth = _context.Booths.Find(id);
-            if (Booth == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Booth entity = await _boothService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _boothService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Booths.Remove(Booth);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

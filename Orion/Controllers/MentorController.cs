@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class MentorController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IMentorService _mentorService;
 
-        public MentorController(AppDbContext context)
+        public MentorController(IMentorService mentorService)
         {
-            _context = context;
+            _mentorService = mentorService;
         }
 
         [HttpGet]
-        public IEnumerable<Mentor> Get()
+        public async Task<List<Mentor>> Get()
         {
-            return _context.Mentors.ToList();
+            List<Mentor> bookings = await _mentorService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Mentor>> Get(int id)
+        {
+            ApiResponse<Mentor> response = new ApiResponse<Mentor>();
+            Mentor mentor = await _mentorService
+                .Get(id, new CancellationToken());
+
+            if (mentor != null)
+            {
+                response.Data = mentor;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Mentor Mentor)
+        public async Task<ApiResponse<Mentor>> Create(Mentor model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Mentors.Add(Mentor);
-                _context.SaveChanges();
-                return Ok(Mentor);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Mentor> response = new ApiResponse<Mentor>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Mentor Mentor)
-        {
-            if (id != Mentor.Id)
+            model = await _mentorService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Mentor);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Mentor = _context.Mentors.Find(id);
-            if (Mentor == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Mentor entity = await _mentorService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _mentorService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Mentors.Remove(Mentor);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

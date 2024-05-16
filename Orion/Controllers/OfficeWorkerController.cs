@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class OfficeWorkerController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IOfficeWorkerService _officeWorkerService;
 
-        public OfficeWorkerController(AppDbContext context)
+        public OfficeWorkerController(IOfficeWorkerService officeWorkerService)
         {
-            _context = context;
+            _officeWorkerService = officeWorkerService;
         }
 
         [HttpGet]
-        public IEnumerable<OfficeWorker> Get()
+        public async Task<List<OfficeWorker>> Get()
         {
-            return _context.OfficeWorkers.ToList();
+            List<OfficeWorker> bookings = await _officeWorkerService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<OfficeWorker>> Get(int id)
+        {
+            ApiResponse<OfficeWorker> response = new ApiResponse<OfficeWorker>();
+            OfficeWorker officeWorker = await _officeWorkerService
+                .Get(id, new CancellationToken());
+
+            if (officeWorker != null)
+            {
+                response.Data = officeWorker;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(OfficeWorker OfficeWorker)
+        public async Task<ApiResponse<OfficeWorker>> Create(OfficeWorker model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.OfficeWorkers.Add(OfficeWorker);
-                _context.SaveChanges();
-                return Ok(OfficeWorker);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<OfficeWorker> response = new ApiResponse<OfficeWorker>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, OfficeWorker OfficeWorker)
-        {
-            if (id != OfficeWorker.Id)
+            model = await _officeWorkerService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(OfficeWorker);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var OfficeWorker = _context.OfficeWorkers.Find(id);
-            if (OfficeWorker == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                OfficeWorker entity = await _officeWorkerService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _officeWorkerService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.OfficeWorkers.Remove(OfficeWorker);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

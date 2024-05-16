@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class EventController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IEventService _eventService;
 
-        public EventController(AppDbContext context)
+        public EventController(IEventService eventService)
         {
-            _context = context;
+            _eventService = eventService;
         }
 
         [HttpGet]
-        public IEnumerable<Event> Get()
+        public async Task<List<Event>> Get()
         {
-            return _context.Events.ToList();
+            List<Event> bookings = await _eventService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Event>> Get(int id)
+        {
+            ApiResponse<Event> response = new ApiResponse<Event>();
+            Event @event = await _eventService
+                .Get(id, new CancellationToken());
+
+            if (@event != null)
+            {
+                response.Data = @event;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Event Event)
+        public async Task<ApiResponse<Event>> Create(Event model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Events.Add(Event);
-                _context.SaveChanges();
-                return Ok(Event);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Event> response = new ApiResponse<Event>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Event Event)
-        {
-            if (id != Event.Id)
+            model = await _eventService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Event);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Event = _context.Events.Find(id);
-            if (Event == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Event entity = await _eventService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _eventService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Events.Remove(Event);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class FeedbackController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IFeedbackService _feedbackService;
 
-        public FeedbackController(AppDbContext context)
+        public FeedbackController(IFeedbackService feedbackService)
         {
-            _context = context;
+            _feedbackService = feedbackService;
         }
 
         [HttpGet]
-        public IEnumerable<Feedback> Get()
+        public async Task<List<Feedback>> Get()
         {
-            return _context.Feedbacks.ToList();
+            List<Feedback> bookings = await _feedbackService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Feedback>> Get(int id)
+        {
+            ApiResponse<Feedback> response = new ApiResponse<Feedback>();
+            Feedback feedback = await _feedbackService
+                .Get(id, new CancellationToken());
+
+            if (feedback != null)
+            {
+                response.Data = feedback;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Feedback Feedback)
+        public async Task<ApiResponse<Feedback>> Create(Feedback model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Feedbacks.Add(Feedback);
-                _context.SaveChanges();
-                return Ok(Feedback);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Feedback> response = new ApiResponse<Feedback>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Feedback Feedback)
-        {
-            if (id != Feedback.Id)
+            model = await _feedbackService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Feedback);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Feedback = _context.Feedbacks.Find(id);
-            if (Feedback == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Feedback entity = await _feedbackService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _feedbackService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Feedbacks.Remove(Feedback);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

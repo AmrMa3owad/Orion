@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class EmployeeController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IEmployeeService _employeeService;
 
-        public EmployeeController(AppDbContext context)
+        public EmployeeController(IEmployeeService employeeService)
         {
-            _context = context;
+            _employeeService = employeeService;
         }
 
         [HttpGet]
-        public IEnumerable<Employee> Get()
+        public async Task<List<Employee>> Get()
         {
-            return _context.Employees.ToList();
+            List<Employee> bookings = await _employeeService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Employee>> Get(int id)
+        {
+            ApiResponse<Employee> response = new ApiResponse<Employee>();
+            Employee employee = await _employeeService
+                .Get(id, new CancellationToken());
+
+            if (employee != null)
+            {
+                response.Data = employee;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Employee Employee)
+        public async Task<ApiResponse<Employee>> Create(Employee model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Employees.Add(Employee);
-                _context.SaveChanges();
-                return Ok(Employee);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Employee> response = new ApiResponse<Employee>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Employee Employee)
-        {
-            if (id != Employee.Id)
+            model = await _employeeService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Employee);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Employee = _context.Employees.Find(id);
-            if (Employee == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Employee entity = await _employeeService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _employeeService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Employees.Remove(Employee);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

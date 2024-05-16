@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class DonationController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IDonationService _donationService;
 
-        public DonationController(AppDbContext context)
+        public DonationController(IDonationService donationService)
         {
-            _context = context;
+            _donationService = _donationService;
         }
 
         [HttpGet]
-        public IEnumerable<Donation> Get()
+        public async Task<List<Donation>> Get()
         {
-            return _context.Donations.ToList();
+            List<Donation> bookings = await _donationService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Donation>> Get(int id)
+        {
+            ApiResponse<Donation> response = new ApiResponse<Donation>();
+            Donation donation = await _donationService
+                .Get(id, new CancellationToken());
+
+            if (donation != null)
+            {
+                response.Data = donation;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Donation Donation)
+        public async Task<ApiResponse<Donation>> Create(Donation model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Donations.Add(Donation);
-                _context.SaveChanges();
-                return Ok(Donation);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Donation> response = new ApiResponse<Donation>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Donation Donation)
-        {
-            if (id != Donation.Id)
+            model = await _donationService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Donation);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Donation = _context.Donations.Find(id);
-            if (Donation == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Donation entity = await _donationService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _donationService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Donations.Remove(Donation);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

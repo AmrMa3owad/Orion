@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class DeliveryOrderController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IDeliveryOrderService _deliveryOrderService;
 
-        public DeliveryOrderController(AppDbContext context)
+        public DeliveryOrderController(IDeliveryOrderService deliveryOrderService)
         {
-            _context = context;
+            _deliveryOrderService = deliveryOrderService;
         }
 
         [HttpGet]
-        public IEnumerable<DeliveryOrder> Get()
+        public async Task<List<DeliveryOrder>> Get()
         {
-            return _context.DeliveryOrders.ToList();
+            List<DeliveryOrder> bookings = await _deliveryOrderService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<DeliveryOrder>> Get(int id)
+        {
+            ApiResponse<DeliveryOrder> response = new ApiResponse<DeliveryOrder>();
+            DeliveryOrder deliveryOrder = await _deliveryOrderService
+                .Get(id, new CancellationToken());
+
+            if (deliveryOrder != null)
+            {
+                response.Data = deliveryOrder;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(DeliveryOrder DeliveryOrder)
+        public async Task<ApiResponse<DeliveryOrder>> Create(DeliveryOrder model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.DeliveryOrders.Add(DeliveryOrder);
-                _context.SaveChanges();
-                return Ok(DeliveryOrder);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<DeliveryOrder> response = new ApiResponse<DeliveryOrder>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, DeliveryOrder DeliveryOrder)
-        {
-            if (id != DeliveryOrder.Id)
+            model = await _deliveryOrderService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(DeliveryOrder);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var DeliveryOrder = _context.DeliveryOrders.Find(id);
-            if (DeliveryOrder == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                DeliveryOrder entity = await _deliveryOrderService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _deliveryOrderService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.DeliveryOrders.Remove(DeliveryOrder);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

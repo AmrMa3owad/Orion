@@ -1,68 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class SponsorController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly ISponsorService _sponsorService;
 
-        public SponsorController(AppDbContext context)
+        public SponsorController(ISponsorService sponsorService)
         {
-            _context = context;
+            _sponsorService = sponsorService;
         }
 
         [HttpGet]
-        public IEnumerable<Sponsor> Get()
+        public async Task<List<Sponsor>> Get()
         {
-            return _context.Sponsors.ToList();
+            List<Sponsor> bookings = await _sponsorService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Sponsor>> Get(int id)
+        {
+            ApiResponse<Sponsor> response = new ApiResponse<Sponsor>();
+            Sponsor sponsor = await _sponsorService
+                .Get(id, new CancellationToken());
+
+            if (sponsor != null)
+            {
+                response.Data = sponsor;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Sponsor Sponsor)
+        public async Task<ApiResponse<Sponsor>> Create(Sponsor model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Sponsors.Add(Sponsor);
-                _context.SaveChanges();
-                return Ok(Sponsor);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Sponsor> response = new ApiResponse<Sponsor>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Sponsor Sponsor)
-        {
-            if (id != Sponsor.Id)
+            model = await _sponsorService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Sponsor);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Sponsor = _context.Sponsors.Find(id);
-            if (Sponsor == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Sponsor entity = await _sponsorService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _sponsorService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Sponsors.Remove(Sponsor);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }
-

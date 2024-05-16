@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class VendorController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IVendorService _vendorService;
 
-        public VendorController(AppDbContext context)
+        public VendorController(IVendorService vendorService)
         {
-            _context = context;
+            _vendorService = vendorService;
         }
 
         [HttpGet]
-        public IEnumerable<Vendor> Get()
+        public async Task<List<Vendor>> Get()
         {
-            return _context.Vendors.ToList();
+            List<Vendor> bookings = await _vendorService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Vendor>> Get(int id)
+        {
+            ApiResponse<Vendor> response = new ApiResponse<Vendor>();
+            Vendor vendor = await _vendorService
+                .Get(id, new CancellationToken());
+
+            if (vendor != null)
+            {
+                response.Data = vendor;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Vendor Vendor)
+        public async Task<ApiResponse<Vendor>> Create(Vendor model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Vendors.Add(Vendor);
-                _context.SaveChanges();
-                return Ok(Vendor);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Vendor> response = new ApiResponse<Vendor>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Vendor Vendor)
-        {
-            if (id != Vendor.Id)
+            model = await _vendorService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Vendor);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Vendor = _context.Vendors.Find(id);
-            if (Vendor == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Vendor entity = await _vendorService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _vendorService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Vendors.Remove(Vendor);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

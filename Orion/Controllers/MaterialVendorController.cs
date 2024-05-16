@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class MaterialVendorController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IMaterialVendorService _materialVendorService;
 
-        public MaterialVendorController(AppDbContext context)
+        public MaterialVendorController(IMaterialVendorService materialVendorService)
         {
-            _context = context;
+            _materialVendorService = materialVendorService;
         }
 
         [HttpGet]
-        public IEnumerable<MaterialVendor> Get()
+        public async Task<List<MaterialVendor>> Get()
         {
-            return _context.MaterialVendors.ToList();
+            List<MaterialVendor> bookings = await _materialVendorService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<MaterialVendor>> Get(int id)
+        {
+            ApiResponse<MaterialVendor> response = new ApiResponse<MaterialVendor>();
+            MaterialVendor materialVendor = await _materialVendorService
+                .Get(id, new CancellationToken());
+
+            if (materialVendor != null)
+            {
+                response.Data = materialVendor;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(MaterialVendor MaterialVendor)
+        public async Task<ApiResponse<MaterialVendor>> Create(MaterialVendor model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.MaterialVendors.Add(MaterialVendor);
-                _context.SaveChanges();
-                return Ok(MaterialVendor);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<MaterialVendor> response = new ApiResponse<MaterialVendor>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, MaterialVendor MaterialVendor)
-        {
-            if (id != MaterialVendor.Id)
+            model = await _materialVendorService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(MaterialVendor);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var MaterialVendor = _context.MaterialVendors.Find(id);
-            if (MaterialVendor == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                MaterialVendor entity = await _materialVendorService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _materialVendorService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.MaterialVendors.Remove(MaterialVendor);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

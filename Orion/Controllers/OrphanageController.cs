@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class OrphanageController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IOrphanageService _orphanageService;
 
-        public OrphanageController(AppDbContext context)
+        public OrphanageController(IOrphanageService orphanageService)
         {
-            _context = context;
+            _orphanageService = orphanageService;
         }
 
         [HttpGet]
-        public IEnumerable<Orphanage> Get()
+        public async Task<List<Orphanage>> Get()
         {
-            return _context.Orphanages.ToList();
+            List<Orphanage> bookings = await _orphanageService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Orphanage>> Get(int id)
+        {
+            ApiResponse<Orphanage> response = new ApiResponse<Orphanage>();
+            Orphanage orphanage = await _orphanageService
+                .Get(id, new CancellationToken());
+
+            if (orphanage != null)
+            {
+                response.Data = orphanage;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Orphanage Orphanage)
+        public async Task<ApiResponse<Orphanage>> Create(Orphanage model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Orphanages.Add(Orphanage);
-                _context.SaveChanges();
-                return Ok(Orphanage);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Orphanage> response = new ApiResponse<Orphanage>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Orphanage Orphanage)
-        {
-            if (id != Orphanage.Id)
+            model = await _orphanageService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Orphanage);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Orphanage = _context.Orphanages.Find(id);
-            if (Orphanage == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Orphanage entity = await _orphanageService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _orphanageService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Orphanages.Remove(Orphanage);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

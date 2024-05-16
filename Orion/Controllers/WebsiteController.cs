@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class WebsiteController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IWebsiteService _websiteService;
 
-        public WebsiteController(AppDbContext context)
+        public WebsiteController(IWebsiteService websiteService)
         {
-            _context = context;
+            _websiteService = websiteService;
         }
 
         [HttpGet]
-        public IEnumerable<Website> Get()
+        public async Task<List<Website>> Get()
         {
-            return _context.Websites.ToList();
+            List<Website> bookings = await _websiteService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Website>> Get(int id)
+        {
+            ApiResponse<Website> response = new ApiResponse<Website>();
+            Website website = await _websiteService
+                .Get(id, new CancellationToken());
+
+            if (website != null)
+            {
+                response.Data = website;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Website website)
+        public async Task<ApiResponse<Website>> Create(Website model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Websites.Add(website);
-                _context.SaveChanges();
-                return Ok(website);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Website> response = new ApiResponse<Website>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Website website)
-        {
-            if (id != website.Id)
+            model = await _websiteService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(website);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var website = _context.Websites.Find(id);
-            if (website == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Website entity = await _websiteService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _websiteService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Websites.Remove(website);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

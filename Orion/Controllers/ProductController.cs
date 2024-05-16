@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class ProductController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IProductService _productService;
 
-        public ProductController(AppDbContext context)
+        public ProductController(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public async Task<List<Product>> Get()
         {
-            return _context.Products.ToList();
+            List<Product> bookings = await _productService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<Product>> Get(int id)
+        {
+            ApiResponse<Product> response = new ApiResponse<Product>();
+            Product product = await _productService
+                .Get(id, new CancellationToken());
+
+            if (product != null)
+            {
+                response.Data = product;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(Product Product)
+        public async Task<ApiResponse<Product>> Create(Product model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Products.Add(Product);
-                _context.SaveChanges();
-                return Ok(Product);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<Product> response = new ApiResponse<Product>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, Product Product)
-        {
-            if (id != Product.Id)
+            model = await _productService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(Product);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var Product = _context.Products.Find(id);
-            if (Product == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                Product entity = await _productService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _productService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.Products.Remove(Product);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }

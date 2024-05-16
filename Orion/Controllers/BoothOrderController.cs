@@ -1,67 +1,98 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Orion.Context;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Orion.Common;
 using Orion.Domain.Models;
+using Orion.Infrastructure.Services;
+using Orion.Shared.Exceptions;
 
 namespace Orion.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
+
     public class BoothOrderController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IBoothOrderService _boothOrderService;
 
-        public BoothOrderController(AppDbContext context)
+        public BoothOrderController(IBoothOrderService boothOrderService)
         {
-            _context = context;
+            _boothOrderService = boothOrderService;
         }
 
         [HttpGet]
-        public IEnumerable<BoothOrder> Get()
+        public async Task<List<BoothOrder>> Get()
         {
-            return _context.BoothOrders.ToList();
+            List<BoothOrder> bookings = await _boothOrderService
+                .GetAll(new CancellationToken()).ToListAsync();
+
+            return bookings;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ApiResponse<BoothOrder>> Get(int id)
+        {
+            ApiResponse<BoothOrder> response = new ApiResponse<BoothOrder>();
+            BoothOrder boothOrder = await _boothOrderService
+                .Get(id, new CancellationToken());
+
+            if (boothOrder != null)
+            {
+                response.Data = boothOrder;
+            }
+            else
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
+            }
+
+            return response;
         }
 
         [HttpPost]
-        public IActionResult Create(BoothOrder BoothOrder)
+        public async Task<ApiResponse<BoothOrder>> Create(BoothOrder model)
         {
-            if (ModelState.IsValid)
-            {
-                _context.BoothOrders.Add(BoothOrder);
-                _context.SaveChanges();
-                return Ok(BoothOrder);
-            }
-            return BadRequest(ModelState);
-        }
+            ApiResponse<BoothOrder> response = new ApiResponse<BoothOrder>();
 
-        [HttpPut("{id}")]
-        public IActionResult Edit(int id, BoothOrder BoothOrder)
-        {
-            if (id != BoothOrder.Id)
+            model = await _boothOrderService.Create(model);
+
+            response.Data = model;
+
+            if (response.Data == null)
             {
-                return BadRequest();
+                response.ErrorCode = Shared.Enums.ErrorCodes.CreateFailed;
             }
 
-            if (ModelState.IsValid)
-            {
-                _context.Update(BoothOrder);
-                _context.SaveChanges();
-                return NoContent();
-            }
-            return BadRequest(ModelState);
+            return response;
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<ApiResponse<bool>> Delete(int id)
         {
-            var BoothOrder = _context.BoothOrders.Find(id);
-            if (BoothOrder == null)
+            ApiResponse<bool> response = new ApiResponse<bool>();
+
+            try
             {
-                return NotFound();
+                BoothOrder entity = await _boothOrderService
+                    .Get(id, new CancellationToken());
+
+                bool deleted = await _boothOrderService.Delete(entity);
+
+                if (deleted)
+                {
+                    response.Data = deleted;
+                }
+                else
+                {
+                    response.ErrorCode = Shared.Enums.ErrorCodes.DeleteFailed;
+                }
+            }
+            catch (NotFoundException)
+            {
+                response.ErrorCode = Shared.Enums.ErrorCodes.NotFound;
             }
 
-            _context.BoothOrders.Remove(BoothOrder);
-            _context.SaveChanges();
-            return NoContent();
+            return response;
         }
     }
 }
