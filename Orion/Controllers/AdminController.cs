@@ -34,7 +34,7 @@ namespace Orion.Controllers
         public async Task<ApiResponse<Admin>> Get(int id)
         {
             ApiResponse<Admin> response = new ApiResponse<Admin>();
-            Admin admin = await _adminService
+            Admin? admin = await _adminService
                 .Get(id, new CancellationToken());
 
             if (admin != null)
@@ -74,7 +74,7 @@ namespace Orion.Controllers
 
             try
             {
-                Admin entity = await _adminService
+                Admin? entity = await _adminService
                     .Get(id, new CancellationToken());
 
                 bool deleted = await _adminService.Delete(entity);

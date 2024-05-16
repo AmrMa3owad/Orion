@@ -34,7 +34,7 @@ namespace Orion.Controllers
         public async Task<ApiResponse<Above12>> Get(int id)
         {
             ApiResponse<Above12> response = new ApiResponse<Above12>();
-            Above12 above12 = await _above12Service
+            Above12? above12 = await _above12Service
                 .Get(id, new CancellationToken());
 
             if (above12 != null)
@@ -73,7 +73,7 @@ namespace Orion.Controllers
 
             try
             {
-                Above12 entity = await _above12Service
+                Above12? entity = await _above12Service
                     .Get(id, new CancellationToken());
 
                 bool deleted = await _above12Service.Delete(entity);
