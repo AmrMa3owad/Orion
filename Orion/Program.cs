@@ -1,7 +1,7 @@
-using Doablelink.FSM.WebApi.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Orion.Context;
+using Orion.Domain.Models;
 using Orion.Extensions;
 using Orion.Infrastructure.Extentions;
 
@@ -13,7 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OrionDB")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureMapper();
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
 builder.Services.ConfigureHttpContext();
 builder.Services.ConfigureInfrastructure();
 builder.Services.ConfigureApiVersions();
@@ -42,9 +42,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.UseSwagger();
-
 
 app.UseSwaggerUI(c =>
 {
