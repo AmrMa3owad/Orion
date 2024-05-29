@@ -6,9 +6,9 @@ namespace Orion.Domain.Models
     {
         public PreCommunity()
         {
-            PremiumUsers = new HashSet<PremiumUser>();
+            Customers = new HashSet<Customer>();
         }
 
-        public virtual ICollection<PremiumUser> PremiumUsers { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

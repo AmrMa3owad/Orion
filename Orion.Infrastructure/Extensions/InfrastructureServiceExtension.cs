@@ -33,7 +33,6 @@ namespace Orion.Infrastructure.Extentions
             services.AddScoped<IOrphanageService, OrphanageService>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IPreCommunityService, PreCommunityService>();
-            services.AddScoped<IPremiumUserService, PremiumUserService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ISponsorService, SponsorService>();
             services.AddScoped<ISponsorAdvertisementService, SponsorAdvertisementService>();

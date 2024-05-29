@@ -12,7 +12,6 @@ namespace Orion.Domain.Models
         public int UserId { get; set; }
         public int PremiumUserId { get; set; }
 
-        public virtual PremiumUser PremiumUser { get; set; }
         public virtual User User { get; set; }
     }
 }

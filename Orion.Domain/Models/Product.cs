@@ -9,7 +9,7 @@ namespace Orion.Domain.Models
             CustomerProducts = new HashSet<CustomerProduct>();
         }
         public string ProductName { get; set; }
-        public string ProductImage { get; set; }
+        public byte[] ProductImage { get; set; }
         public string ProductColor { get; set; }
         public int ProductNumber { get; set; }
         public string ProductType { get; set; }

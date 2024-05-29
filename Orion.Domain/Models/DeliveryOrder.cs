@@ -2,9 +2,10 @@
 
 namespace Orion.Domain.Models
 {
-    public class DeliveryOrder : BaseEntity<int> //Bridge
+    public class DeliveryOrder : BaseEntity<int>
     {
         public double ShippingFees { get; set; }
+        public int Place { get; set; }
         public int DeliveryId { get; set; }
         public int OrderId { get; set; }
 

@@ -35,7 +35,6 @@ namespace Orion.Context
         public DbSet<Orphanage> Orphanages { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PreCommunity> PreCommunities { get; set; }
-        public DbSet<PremiumUser> PremiumUsers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Sponsor> Sponsors { get; set; }
         public DbSet<SponsorAdvertisement> SponsorAdvertisements { get; set; }

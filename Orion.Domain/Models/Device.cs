@@ -6,7 +6,7 @@ namespace Orion.Domain.Models
     {
         public string DeviceType { get; set; }
         public string DeviceDateOfPurchase { get; set; }
-        public DateTime MaintenanceDate { get; set; }
+        public string MaintenanceDate { get; set; }
         public int MaintenancePrice { get; set; }
         public int AdminId { get; set; }
         public int OfficeWorkerId { get; set; }

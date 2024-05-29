@@ -10,7 +10,7 @@ namespace Orion.Domain.Models
             Sponsors = new HashSet<Sponsor>();
             Customers = new HashSet<Customer>();
         }
-        public DateTime EventDate { get; set; }
+        public string EventDate { get; set; }
         public string EventTitle { get; set; }
         public string EventPlace { get; set; }
         public int BoothId { get; set; }

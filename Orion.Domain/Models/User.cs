@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Orion.Domain.Models.Common;
+﻿using Orion.Domain.Models.Common;
 
 namespace Orion.Domain.Models
 {
-    public class User : IdentityUser<int>, IBaseIdentity
+    public class User : BaseEntity<int>
     {
         public User()
         {
@@ -21,7 +20,7 @@ namespace Orion.Domain.Models
         public string Password { get; set; }
         public int Phone { get; set; }
         public string Address { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
 
         public virtual ICollection<UserFreelancer> UserFreelancers { get; set; }
         public virtual ICollection<UserMentor> UserMentors { get; set; }
