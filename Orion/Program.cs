@@ -7,10 +7,8 @@ using Orion.Infrastructure.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorPages().AddRazorPagesOptions(options => {
-    options.Conventions.AddPageRoute("/Home", "Index.html");
-}
-    ); builder.Services.AddMvc();
+builder.Services.AddRazorPages();
+builder.Services.AddMvc();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OrionDB")));
 builder.Services.AddEndpointsApiExplorer();
@@ -25,10 +23,10 @@ builder.Services.ConfigureWebApi(builder.Configuration);
 builder.Services.ConfigureMapper();
 builder.Services.ConfigureEmailSender(builder.Configuration);
 
-//builder.Services.AddSwaggerGen(c =>
-//{
-//    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orion", Version = "v1" });
-//});
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orion", Version = "v1" });
+});
 
 var app = builder.Build();
 
@@ -46,13 +44,13 @@ app.UseRouting();
 app.UseAuthorization();
 app.UseAuthentication();
 
-//app.UseSwagger();
+app.UseSwagger();
 
-//app.UseSwaggerUI(c =>
-//{
-//    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Orion v1");
-//    c.RoutePrefix = string.Empty;
-//});
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Orion v1");
+    c.RoutePrefix = string.Empty;
+});
 
 app.MapRazorPages();
 app.MapControllers();
