@@ -8,7 +8,7 @@ using Orion.Infrastructure.Extentions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages().AddRazorPagesOptions(options => {
-    options.Conventions.AddPageRoute("/Test", "Index.html");
+    options.Conventions.AddPageRoute("/Home", "Index.html");
 }
     ); builder.Services.AddMvc();
 builder.Services.AddDbContext<AppDbContext>(options =>
