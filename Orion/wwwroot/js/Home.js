@@ -96,4 +96,4 @@ const sr = ScrollReveal({
     duration: 2500,
     delay: 300,
 })
-sr.reveal((js).Ho4)
+sr.reveal(Ho4)
