@@ -7,10 +7,15 @@ using Orion.Infrastructure.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorPages().AddRazorPagesOptions(options => {
-    options.Conventions.AddPageRoute("/Home", "Index.html");
-}
-    ); builder.Services.AddMvc();
+builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
+{
+    options.Conventions.AddPageRoute("/EndUser/Home", "Index.html");
+    options.Conventions.AddPageRoute("/EndUser/main-products", "main-products.html");
+
+});
+
+builder.Services.AddMvc();
+builder.Services.ConfigureRouter();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OrionDB")));
 builder.Services.AddEndpointsApiExplorer();
