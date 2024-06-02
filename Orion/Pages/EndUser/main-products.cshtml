@@ -6,250 +6,244 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- box icons  -->
-     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-     <!-- styles  -->
-    <link rel="stylesheet" href="css/main-products.css">
-     <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.min.css">
-     <link rel="stylesheet" href="css/layout.css">
-     <title>products</title>
-
+    <!-- box icons -->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- styles -->
+    <link rel="stylesheet" href="~/cssAdmin/main-products.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/fontawesome-free-6.4.0-web/css/all.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/cssEndUser/layout.css" asp-append-version="true">
+    <title>Products</title>
 </head>
 
 <body>
-    
-
-       <!-- header start -->
-  <header class="header">
-    <div class="container">
-        <div class="header-main">
-            <div class="logo">
-               <a href="Home.html"><img src="img/GRAD logo dark.png" width="200px"></a>
-            </div>
-            <div class="open-nav-menu">
-               <span></span>
-            </div>
-            <div class="menu-overlay">
-            </div>
-            <!-- navigation menu start -->
-            <nav class="nav-menu">
-              <div class="close-nav-menu">
-                 <img src="img/close.svg" alt="close">
-              </div>
-              <ul class="menu">
-                 <li class="menu-item menu-item-has-children">
-                    <a href="Home.html" data-toggle="sub-menu">Home </i></a>
-                 </li>
-                 
-                 <li class="menu-item  menu-item-has-children">
-                    <a href="raw.html" data-toggle="sub-menu">Raw materials<i class="plus"></i></a>
-                     <ul class="sub-menu">
-                        <li class="menu-item"><a href="raw.html" class="javanav">Resin</a></li>
-                        <li class="menu-item"><a href="raw.html" class="javanav">Clayart</a></li>
-                        <li class="menu-item"><a href="raw.html" class="javanav">Crochet</a></li>
-                        <li class="menu-item"><a href="raw.html" class="javanav">punch needle</a></li>
-                        <li class="menu-item"><a href="raw.html" class="javanav">Beads</a></li>
- 
-                    </ul> 
-                 </li>
-                 <li class="menu-item menu-item-has-children">
-                    <a href="main-products.html" data-toggle="sub-menu">Products<i class="plus"></i></a>
-                    <ul class="sub-menu">
-                     <li class="menu-item"><a href="main-products.html" class="javanav">Resin</a></li>
-                     <li class="menu-item"><a href="main-products.html" class="javanav">Clayart</a></li>
-                     <li class="menu-item"><a href="main-products.html" class="javanav">Crochet</a></li>
-                     <li class="menu-item"><a href="main-products.html" class="javanav">punch needle</a></li>
-                     <li class="menu-item"><a href="main-products.html" class="javanav">Beads</a></li>
- 
-                 </ul> 
-                 </li>
-                 <li class="menu-item">
-                   <a href="Sign.html">Register</a>
-                </li>
-                 <li class="menu-item">
-                    <a href="#">Donate</a>
-                 </li>
-                 <li class="menu-item">
-                    <a href="feedback.html">Contact us</a>
-                 </li>
-               <li class="menu-item">
-                 <a href="#"> 
-                    <!-- CART ICON  -->
-                    <i class='bx bx-shopping-bag' id="cart-icon"></i>
-        
-                    <!-- CART  -->
-                    <div class="cart">
-                        <h2 class="cart-title">Your Cart</h2>
-        
-                        <!-- CONTENT  -->
-                        <div class="cart-content">
-        
-        
-                        </div>
-        
-                        <!-- TOTAL   -->
-                        <div class="total">
-                            <div class="total-title">Total</div>
-                            <div class="total-price">$0</div>
-                        </div>
-                        <!-- BUY BUTTON  -->
-                        <a href="checkout.html"><button type="button" class="btn-buy">Checkout</button></a>
-                        <!-- CART CLOSE  -->
-                        <i class='bx bx-x' id="cart-close"></i>
+    <!-- header start -->
+    <header class="header">
+        <div class="container">
+            <div class="header-main">
+                <div class="logo">
+                    <a asp-page="/Home"><img src="~/img/GRAD logo dark.png" width="200px" /></a>
+                </div>
+                <div class="open-nav-menu">
+                    <span></span>
+                </div>
+                <div class="menu-overlay"></div>
+                <!-- navigation menu start -->
+                <nav class="nav-menu">
+                    <div class="close-nav-menu">
+                        <img src="~/img/close.svg" alt="close" />
                     </div>
-                </a>
-              </li>
-            </ul>
-          </nav>
-          <!-- navigation menu end -->
-       </div>
-    </div>
- </header>
- <!-- header end -->
-   
-
-
- 
-    <!-- SHOP SECTION  -->
+                    <ul class="menu">
+                        <li class="menu-item menu-item-has-children">
+                            <a asp-page="/Home" data-toggle="sub-menu">Home</a>
+                        </li>
+                        <li class="menu-item menu-item-has-children">
+                            <a asp-page="/RawMaterials" data-toggle="sub-menu">Raw materials<i class="plus"></i></a>
+                            <ul class="sub-menu">
+                                <li class="menu-item"><a asp-page="/RawMaterials/Resin" class="javanav">Resin</a></li>
+                                <li class="menu-item"><a asp-page="/RawMaterials/Clayart" class="javanav">Clayart</a></li>
+                                <li class="menu-item"><a asp-page="/RawMaterials/Crochet" class="javanav">Crochet</a></li>
+                                <li class="menu-item"><a asp-page="/RawMaterials/PunchNeedle" class="javanav">Punch Needle</a></li>
+                                <li class="menu-item"><a asp-page="/RawMaterials/Beads" class="javanav">Beads</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-has-children">
+                            <a asp-page="/Products" data-toggle="sub-menu">Products<i class="plus"></i></a>
+                            <ul class="sub-menu">
+                                <li class="menu-item"><a asp-page="/Products/Resin" class="javanav">Resin</a></li>
+                                <li class="menu-item"><a asp-page="/Products/Clayart" class="javanav">Clayart</a></li>
+                                <li class="menu-item"><a asp-page="/Products/Crochet" class="javanav">Crochet</a></li>
+                                <li class="menu-item"><a asp-page="/Products/PunchNeedle" class="javanav">Punch Needle</a></li>
+                                <li class="menu-item"><a asp-page="/Products/Beads" class="javanav">Beads</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item">
+                            <a asp-page="/Register">Register</a>
+                        </li>
+                        <li class="menu-item">
+                            <a asp-page="/Donate">Donate</a>
+                        </li>
+                        <li class="menu-item">
+                            <a asp-page="/ContactUs">Contact us</a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#">
+                                <!-- CART ICON -->
+                                <i class='bx bx-shopping-bag' id="cart-icon"></i>
+                                <!-- CART -->
+                                <div class="cart">
+                                    <h2 class="cart-title">Your Cart</h2>
+                                    <!-- CONTENT -->
+                                    <div class="cart-content"></div>
+                                    <!-- TOTAL -->
+                                    <div class="total">
+                                        <div class="total-title">Total</div>
+                                        <div class="total-price">$0</div>
+                                    </div>
+                                    <!-- BUY BUTTON -->
+                                    <a asp-page="/Checkout"><button type="button" class="btn-buy">Checkout</button></a>
+                                    <!-- CART CLOSE -->
+                                    <i class='bx bx-x' id="cart-close"></i>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- navigation menu end -->
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+    <!-- SHOP SECTION -->
     <section class="shop-container">
         <div class="orion-categ">
-            <a href="" class="categoryyy"> <div class="category-img"><img src="img/pexels-cottonbro-studio-3838692.jpg" alt=""></div><p>Beads</p></a>
-        
-            <a href="" class="categoryyy"><div class="category-img"><img src="img/pexels-miriam-alonso-7585238.jpg" alt="" ></div><p>Crochet</p></a>
-        
-            <a href="" class="categoryyy"><div class="category-img"><img src="img/pexels-miriam-alonso-7585704.jpg" alt="" ></div><p>Resin</p></a>
-        
-            <a href="" class="categoryyy"><div class="category-img"><img src="img/pexels-thirdman-7256642.jpg" alt="" ></div><p>Punch needle</p></a>
-            <a href="" class="categoryyy"><div class="category-img"><img src="img/pexels-thirdman-7256642.jpg" alt="" ></div><p>Clay art</p></a>
+            <a href="" class="categoryyy">
+                <div class="category-img"><img src="~/img/pexels-cottonbro-studio-3838692.jpg" alt="" /></div>
+                <p>Beads</p>
+            </a>
+            <a href="" class="categoryyy">
+                <div class="category-img"><img src="~/img/pexels-miriam-alonso-7585238.jpg" alt="" /></div>
+                <p>Crochet</p>
+            </a>
+            <a href="" class="categoryyy">
+                <div class="category-img"><img src="~/img/pexels-miriam-alonso-7585704.jpg" alt="" /></div>
+                <p>Resin</p>
+            </a>
+            <a href="" class="categoryyy">
+                <div class="category-img"><img src="~/img/pexels-thirdman-7256642.jpg" alt="" /></div>
+                <p>Punch needle</p>
+            </a>
+            <a href="" class="categoryyy">
+                <div class="category-img"><img src="~/img/pexels-thirdman-7256642.jpg" alt="" /></div>
+                <p>Clay art</p>
+            </a>
+        </div>
 
-            </div>
-        
-    
-            <!-- ------------------------categories end search start-------------------------------------- -->
-            <div class="container-search">
-                <input type="text" placeholder="Search" name="text" class="input-search">
-                <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M790.588 1468.235c-373.722 0-677.647-303.924-677.647-677.647 0-373.722 303.925-677.647 677.647-677.647 373.723 0 677.647 303.925 677.647 677.647 0 373.723-303.924 677.647-677.647 677.647Zm596.781-160.715c120.396-138.692 193.807-319.285 193.807-516.932C1581.176 354.748 1226.428 0 790.588 0S0 354.748 0 790.588s354.748 790.588 790.588 790.588c197.647 0 378.24-73.411 516.932-193.807l516.028 516.142 79.963-79.963-516.142-516.028Z" fill-rule="evenodd"></path>
-              </svg>
-              </div>
-    
-              <!-- ----------------------------------search end subcategory start--------------------------------  -->
-              <div class="filter">
-                <ul class="fltr">
-                  <li><a href="#">Bracelets</a></li>
-                  <li><a href="#">Necklace</a></li>
-                  <li><a href="#">Rings</a></li>
-                  <li><a href="#">Bags </a></li>
-                </ul>
-              </div>
+        <!-- categories end search start -->
+        <div class="container-search">
+            <input type="text" placeholder="Search" name="text" class="input-search" />
+            <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                <path d="M790.588 1468.235c-373.722 0-677.647-303.924-677.647-677.647 0-373.722 303.925-677.647 677.647-677.647 373.723 0 677.647 303.925 677.647 677.647 0 373.723-303.924 677.647-677.647 677.647Zm596.781-160.715c120.396-138.692 193.807-319.285 193.807-516.932C1581.176 354.748 1226.428 0 790.588 0S0 354.748 0 790.588s354.748 790.588 790.588 790.588c197.647 0 378.24-73.411 516.932-193.807l516.028 516.142 79.963-79.963-516.142-516.028Z" fill-rule="evenodd"></path>
+            </svg>
+        </div>
+
+        <!-- search end subcategory start -->
+        <div class="filter">
+            <ul class="fltr">
+                <li><a href="#">Bracelets</a></li>
+                <li><a href="#">Necklace</a></li>
+                <li><a href="#">Rings</a></li>
+                <li><a href="#">Bags</a></li>
+            </ul>
+        </div>
         <h2 class="section-title">Shop Products</h2>
 
-        <!-- CONTENT  -->
+        <!-- CONTENT -->
         <div class="shop-content">
             <!-- BOX 1 -->
-            <div  class="product-box">
-                <a href="details.html"><img src="img/product1.jpg" alt="" class="product-img"></a>
+            <div class="product-box">
+                <a asp-page="/ProductDetails" asp-route-id="1"><img src="~/img/product1.jpg" alt="" class="product-img" /></a>
                 <h2 class="product-title">Nike Shoes</h2>
                 <span class="product-price">$79.5</span>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
             <!-- BOX 2 -->
-            <div  class="product-box">
-                <a href="details.html"><img src="img/product2.jpg" alt="" class="product-img"></a>
+            <div class="product-box">
+                <a asp-page="/ProductDetails" asp-route-id="2"><img src="~/img/product2.jpg" alt="" class="product-img" /></a>
                 <h2 class="product-title">BACKPACK</h2>
                 <span class="product-price">$59.5</span>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
             <!-- BOX 3 -->
-            <div  class="product-box">
-               <a href="details.html"> <img src="img/product3.jpg" alt="" class="product-img"></a>
+            <div class="product-box">
+                <a asp-page="/ProductDetails" asp-route-id="3"><img src="~/img/product3.jpg" alt="" class="product-img" /></a>
                 <h2 class="product-title">METAL BOTTLE</h2>
                 <span class="product-price">$29.5</span>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
             <!-- BOX 4 -->
-            <div  class="product-box">
-                <a href="details.html"><img src="img/product4.jpg" alt="" class="product-img"></a>
+            <div class="product-box">
+                <a asp-page="/ProductDetails" asp-route-id="4"><img src="~/img/product4.jpg" alt="" class="product-img" /></a>
                 <h2 class="product-title">METAL SUNGLASSES</h2>
                 <span class="product-price">$105</span>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
             <!-- BOX 5 -->
             <div class="product-box">
-               <a href="details.html"> <img src="img/product5.jpg" alt="" class="product-img"></a>
+                <a asp-page="/ProductDetails" asp-route-id="5"><img src="~/img/product5.jpg" alt="" class="product-img" /></a>
                 <h2 class="product-title">PS5 Controller</h2>
                 <span class="product-price">$95</span>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
             <!-- BOX 6 -->
             <div class="product-box">
-               <a href="details.html"> <img src="img/product6.jpg" alt="" class="product-img"></a>
+                <a asp-page="/ProductDetails" asp-route-id="6"><img src="~/img/product6.jpg" alt="" class="product-img" /></a>
                 <h2 class="product-title">Galaxy Z Fold</h2>
                 <span class="product-price">$1400</span>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
             <!-- BOX 7 -->
             <div class="product-box">
-                <a href="details.html"><img src="img/product7.jpg" alt="" class="product-img"></a>
-                <h2 class="product-title">Nokon Camera</h2>
+                <a asp-page="/ProductDetails" asp-route-id="7"><img src="~/img/product7.jpg" alt="" class="product-img" /></a>
+                <h2 class="product-title">Nikon Camera</h2>
                 <span class="product-price">$1700</span>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
             <!-- BOX 8 -->
             <div class="product-box">
-               <a href="details.html"> <img src="img/product8.jpg" alt="" class="product-img"></a>
+                <a asp-page="/ProductDetails" asp-route-id="8"><img src="~/img/product8.jpg" alt="" class="product-img" /></a>
                 <h2 class="product-title">Apple Watch</h2>
                 <span class="product-price">$110.5</span>
                 <i class='bx bx-shopping-bag add-cart'></i>
             </div>
         </div>
     </section>
-    <!-- ---------------------------footer--------------------------------- -->
-<footer class="footer">
-   <div class="fcontainer">
-     <div class="row">
-       <div class="footer-col">
-         <h4>company</h4>
-         <ul>
-           <li><a href="#">about us</a></li>
-           <li><a href="#">our services</a></li>
-           <li><a href="#">privacy policy</a></li>
-           <li><a href="#">affiliate program</a></li>
-         </ul>
-       </div>
-       <div class="footer-col">
-         <h4>get help</h4>
-         <ul>
-           <li><a href="#">FAQ</a></li>
-           <li><a href="#">shipping</a></li>
-           <li><a href="#">returns</a></li>
-           <li><a href="#">order status</a></li>
-           <li><a href="#">payment options</a></li>
-         </ul>
-       </div>
-       <div class="footer-col">
-         <h4>online shop</h4>
-         <ul>
-           <li><a href="#">watch</a></li>
-           <li><a href="#">bag</a></li>
-           <li><a href="#">shoes</a></li>
-           <li><a href="#">dress</a></li>
-         </ul>
-       </div>
-       <div class="footer-col">
-         <h4>follow us</h4>
-         <div class="social-links">
-           <a href="#"><i class="fab fa-facebook-f"></i></a>
-           <a href="#"><i class="fab fa-twitter"></i></a>
-           <a href="#"><i class="fab fa-instagram"></i></a>
-           <a href="#"><i class="fab fa-linkedin-in"></i></a>
-         </div>
-       </div>
-     </div>
-   </div>
- </footer>
-    <!-- link js  -->
-    <script src="Js/mainCart.js"></script>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="fcontainer">
+            <div class="row">
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">Our services</a></li>
+                        <li><a href="#">Privacy policy</a></li>
+                        <li><a href="#">Affiliate program</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Get help</h4>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">Order status</a></li>
+                        <li><a href="#">Payment options</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Online shop</h4>
+                    <ul>
+                        <li><a href="#">Watch</a></li>
+                        <li><a href="#">Bag</a></li>
+                        <li><a href="#">Shoes</a></li>
+                        <li><a href="#">Dress</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- link js -->
+    <script src="~/js/mainCart.js" asp-append-version="true"></script>
 </body>
 
 </html>
