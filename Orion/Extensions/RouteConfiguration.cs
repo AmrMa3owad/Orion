@@ -28,6 +28,12 @@ namespace Orion.Extensions
                 {
                     options.Conventions.AddPageRoute("/EndUser/Home", "Index.html");
                     options.Conventions.AddPageRoute("/EndUser/main-products", "main-products.html");
+                    options.Conventions.AddPageRoute("/EndUser/raw", "raw.html");
+                    options.Conventions.AddPageRoute("/EndUser/Sign", "Sign.html");
+                    options.Conventions.AddPageRoute("/EndUser/orionForm", "orionForm.html");
+                    options.Conventions.AddPageRoute("/EndUser/details", "details.html");
+                    options.Conventions.AddPageRoute("/EndUser/visa", "visa.html");
+
                 });
         }
 
