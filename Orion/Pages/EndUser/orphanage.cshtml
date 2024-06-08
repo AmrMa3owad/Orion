@@ -1,5 +1,8 @@
-
-<!DOCTYPE html>
+@page
+@model orphanageModel
+@{
+    Layout = "~/pages/shared/_layout.cshtml";
+}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,8 +14,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"/>
 
-    <link rel="stylesheet" href="css/profilee.css" />
-    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="/cssEndUser/profilee.css" />
+    <link rel="stylesheet" href="/cssEndUser/layout.css">
     <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.min.css">
   </head>
   <body>
@@ -237,7 +240,8 @@
     </div>
   </div>
 </footer>
-<script src="Js/homeNAV.js"></script>
+    <!-- link js -->
+    <script src="~/js/mainCart.js" asp-append-version="true"></script>
 
 
 

@@ -33,9 +33,30 @@ namespace Orion.Extensions
                     options.Conventions.AddPageRoute("/EndUser/orionForm", "orionForm.html");
                     options.Conventions.AddPageRoute("/EndUser/details", "details.html");
                     options.Conventions.AddPageRoute("/EndUser/visa", "visa.html");
+                    options.Conventions.AddPageRoute("/EndUser/checkout", "checkout.html");
+                    options.Conventions.AddPageRoute("/EndUser/childProfile", "childProfile.html");
+                    options.Conventions.AddPageRoute("/EndUser/donate", "donate.html");
+                    options.Conventions.AddPageRoute("/EndUser/feedback", "feedback.html");
+                    options.Conventions.AddPageRoute("/EndUser/orphanage", "orphanage.html");
+
+
+                    options.Conventions.AddPageRoute("/supervisor/AddProduct", "AddProduct.html");
+                    options.Conventions.AddPageRoute("/supervisor/childProfile", "childProfile.html");
+                    options.Conventions.AddPageRoute("/supervisor/editPro", " editPro.html");
+                    options.Conventions.AddPageRoute("/supervisor/superProfile", " superProfile.html");
+                    options.Conventions.AddPageRoute("/supervisor/superSignIn", " superSignIn.html");
+                    options.Conventions.AddPageRoute("/supervisor/superSignup", " superSignup.html");
+
+
+
+
+
+
 
                 });
         }
+        editPro
+
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {

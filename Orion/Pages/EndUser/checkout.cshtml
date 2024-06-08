@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@page
+@model checkoutModel
 
 @section PageScripts {
     <script src='~/'></script>
@@ -10,8 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/checkout.css">
-    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="/cssEndUser/checkout.css">
+    <link rel="stylesheet" href="/cssEndUser/layout.css">
     <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.min.css">
 
     <title>Checkout </title>
@@ -246,7 +247,8 @@
             </div>
         </div>
     </footer>
-    <script src="Js/homeNAV.js"></script>
+    <!-- link js -->
+    <script src="~/js/mainCart.js" asp-append-version="true"></script>
 
 
 </body>
