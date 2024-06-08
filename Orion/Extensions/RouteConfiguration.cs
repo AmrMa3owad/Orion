@@ -38,6 +38,7 @@ namespace Orion.Extensions
                     options.Conventions.AddPageRoute("/EndUser/donate", "donate.html");
                     options.Conventions.AddPageRoute("/EndUser/feedback", "feedback.html");
                     options.Conventions.AddPageRoute("/EndUser/orphanage", "orphanage.html");
+                    options.Conventions.AddPageRoute("/EndUser/Home", "Home.html");
 
 
                     options.Conventions.AddPageRoute("/supervisor/AddProduct", "AddProduct.html");
@@ -55,9 +56,6 @@ namespace Orion.Extensions
 
                 });
         }
-        editPro
-
-
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthentication(options =>
