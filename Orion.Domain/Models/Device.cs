@@ -8,8 +8,8 @@ namespace Orion.Domain.Models
         public string DeviceDateOfPurchase { get; set; }
         public string MaintenanceDate { get; set; }
         public int MaintenancePrice { get; set; }
-        public int AdminId { get; set; }
-        public int OfficeWorkerId { get; set; }
+        public int? AdminId { get; set; }
+        public int? OfficeWorkerId { get; set; }
 
         public virtual Admin Admin { get; set; }
         public virtual OfficeWorker OfficeWorker { get; set; }

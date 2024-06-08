@@ -7,7 +7,7 @@ namespace Orion.Domain.Models
         public string Name { get; set; }
         public byte[] Img { get; set; }
         public string SubCategory { get; set; }
-        public int AdminId { get; set; }
+        public int? AdminId { get; set; }
 
         public virtual Admin Admin { get; set; }
     }

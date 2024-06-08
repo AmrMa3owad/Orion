@@ -5,7 +5,7 @@ using Orion.Domain.Models;
 namespace Orion.Infrastructure.Services
 {
     public class MentorService
-        : BaseService<Mentor, int>,
+        : BaseServiceUser<Mentor, int>,
             IMentorService
     {
         public MentorService(

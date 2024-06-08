@@ -10,7 +10,7 @@ namespace Orion.Domain.Models
         }
         public string WebsiteName { get; set; }
         public int? AdminId { get; set; }
-        public int OfficeWorkerId { get; set; }
+        public int? OfficeWorkerId { get; set; }
 
         public virtual Admin Admin { get; set; }
         public virtual OfficeWorker OfficeWorker { get; set; }

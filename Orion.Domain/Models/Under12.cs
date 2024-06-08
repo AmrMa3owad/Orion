@@ -8,7 +8,7 @@ namespace Orion.Domain.Models
         {
             FreelancerUnder12s = new HashSet<FreelancerUnder12>();
         }
-        public int SupervisorId { get; set; }
+        public int? SupervisorId { get; set; }
 
         public virtual Supervisor Supervisor { get; set; }
         public virtual ICollection<FreelancerUnder12> FreelancerUnder12s { get; set; }

@@ -14,8 +14,8 @@ namespace Orion.Domain.Models
         public int SponsorPhone { get; set; }
         public string SponsorAddress { get; set; }
         public string BusinessType { get; set; }
-        public int DonationId { get; set; }
-        public int EventId { get; set; }
+        public int? DonationId { get; set; }
+        public int? EventId { get; set; }
 
         public virtual Donation Donation { get; set; }
         public virtual Event Event { get; set; }

@@ -18,9 +18,9 @@ namespace Orion.Domain.Models
         public int ProductPrice { get; set; }
         public string Reviews { get; set; }
         public string Customization { get; set; }
-        public int SupervisorId { get; set; }
-        public int EventId { get; set; }
-        public int Above12Id { get; set; }
+        public int? SupervisorId { get; set; }
+        public int? EventId { get; set; }
+        public int? Above12Id { get; set; }
 
         public virtual Supervisor Supervisor { get; set; }
         public virtual Above12 Above12 { get; set; }

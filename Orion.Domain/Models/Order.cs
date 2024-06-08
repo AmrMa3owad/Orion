@@ -14,7 +14,7 @@ namespace Orion.Domain.Models
         public string OrderType { get; set; }
         public int OrderAmount { get; set; }
         public string OrderComments { get; set; }
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual ICollection<BoothOrder> BoothOrders { get; set; }
