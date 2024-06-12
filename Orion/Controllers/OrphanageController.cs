@@ -22,7 +22,7 @@ namespace Orion.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Orphanage>> Get()
+        public async Task<List<Orphanage>> GetO()
         {
             List<Orphanage> bookings = await _orphanageService
                 .GetAll(new CancellationToken()).ToListAsync();
