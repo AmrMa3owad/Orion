@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Orion.Context;
@@ -11,9 +12,11 @@ using Orion.Context;
 namespace Orion.Context.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240615112956_AmrUpdate")]
+    partial class AmrUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,28 +166,6 @@ namespace Orion.Context.Migrations
                     b.HasIndex("OrderId");
 
                     b.ToTable("BoothOrders");
-                });
-
-            modelBuilder.Entity("Orion.Domain.Models.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("NumberOfProducts")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Cart");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Category", b =>
@@ -979,9 +960,6 @@ namespace Orion.Context.Migrations
                     b.Property<int?>("Above12Id")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Customization")
                         .IsRequired()
                         .HasColumnType("text");
@@ -1031,8 +1009,6 @@ namespace Orion.Context.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Above12Id");
-
-                    b.HasIndex("CartId");
 
                     b.HasIndex("EventId");
 
@@ -1701,10 +1677,6 @@ namespace Orion.Context.Migrations
                         .WithMany("Products")
                         .HasForeignKey("Above12Id");
 
-                    b.HasOne("Orion.Domain.Models.Cart", "Cart")
-                        .WithMany("Products")
-                        .HasForeignKey("CartId");
-
                     b.HasOne("Orion.Domain.Models.Event", "Event")
                         .WithMany("Products")
                         .HasForeignKey("EventId");
@@ -1714,8 +1686,6 @@ namespace Orion.Context.Migrations
                         .HasForeignKey("SupervisorId");
 
                     b.Navigation("Above12");
-
-                    b.Navigation("Cart");
 
                     b.Navigation("Event");
 
@@ -1824,11 +1794,6 @@ namespace Orion.Context.Migrations
             modelBuilder.Entity("Orion.Domain.Models.Booth", b =>
                 {
                     b.Navigation("BoothOrders");
-                });
-
-            modelBuilder.Entity("Orion.Domain.Models.Cart", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Craft", b =>

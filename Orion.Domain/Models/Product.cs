@@ -9,7 +9,7 @@ namespace Orion.Domain.Models
             CustomerProducts = new HashSet<CustomerProduct>();
         }
         public string ProductName { get; set; }
-        public byte[] ProductImage { get; set; }
+        public byte[]? ProductImage { get; set; }
         public string ProductColor { get; set; }
         public int ProductNumber { get; set; }
         public string ProductType { get; set; }
@@ -21,10 +21,12 @@ namespace Orion.Domain.Models
         public int? SupervisorId { get; set; }
         public int? EventId { get; set; }
         public int? Above12Id { get; set; }
-
+        public int? CartId { get; set; }
         public virtual Supervisor Supervisor { get; set; }
         public virtual Above12 Above12 { get; set; }
         public virtual Event Event { get; set; }
+        public virtual Cart Cart { get; set; }
+
         public virtual ICollection<CustomerProduct> CustomerProducts { get; set; }
 
     }
