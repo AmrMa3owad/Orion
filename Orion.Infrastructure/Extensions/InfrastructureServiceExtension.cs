@@ -8,6 +8,7 @@ namespace Orion.Infrastructure.Extentions
         public static void ConfigureInfrastructure(this IServiceCollection services)
         {
             //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICartService, CartService>();
             services.AddScoped<IAbove12Service, Above12Service>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IAdvertisementService, AdvertisementService>();

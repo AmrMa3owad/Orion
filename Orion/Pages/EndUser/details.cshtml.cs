@@ -10,7 +10,7 @@ namespace Orion.Pages.EndUser
     {
 
         public List<Product> products { get; set; }
-        public Product product { get; set; }
+        public Product? product { get; set; }
 
 
         private readonly IProductService _productService;

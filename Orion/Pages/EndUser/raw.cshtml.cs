@@ -8,23 +8,47 @@ namespace Orion.Pages.EndUser
 {
     public class rawModel : PageModel
     {
-        public List<Product> products { get; set; }
-        public IEnumerable<string> ProName { get; set; }
+        public Cart Cart { get; set; }
+        public List<Product> Products { get; set; }
+        public IEnumerable<string> ProNames { get; set; }
+        public IEnumerable<byte[]?> ProductImg { get; set; }
+        public IEnumerable<int> ProductPrice { get; set; }
 
         private readonly IProductService _productService;
+        private readonly ICartService _cartService;
 
-        public rawModel(IProductService productService) : base()
+        [BindProperty(SupportsGet = true)]
+        public string SearchQuery { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string ProductType { get; set; }
+
+        public rawModel(IProductService productService, ICartService cartService)
         {
             _productService = productService;
-
+            _cartService = cartService;
         }
+
         public async Task<IActionResult> OnGet()
         {
+            var allProducts = await _productService.GetAll(new CancellationToken()).ToListAsync();
 
-            products = await _productService
-                .GetAll(new CancellationToken()).ToListAsync();
+            if (!string.IsNullOrEmpty(SearchQuery))
+            {
+                allProducts = allProducts.Where(p => p.ProductName.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
 
-            ProName = products.Select(x=>x.ProductName); // TODO
+            if (!string.IsNullOrEmpty(ProductType))
+            {
+                allProducts = allProducts.Where(p => p.ProductType.Equals(ProductType, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            Products = allProducts;
+            ProNames = Products.Select(x => x.ProductName);
+            ProductImg = Products.Select(x => x.ProductImage);
+            ProductPrice = Products.Select(x => x.ProductPrice);
+
+
             return Page();
         }
 
