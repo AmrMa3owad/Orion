@@ -52,5 +52,27 @@ namespace Orion.Pages.EndUser
             return Page();
         }
 
+        public async Task<JsonResult> OnPostAddToCartAsync([FromBody]Models.CartProduct cartProduct)
+        {
+            var product = await _productService.Get(cartProduct.ProductId, new CancellationToken());
+
+            if (!cartProduct.CartId.HasValue)
+            {
+                Cart = new Cart();
+                Cart = await _cartService.Create(Cart);
+            }
+            else
+            {
+                //TODO GetCartby id if it has value
+                Cart = await _cartService.Get(cartProduct.CartId.Value, new CancellationToken());
+            }
+            Cart.Products.Add(product);
+            Cart.NumberOfProducts = Cart.Products.Count;
+            Cart.TotalPrice = Cart.Products.Sum(p => p.ProductPrice);
+            await _cartService.Update(Cart);
+
+            return new JsonResult
+                (new { CartId = Cart.Id, Products = Cart.Products.Select(p=> new { ProductId = p.Id}).ToList()});
+        }
     }
 }

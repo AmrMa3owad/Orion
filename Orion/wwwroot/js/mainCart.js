@@ -1,5 +1,7 @@
-(() =>{
- 
+let cartId = undefined;
+
+(() => {
+
   const openNavMenu = document.querySelector(".open-nav-menu"),
   closeNavMenu = document.querySelector(".close-nav-menu"),
   navMenu = document.querySelector(".nav-menu"),
@@ -9,8 +11,7 @@
   openNavMenu.addEventListener("click", toggleNav);
   closeNavMenu.addEventListener("click", toggleNav);
   // close the navMenu by clicking outside
-  menuOverlay.addEventListener("click", toggleNav);
-
+    menuOverlay.addEventListener("click", toggleNav);
   function toggleNav() {
   	navMenu.classList.toggle("open");
   	menuOverlay.classList.toggle("active");
@@ -127,36 +128,60 @@ function addEvents() {
 
 // ============= HANDLE EVENTS FUNCTIONS =============
 let itemsAdded = [];
+function deleteRow(id) {
+    return new Promise((resolve, reject) => {
 
+      
+    });
+}
 function handle_addCartItem() {
-  let product = this.parentElement;
-  let title = product.querySelector(".product-title").innerHTML;
-  let price = product.querySelector(".product-price").innerHTML;
-  let imgSrc = product.querySelector(".product-img").src;
-  console.log(title, price, imgSrc);
+    let product = this.parentElement;
+    let pid = product.querySelector(".product-id").innerHTML;
 
-  let newToAdd = {
-    title,
-    price,
-    imgSrc,
-  };
+            let title = product.querySelector(".product-title").innerHTML;
+            let price = product.querySelector(".product-price").innerHTML;
+            let imgSrc = product.querySelector(".product-img").src;
+            console.log(title, price, imgSrc);
 
-  // handle item is already exist
-  if (itemsAdded.find((el) => el.title == newToAdd.title)) {
-    alert("This Item Is Already Exist!");
-    return;
-  } else {
-    itemsAdded.push(newToAdd);
-  }
+            let newToAdd = {
+                title,
+                price,
+                imgSrc,
+            };
 
-  // Add product to cart
-  let cartBoxElement = CartBoxComponent(title, price, imgSrc);
-  let newNode = document.createElement("div");
-  newNode.innerHTML = cartBoxElement;
-  const cartContent = cart.querySelector(".cart-content");
-  cartContent.appendChild(newNode);
+            // handle item is already exist
+    if (itemsAdded.find((el) => el.title == newToAdd.title)) {
+        alert("This Item Is Already Exist!");
+        return;
+    } else {
 
-  update();
+        const data = {
+            productId: Number(pid),
+            cartId: cartId
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/raw.html" + '?handler=AddToCart',
+            headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (data) {
+                cartId = data.cartId;
+
+                itemsAdded.push(newToAdd);
+                // Add product to cart
+                let cartBoxElement = CartBoxComponent(title, price, imgSrc);
+                let newNode = document.createElement("div");
+                newNode.innerHTML = cartBoxElement;
+                const cartContent = cart.querySelector(".cart-content");
+                cartContent.appendChild(newNode);
+
+                update();
+
+            }
+        });
+    }      
 }
 
 function handle_removeCartItem() {
