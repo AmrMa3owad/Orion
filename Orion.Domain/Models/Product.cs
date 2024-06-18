@@ -19,11 +19,11 @@ namespace Orion.Domain.Models
         public string Reviews { get; set; }
         public string Customization { get; set; }
         public int? SupervisorId { get; set; }
+        public int? FreelancerId { get; set; }
         public int? EventId { get; set; }
-        public int? Above12Id { get; set; }
         public int? CartId { get; set; }
         public virtual Supervisor Supervisor { get; set; }
-        public virtual Above12 Above12 { get; set; }
+        public virtual Freelancer Freelancer { get; set; }
         public virtual Event Event { get; set; }
         public virtual Cart Cart { get; set; }
 

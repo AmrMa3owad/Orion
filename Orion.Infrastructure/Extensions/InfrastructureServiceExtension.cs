@@ -7,10 +7,9 @@ namespace Orion.Infrastructure.Extentions
     {
         public static void ConfigureInfrastructure(this IServiceCollection services)
         {
-            //services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IContactUsService, ContactUsService>();
             services.AddScoped<ICartService, CartService>();
-            services.AddScoped<IAbove12Service, Above12Service>();
             services.AddScoped<IAdminService, AdminService>();
             services.AddScoped<IAdvertisementService, AdvertisementService>();
             services.AddScoped<IBoothService, BoothService>();
@@ -39,7 +38,6 @@ namespace Orion.Infrastructure.Extentions
             services.AddScoped<ISponsorService, SponsorService>();
             services.AddScoped<ISponsorAdvertisementService, SponsorAdvertisementService>();
             services.AddScoped<ISupervisorService, SupervisorService>();
-            services.AddScoped<IUnder12Service, Under12Service>();
             services.AddScoped<IVendorService, VendorService>();
             services.AddScoped<IWebsiteService, WebsiteService>();                  
         }

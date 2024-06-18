@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Orion.Context;
@@ -11,9 +12,11 @@ using Orion.Context;
 namespace Orion.Context.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240618120357_donationupdt")]
+    partial class donationupdt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +40,7 @@ namespace Orion.Context.Migrations
                     b.ToTable("CustomerEvent");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
+            modelBuilder.Entity("Orion.Domain.Models.Above12", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,128 +48,17 @@ namespace Orion.Context.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("text");
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
-
-                    b.Property<int>("RoleId")
+                    b.Property<int?>("OrphanageId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+                    b.HasIndex("OrphanageId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("text");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("Above12s");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Admin", b =>
@@ -792,6 +684,10 @@ namespace Orion.Context.Migrations
                     b.Property<int?>("OrphanageId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("ProductType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Skill")
                         .IsRequired()
                         .HasColumnType("text");
@@ -800,16 +696,63 @@ namespace Orion.Context.Migrations
                         .IsRequired()
                         .HasColumnType("bytea");
 
-                    b.Property<int?>("SupervisorId")
-                        .HasColumnType("integer");
-
                     b.HasKey("UserId");
 
                     b.HasIndex("OrphanageId");
 
-                    b.HasIndex("SupervisorId");
-
                     b.ToTable("Freelancers");
+                });
+
+            modelBuilder.Entity("Orion.Domain.Models.FreelancerAbove12", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Above12Id")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("FreelancerId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Above12Id");
+
+                    b.HasIndex("FreelancerId");
+
+                    b.ToTable("FreelancerAbove12");
+                });
+
+            modelBuilder.Entity("Orion.Domain.Models.FreelancerUnder12", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("FreelancerId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Under12Id")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FreelancerId");
+
+                    b.HasIndex("Under12Id");
+
+                    b.ToTable("FreelancerUnder12");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Material", b =>
@@ -1033,6 +976,9 @@ namespace Orion.Context.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("Above12Id")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("CartId")
                         .HasColumnType("integer");
 
@@ -1048,9 +994,6 @@ namespace Orion.Context.Migrations
                         .HasColumnType("text");
 
                     b.Property<int?>("EventId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("FreelancerId")
                         .HasColumnType("integer");
 
                     b.Property<string>("ProductColor")
@@ -1087,11 +1030,11 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Above12Id");
+
                     b.HasIndex("CartId");
 
                     b.HasIndex("EventId");
-
-                    b.HasIndex("FreelancerId");
 
                     b.HasIndex("SupervisorId");
 
@@ -1181,15 +1124,19 @@ namespace Orion.Context.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("SupervisorInfo")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<byte[]>("SupervisorPhoto")
+                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("SupervisorRegion")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SupervisorSkill")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -1223,6 +1170,27 @@ namespace Orion.Context.Migrations
                     b.ToTable("SupervisorOrphanage");
                 });
 
+            modelBuilder.Entity("Orion.Domain.Models.Under12", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("SupervisorId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupervisorId");
+
+                    b.ToTable("Under12s");
+                });
+
             modelBuilder.Entity("Orion.Domain.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -1243,12 +1211,10 @@ namespace Orion.Context.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
@@ -1272,12 +1238,10 @@ namespace Orion.Context.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -1299,19 +1263,11 @@ namespace Orion.Context.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Vendor", b =>
@@ -1381,55 +1337,11 @@ namespace Orion.Context.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
+            modelBuilder.Entity("Orion.Domain.Models.Above12", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
-                {
-                    b.HasOne("Orion.Domain.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
-                {
-                    b.HasOne("Orion.Domain.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<int>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Orion.Domain.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
-                {
-                    b.HasOne("Orion.Domain.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Orion.Domain.Models.Orphanage", null)
+                        .WithMany("Above12s")
+                        .HasForeignKey("OrphanageId");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Admin", b =>
@@ -1693,21 +1605,51 @@ namespace Orion.Context.Migrations
                         .WithMany("Freelancers")
                         .HasForeignKey("OrphanageId");
 
-                    b.HasOne("Orion.Domain.Models.Supervisor", "Supervisor")
-                        .WithMany("Freelancers")
-                        .HasForeignKey("SupervisorId");
-
-                    b.HasOne("Orion.Domain.Models.User", "User")
+                    b.HasOne("Orion.Domain.Models.User", null)
                         .WithOne("Freelancer")
                         .HasForeignKey("Orion.Domain.Models.Freelancer", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Orphanage");
+                });
 
-                    b.Navigation("Supervisor");
+            modelBuilder.Entity("Orion.Domain.Models.FreelancerAbove12", b =>
+                {
+                    b.HasOne("Orion.Domain.Models.Above12", "Above12")
+                        .WithMany("FreelancerAbove12s")
+                        .HasForeignKey("Above12Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("Orion.Domain.Models.Freelancer", "Freelancer")
+                        .WithMany("FreelancerAbove12s")
+                        .HasForeignKey("FreelancerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Above12");
+
+                    b.Navigation("Freelancer");
+                });
+
+            modelBuilder.Entity("Orion.Domain.Models.FreelancerUnder12", b =>
+                {
+                    b.HasOne("Orion.Domain.Models.Freelancer", "Freelancer")
+                        .WithMany("FreelancerUnder12s")
+                        .HasForeignKey("FreelancerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Orion.Domain.Models.Under12", "Under12")
+                        .WithMany("FreelancerUnder12s")
+                        .HasForeignKey("Under12Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Freelancer");
+
+                    b.Navigation("Under12");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.MaterialVendor", b =>
@@ -1755,6 +1697,10 @@ namespace Orion.Context.Migrations
 
             modelBuilder.Entity("Orion.Domain.Models.Product", b =>
                 {
+                    b.HasOne("Orion.Domain.Models.Above12", "Above12")
+                        .WithMany("Products")
+                        .HasForeignKey("Above12Id");
+
                     b.HasOne("Orion.Domain.Models.Cart", "Cart")
                         .WithMany("Products")
                         .HasForeignKey("CartId");
@@ -1763,19 +1709,15 @@ namespace Orion.Context.Migrations
                         .WithMany("Products")
                         .HasForeignKey("EventId");
 
-                    b.HasOne("Orion.Domain.Models.Freelancer", "Freelancer")
-                        .WithMany("Products")
-                        .HasForeignKey("FreelancerId");
-
                     b.HasOne("Orion.Domain.Models.Supervisor", "Supervisor")
                         .WithMany("Products")
                         .HasForeignKey("SupervisorId");
 
+                    b.Navigation("Above12");
+
                     b.Navigation("Cart");
 
                     b.Navigation("Event");
-
-                    b.Navigation("Freelancer");
 
                     b.Navigation("Supervisor");
                 });
@@ -1833,6 +1775,15 @@ namespace Orion.Context.Migrations
                     b.Navigation("Supervisor");
                 });
 
+            modelBuilder.Entity("Orion.Domain.Models.Under12", b =>
+                {
+                    b.HasOne("Orion.Domain.Models.Supervisor", "Supervisor")
+                        .WithMany("Under12s")
+                        .HasForeignKey("SupervisorId");
+
+                    b.Navigation("Supervisor");
+                });
+
             modelBuilder.Entity("Orion.Domain.Models.Website", b =>
                 {
                     b.HasOne("Orion.Domain.Models.OfficeWorker", "OfficeWorker")
@@ -1840,6 +1791,13 @@ namespace Orion.Context.Migrations
                         .HasForeignKey("OfficeWorkerId");
 
                     b.Navigation("OfficeWorker");
+                });
+
+            modelBuilder.Entity("Orion.Domain.Models.Above12", b =>
+                {
+                    b.Navigation("FreelancerAbove12s");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Admin", b =>
@@ -1926,7 +1884,9 @@ namespace Orion.Context.Migrations
 
             modelBuilder.Entity("Orion.Domain.Models.Freelancer", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("FreelancerAbove12s");
+
+                    b.Navigation("FreelancerUnder12s");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Material", b =>
@@ -1955,6 +1915,8 @@ namespace Orion.Context.Migrations
 
             modelBuilder.Entity("Orion.Domain.Models.Orphanage", b =>
                 {
+                    b.Navigation("Above12s");
+
                     b.Navigation("Freelancers");
 
                     b.Navigation("SupervisorOrphanages");
@@ -1985,11 +1947,16 @@ namespace Orion.Context.Migrations
                 {
                     b.Navigation("EmployeeSupervisors");
 
-                    b.Navigation("Freelancers");
-
                     b.Navigation("Products");
 
                     b.Navigation("SupervisorOrphanages");
+
+                    b.Navigation("Under12s");
+                });
+
+            modelBuilder.Entity("Orion.Domain.Models.Under12", b =>
+                {
+                    b.Navigation("FreelancerUnder12s");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.User", b =>

@@ -8,12 +8,14 @@ namespace Orion.Pages.EndUser
 {
     public class mainproductsModel : PageModel
     {
+        public Cart Cart { get; set; }
         public List<Product> Products { get; set; }
         public IEnumerable<string> ProNames { get; set; }
         public IEnumerable<byte[]?> ProductImg { get; set; }
         public IEnumerable<int> ProductPrice { get; set; }
 
         private readonly IProductService _productService;
+        private readonly ICartService _cartService;
 
         [BindProperty(SupportsGet = true)]
         public string SearchQuery { get; set; }
@@ -21,9 +23,10 @@ namespace Orion.Pages.EndUser
         [BindProperty(SupportsGet = true)]
         public string ProductType { get; set; }
 
-        public mainproductsModel(IProductService productService)
+        public mainproductsModel(IProductService productService, ICartService cartService)
         {
             _productService = productService;
+            _cartService = cartService;
         }
 
         public async Task<IActionResult> OnGet()
@@ -46,6 +49,28 @@ namespace Orion.Pages.EndUser
             ProductPrice = Products.Select(x => x.ProductPrice);
 
             return Page();
+        }
+        public async Task<JsonResult> OnPostAddToCartAsync([FromBody] Models.CartProduct cartProduct)
+        {
+            var product = await _productService.Get(cartProduct.ProductId, new CancellationToken());
+
+            if (!cartProduct.CartId.HasValue)
+            {
+                Cart = new Cart();
+                Cart = await _cartService.Create(Cart);
+            }
+            else
+            {
+                //TODO GetCartby id if it has value
+                Cart = await _cartService.Get(cartProduct.CartId.Value, new CancellationToken());
+            }
+            Cart.Products.Add(product);
+            Cart.NumberOfProducts = Cart.Products.Count;
+            Cart.TotalPrice = Cart.Products.Sum(p => p.ProductPrice);
+            await _cartService.Update(Cart);
+
+            return new JsonResult
+                (new { CartId = Cart.Id, Products = Cart.Products.Select(p => new { ProductId = p.Id }).ToList() });
         }
     }
 }

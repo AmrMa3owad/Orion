@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Orion.Context;
@@ -11,9 +12,11 @@ using Orion.Context;
 namespace Orion.Context.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240618145012_freelancerupdt5")]
+    partial class freelancerupdt5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1181,15 +1184,19 @@ namespace Orion.Context.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("SupervisorInfo")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<byte[]>("SupervisorPhoto")
+                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("SupervisorRegion")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SupervisorSkill")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

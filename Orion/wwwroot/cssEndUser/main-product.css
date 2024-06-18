@@ -481,13 +481,16 @@ a{
     margin-bottom: 1.5rem;
 }
 .shop-content{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, auto));
-    gap: 1.5rem;
+    display: flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap: 6.5rem;
 }
 .product-box{
     position: relative;
     color: #000;
+    width:15rem;
 }
 .product-box:hover{
     padding: 10px;
@@ -777,4 +780,9 @@ justify-content: space-evenly;
 
 
   }
-  
+/*  --------------------------------------new updates-----------------------------------------------------*/
+.orion-categ button.categoryyy {
+    border: none;
+    background-color: transparent;
+    cursor:pointer;
+}

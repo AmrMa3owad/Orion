@@ -8,10 +8,10 @@ namespace Orion.Domain.Models
         {
             Sponsors = new HashSet<Sponsor>();
         }
-        public string DonationType { get; set; }
-        public double DonationQuantity { get; set; }
-        public string DonationTime { get; set; }
-        public string DonationMethod { get; set; }
+        public string? DonationType { get; set; }
+        public double DonationQuantity { get; set; } //donation
+        public string? DonationTime { get; set; }
+        public string? DonationMethod { get; set; }
         public int? CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }

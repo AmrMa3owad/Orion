@@ -163,6 +163,7 @@ function handle_addCartItem() {
         $.ajax({
             type: "POST",
             url: "/raw.html" + '?handler=AddToCart',
+            url: "/main-products.html" + '?handler=AddToCart',
             headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val() },
             data: JSON.stringify(data),
             contentType: "application/json",

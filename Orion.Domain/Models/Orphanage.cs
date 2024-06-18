@@ -7,7 +7,6 @@ namespace Orion.Domain.Models
         public Orphanage()
         {
             Freelancers = new HashSet<Freelancer>();
-            Above12s = new HashSet<Above12>();
             SupervisorOrphanages = new HashSet<SupervisorOrphanage>();
 
         }
@@ -17,7 +16,6 @@ namespace Orion.Domain.Models
         public byte[] OrphanageLogo { get; set; }
 
         public virtual ICollection<Freelancer> Freelancers { get; set; }
-        public virtual ICollection<Above12> Above12s { get; set; }
         public virtual ICollection<SupervisorOrphanage> SupervisorOrphanages { get; set; }
 
     }
