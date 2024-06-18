@@ -44,6 +44,7 @@ namespace Orion.Extensions
                     options.Conventions.AddPageRoute("/Supervisor/AddProduct", "AddProduct.html");
                     options.Conventions.AddPageRoute("/Supervisor/childsProfile", "childsProfile.html");
                     options.Conventions.AddPageRoute("/Supervisor/editPro", "editPro.html");
+                    options.Conventions.AddPageRoute("/Supervisor/editProFreelancer", "editProFreelancer.html");
                     options.Conventions.AddPageRoute("/Supervisor/superProfile", "superProfile.html");
                     options.Conventions.AddPageRoute("/Supervisor/superSignIn", "superSignIn.html");
                     options.Conventions.AddPageRoute("/Supervisor/superSignup", "superSignup.html");

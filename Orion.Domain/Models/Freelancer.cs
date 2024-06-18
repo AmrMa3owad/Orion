@@ -8,12 +8,12 @@ namespace Orion.Domain.Models
         {
             Products = new HashSet<Product>();
         }
-        public int Earnings { get; set; }
-        public byte[] StarPhoto { get; set; }
-        public string Skill { get; set; }
+        public int? Earnings { get; set; }
+        public byte[]? StarPhoto { get; set; }
+        public string? Skill { get; set; }
         public int? SupervisorId { get; set; }
         public int? OrphanageId { get; set; }
-        public string FreelancerType { get; set; }
+        public string? FreelancerDescription { get; set; }
 
         public virtual Orphanage Orphanage { get; set; }
         public virtual User User { get; set; }

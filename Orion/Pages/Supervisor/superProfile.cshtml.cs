@@ -38,8 +38,9 @@ namespace Orion.Pages.Supervisor
         public IEnumerable<int> ProductsNum { get; set; }
         public IEnumerable<int> FreelancerNum { get; set; }
         public IEnumerable<int> SupervisorId { get; set; }
-        public IEnumerable<byte[]?> FreelancerImg { get; set; }
-        public IEnumerable<string?> FreelancerInfo { get; set; }
+        public IEnumerable<byte[]?> SupervisorImg { get; set; }
+        public IEnumerable<string?> SupervisorInfo { get; set; }
+        public IEnumerable<ICollection<Freelancer?>> SupervisorFreelancer { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -50,10 +51,11 @@ namespace Orion.Pages.Supervisor
 
             ProductsNum = Supervisors.Select(x => x.Products.Count);
             FreelancerNum = Supervisors.Select(x => x.Freelancers.Count);
-            FreelancerImg = Supervisors.Select(x => x.SupervisorPhoto);
-            FreelancerInfo = Supervisors.Select(x => x.SupervisorInfo);
+            SupervisorImg = Supervisors.Select(x => x.SupervisorPhoto);
+            SupervisorInfo = Supervisors.Select(x => x.SupervisorInfo);
             SupervisorId = Supervisors.Select(x => x.Id);
 
+            SupervisorFreelancer = Supervisors.Select(x => x.Freelancers);
             return Page();
         }
     }
