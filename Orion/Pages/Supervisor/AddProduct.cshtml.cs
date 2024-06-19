@@ -2,9 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Orion.Domain.Models;
 using Orion.Infrastructure.Services;
-using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Orion.Pages.Supervisor
 {
@@ -16,11 +13,16 @@ namespace Orion.Pages.Supervisor
         [BindProperty]
         public IFormFile ProductImageFile { get; set; }
 
-        private readonly IProductService _productService;
+        [BindProperty(SupportsGet = true)]
+        public int FreelancerId { get; set; }
 
-        public AddProductModel(IProductService productService)
+        private readonly IProductService _productService;
+        private readonly IFreelancerService _freelancerService;
+
+        public AddProductModel(IProductService productService, IFreelancerService freelancerService)
         {
             _productService = productService;
+            _freelancerService = freelancerService;
         }
 
         public void OnGet()
@@ -38,7 +40,16 @@ namespace Orion.Pages.Supervisor
                 }
             }
 
+            Product.FreelancerId = FreelancerId;
+
             await _productService.Create(Product);
+
+            var freelancer = await _freelancerService.GetFreelancerWithOrphanageAsync(FreelancerId, new System.Threading.CancellationToken());
+            if (freelancer != null)
+            {
+                freelancer.Products.Add(Product);
+                await _freelancerService.Update(freelancer);
+            }
 
             return RedirectToPage("/Supervisor/childsProfile"); 
         }
