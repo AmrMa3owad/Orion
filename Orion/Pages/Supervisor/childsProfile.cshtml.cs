@@ -31,13 +31,14 @@ namespace Orion.Pages.Supervisor
         public IEnumerable<int> FreelancerId { get; set; }
         public IEnumerable<string?> FreelancerInfo { get; set; }
         public IEnumerable<ICollection<Product?>> FreelancerProduct { get; set; }
+        public IEnumerable<string> FreelancerOrphanage { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync()
         {
             Users = await _userService.GetAll(CancellationToken.None).ToListAsync();
             Products = await _productService.GetAll(CancellationToken.None).ToListAsync();
-            Freelancers = await _freelancerService.GetAll(CancellationToken.None).ToListAsync();
+            Freelancers = await _freelancerService.GetAllInclude(CancellationToken.None);
 
             ProductsNum = Freelancers.Select(x=>x.Products.Count);
             FreelancerAge = Users.Select(x => x.BirthDate);
@@ -45,6 +46,7 @@ namespace Orion.Pages.Supervisor
             FreelancerInfo = Freelancers.Select(x => x.FreelancerDescription);
             FreelancerId = Freelancers.Select(x => x.UserId);
             FreelancerProduct = Freelancers.Select(x => x.Products);
+            FreelancerOrphanage = Freelancers.Select(x => x.Orphanage.OrphanageName);
             return Page();
         }
     }

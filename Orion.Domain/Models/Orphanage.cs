@@ -10,10 +10,10 @@ namespace Orion.Domain.Models
             SupervisorOrphanages = new HashSet<SupervisorOrphanage>();
 
         }
-        public string OrphanageName { get; set; }
-        public int OrphanageRegion { get; set; }
-        public string OrphanageInfo { get; set; }
-        public byte[] OrphanageLogo { get; set; }
+        public string? OrphanageName { get; set; }
+        public string? OrphanageRegion { get; set; }
+        public string? OrphanageInfo { get; set; }
+        public byte[]? OrphanageLogo { get; set; }
 
         public virtual ICollection<Freelancer> Freelancers { get; set; }
         public virtual ICollection<SupervisorOrphanage> SupervisorOrphanages { get; set; }
