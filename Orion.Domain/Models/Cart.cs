@@ -8,8 +8,8 @@ namespace Orion.Domain.Models
         {
             Products = new HashSet<Product>();
         }
-        public int NumberOfProducts { get; set; }
-        public double TotalPrice { get; set; }
+        public int? NumberOfProducts { get; set; }
+        public double? TotalPrice { get; set; }
 
         public virtual ICollection<Product> Products { get; set;}
     }

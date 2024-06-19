@@ -49,6 +49,11 @@
           </nav>
 
           <div class="photos">
+                    <div class="product-box">
+                        <a href="AddProduct.html?freelancerId=@Model.FreelancerId.FirstOrDefault()"><img src="img/vector61-714-01.jpg" alt="" class="product-img"></a>
+                        <h2 class="product-title" id="addpro">Add product</h2>
+                        <a href="AddProduct.html?freelancerId=@Model.FreelancerId.FirstOrDefault()"><i class="fa-solid fa-plus add-cart"></i></a>
+                    </div>
                     @foreach (var product in Model.FreelancerProduct.FirstOrDefault())
                     {
                         var name = product.ProductName;

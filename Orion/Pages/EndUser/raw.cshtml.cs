@@ -12,7 +12,7 @@ namespace Orion.Pages.EndUser
         public List<Product> Products { get; set; }
         public IEnumerable<string> ProNames { get; set; }
         public IEnumerable<byte[]?> ProductImg { get; set; }
-        public IEnumerable<int> ProductPrice { get; set; }
+        public IEnumerable<double?> ProductPrice { get; set; }
 
         private readonly IProductService _productService;
         private readonly ICartService _cartService;
