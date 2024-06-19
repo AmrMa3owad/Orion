@@ -61,8 +61,7 @@ namespace Orion.Pages.EndUser
             }
             else
             {
-                //TODO GetCartby id if it has value
-                Cart = await _cartService.Get(cartProduct.CartId.Value, new CancellationToken());
+                Cart = await _cartService.GetCartIncludeAsync(cartProduct.CartId.Value, new CancellationToken());
             }
             Cart.Products.Add(product);
             Cart.NumberOfProducts = Cart.Products.Count;

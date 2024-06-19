@@ -6,5 +6,7 @@ namespace Orion.Infrastructure.Services
     public interface ICartService :
         IBaseService<Cart, int>
     {
+        Task<Cart> GetCartIncludeAsync(int id, CancellationToken cancellationToken);
+        Task<List<Cart>> GetAllInclude(CancellationToken cancellationToken);
     }
 }
