@@ -2,7 +2,7 @@
 
 namespace Orion.Domain.Models
 {
-    public class Customer : BaseEmployee<int>
+    public class Customer : BaseUser<int>
     {
         public Customer()
         {
@@ -19,8 +19,8 @@ namespace Orion.Domain.Models
         public int? WebsiteId { get; set; }
         public int? PreCommunityId { get; set; }
 
+        public virtual User User { get; set; }
         public virtual Donation Donation { get; set; }
-        public virtual Employee Employee { get; set; }
         public virtual Payment Payment { get; set; }
         public virtual Order Order { get; set; }
         public virtual Website Website { get; set; }
