@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Orion.Pages.Admin
 {
-    public class detailsModel : PageModel
+    public class orphanageAdminModel : PageModel
     {
         public void OnGet()
         {
