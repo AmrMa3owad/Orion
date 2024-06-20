@@ -5,7 +5,7 @@ using Orion.Domain.Models;
 namespace Orion.Infrastructure.Services
 {
     public class SupervisorService
-        : BaseService<Supervisor, int>,
+        : BaseServiceEmployee<Supervisor, int>,
             ISupervisorService
     {
         public SupervisorService(

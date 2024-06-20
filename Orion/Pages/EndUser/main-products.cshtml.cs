@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Orion.Domain.Models;
 using Orion.Infrastructure.Services;
+using Orion.Models;
 
 namespace Orion.Pages.EndUser
 {
@@ -50,7 +51,7 @@ namespace Orion.Pages.EndUser
 
             return Page();
         }
-        public async Task<JsonResult> OnPostAddToCartAsync([FromBody] Models.CartProduct cartProduct)
+        public async Task<JsonResult> OnPostAddToCartAsync([FromBody] CartProduct cartProduct)
         {
             var product = await _productService.Get(cartProduct.ProductId, new CancellationToken());
 
@@ -61,15 +62,15 @@ namespace Orion.Pages.EndUser
             }
             else
             {
-                Cart = await _cartService.GetCartIncludeAsync(cartProduct.CartId.Value, new CancellationToken());
+                Cart = await _cartService.Get(cartProduct.CartId.Value, new CancellationToken());
             }
+
             Cart.Products.Add(product);
             Cart.NumberOfProducts = Cart.Products.Count;
             Cart.TotalPrice = Cart.Products.Sum(p => p.ProductPrice);
             await _cartService.Update(Cart);
 
-            return new JsonResult
-                (new { CartId = Cart.Id, Products = Cart.Products.Select(p => new { ProductId = p.Id }).ToList() });
+            return new JsonResult(new { CartId = Cart.Id, Products = Cart.Products.Select(p => new { ProductId = p.Id }).ToList() });
         }
     }
 }

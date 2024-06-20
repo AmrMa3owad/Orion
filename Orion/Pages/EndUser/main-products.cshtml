@@ -92,12 +92,14 @@
                 var name = Model.Products[i].ProductName;
                 var img = Model.Products[i].ProductImage;
                 var price = Model.Products[i].ProductPrice;
+                var id = Model.Products[i].Id;
                 var imgSrc = img != null ? $"data:image/jpg;base64,{Convert.ToBase64String(img)}" : "img/product1.jpg"; // Fallback image
 
                 <div class="product-box">
-                    <a href="details.html"><img src="@imgSrc" alt="" class="product-img"></a>
+                    <a href="/EndUser/details?productId=@id"><img src="@imgSrc" alt="" class="product-img"></a>
                     <h2 class="product-title">@name</h2>
                     <span class="product-price">$@price</span>
+                    <span class="product-id">@id</span>
                     <i class='bx bx-shopping-bag add-cart'></i>
                 </div>
             }
@@ -149,7 +151,8 @@
         </div>
     </footer>
     <!-- link js -->
-    <script src="~/js/mainCart.js" asp-append-version="true"></script>
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="Js/mainCartProducts.js"></script>
 </body>
 
 </html>

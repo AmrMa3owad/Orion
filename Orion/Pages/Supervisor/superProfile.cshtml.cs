@@ -53,7 +53,7 @@ namespace Orion.Pages.Supervisor
             FreelancerNum = Supervisors.Select(x => x.Freelancers.Count);
             SupervisorImg = Supervisors.Select(x => x.SupervisorPhoto);
             SupervisorInfo = Supervisors.Select(x => x.SupervisorInfo);
-            SupervisorId = Supervisors.Select(x => x.Id);
+            SupervisorId = Supervisors.Select(x => x.EmployeeId);
 
             SupervisorFreelancer = Supervisors.Select(x => x.Freelancers);
             return Page();

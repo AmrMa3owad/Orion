@@ -7,6 +7,7 @@ namespace Orion.Domain.Models
         public Product()
         {
             CustomerProducts = new HashSet<CustomerProduct>();
+            Reviews = new HashSet<Review>();
         }
         public string? ProductName { get; set; }
         public byte[]? ProductImage { get; set; }
@@ -16,7 +17,6 @@ namespace Orion.Domain.Models
         public string? ProductSize { get; set; }
         public string? Description { get; set; }
         public double? ProductPrice { get; set; }
-        public string? Reviews { get; set; }
         public string? Customization { get; set; }
         public int? SupervisorId { get; set; }
         public int? FreelancerId { get; set; }
@@ -27,6 +27,7 @@ namespace Orion.Domain.Models
         public virtual Event Event { get; set; }
         public virtual Cart Cart { get; set; }
 
+        public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<CustomerProduct> CustomerProducts { get; set; }
 
     }

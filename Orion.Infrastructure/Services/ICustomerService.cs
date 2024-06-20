@@ -4,7 +4,7 @@ using Orion.Infrastructure.Common;
 namespace Orion.Infrastructure.Services
 {
     public interface ICustomerService :
-        IBaseServiceUser<Customer, int>
+        IBaseServiceEmployee<Customer, int>
     {
     }
 }
