@@ -50,16 +50,27 @@ namespace Orion.Extensions
                     options.Conventions.AddPageRoute("/Supervisor/superSignup", "superSignup.html");
 
 
+                    options.Conventions.AddPageRoute("/Pages/Admin/AddAdmin", "AddAdmin.html");
                     options.Conventions.AddPageRoute("/Admin/addCategory", "addCategory.html");
-                    options.Conventions.AddPageRoute("/Admin/addProd", "addProd.html");
+                    options.Conventions.AddPageRoute("/Admin/addMaterial", "addMaterial.html");
+                    options.Conventions.AddPageRoute("/Admin/AddOrphanage", "AddOrphanage.html");
+                    options.Conventions.AddPageRoute("/Admin/AddSuper", "AddSuper.html");
                     options.Conventions.AddPageRoute("/Admin/adminMaterial", "adminMaterial.html");
-                    options.Conventions.AddPageRoute("/Admin/adminRegister", "adminRegister.html");
+                    options.Conventions.AddPageRoute("/Admin/adminSignIn", "adminSignIn.html");
+                    options.Conventions.AddPageRoute("/Admin/childProfile", "childProfile.html");
+                    options.Conventions.AddPageRoute("/Admin/childstable", "childstable.html");
+                    options.Conventions.AddPageRoute("/Admin/ContactUs", "ContactUs.html");
+                    options.Conventions.AddPageRoute("/Admin/Dashboard", "Dashboard.html");
+                    options.Conventions.AddPageRoute("/Admin/details", "details.html");
+                    options.Conventions.AddPageRoute("/Admin/EditMaterial", "EditMaterial.html");
                     options.Conventions.AddPageRoute("/Admin/editOrphanage", "editOrphanage.html");
-                    options.Conventions.AddPageRoute("/Admin/adminSign", "adminSign.html");
-                    options.Conventions.AddPageRoute("/Admin/feedback", "feedback.html");
-                    options.Conventions.AddPageRoute("/Admin/newOrphanage", "newOrphanage.html");
+                    options.Conventions.AddPageRoute("/Admin/email", "email.html");
                     options.Conventions.AddPageRoute("/Admin/orphanage", "orphanage.html");
-              });
+                    options.Conventions.AddPageRoute("/Admin/orphanageSSS", "orphanageSSS.html");
+                    options.Conventions.AddPageRoute("/Admin/superProfile", "superProfile.html");
+                    options.Conventions.AddPageRoute("/Admin/supertable", "supertable.html");
+                    options.Conventions.AddPageRoute("/Admin/verify", "verify.html");
+                });
         }
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {

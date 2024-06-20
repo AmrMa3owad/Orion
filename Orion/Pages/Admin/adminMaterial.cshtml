@@ -1,24 +1,138 @@
 @page
-@model adminMaterialModel
-
-
+@model Orion.Pages.Admin.adminMaterialModel
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>products</title>
-
-    <!-- box icons  -->
-    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-    <!-- styles  -->
+    <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+   
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <!----css3---->
+     <link rel="stylesheet" href="css/custom.css">
+     <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+  <!-- box icons  -->
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--google material icon-->
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons"
+rel="stylesheet">
+ <!-- custom css file link  -->
     <link rel="stylesheet" href="css/main-products.css">
+    <title>Materials</title>
+
 </head>
 
 <body>
-    
+    <div class="wrapper">
+
+
+        <div class="body-overlay"></div>
+        
+        
+                <!-- Sidebar  -->
+                <nav id="sidebar">
+                    <div class="sidebar-header">
+                        <h3><img src="img/GRAD logo dark.png" class="img-fluid"/><span id="admoon">Welcome Amr</span></h3>
+                    </div>
+                    <ul class="list-unstyled components">
+                    <li  class="active">
+                            <a href="Dashboard.html" class="dashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="material-icons">border_color</i><span>forms</span></a>
+                            <ul class="collapse list-unstyled menu" id="pageSubmenu5">
+                                <li>
+                                    <a href="AddAdmin.html">Add admin</a>
+                                </li>
+                                <li>
+                                    <a href="addCategory.html">Add category</a>
+                                </li>
+                                <li>
+                                    <a href="addMaterial.html">Add material</a>
+                                </li>
+                                <li>
+                                    <a href="AddSuper.html">Add Supervisors</a>
+                                </li>
+                                <li>
+                                    <a href="AddOrphanage.html">Add Orphanage</a>
+                                </li>
+                                <li>
+                                    <a href="editOrphanage.html">Edit Orphanage</a>
+                                </li>
+                                <li>
+                                    <a href="EditMaterial.html">Edit material</a>
+                                </li>
+                            </ul>
+                        </li>
+                   
+                       <li class="dropdown">
+                            <a href="#pageSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="material-icons">grid_on</i><span>tables</span></a>
+                            <ul class="collapse list-unstyled menu" id="pageSubmenu6">
+                                <li>
+                                    <a href="orphanageSSS.html">Orphanages table</a>
+                                </li>
+                                <li>
+                                    <a href="supertable.html">Supervisors table</a>
+                                </li>
+                                <li>
+                                    <a href="childstable.html">stars table</a>
+                                </li>
+                            </ul>
+                        </li>
+                   
+                         <li class="dropdown">
+                            <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="material-icons">content_copy</i><span>Pages</span></a>
+                            <ul class="collapse list-unstyled menu" id="pageSubmenu7">
+                                <li>
+                                    <a href="adminMaterial.html">Materials</a>
+                                </li>
+                                <li>
+                                    <a href="ContactUs.html">Contact Us</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                 </ul>
+        
+                   
+                </nav>
+                
+                
+        
+                <!-- Page Content  -->
+                <div id="content">
+                
+                <div class="top-navbar">
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="container-fluid">
+        
+                            <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none">
+                                <span class="material-icons">arrow_back_ios</span>
+                            </button>
+                            
+                            <a class="navbar-brand" href="#">Orphanages</a>
+                            
+                            <button class="d-inline-block d-lg-none ml-auto more-button" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="material-icons">more_vert</span>
+                            </button>
+        
+                           
+                        </div>
+                    </nav>
+                </div>
+                </div>
+                </div>
+
+
+
     <!-- SHOP SECTION  -->
     <section class="shop-container">
         <div class="orion-categ">
@@ -30,7 +144,7 @@
         
             <a href="" class="categoryyy"><div class="category-img"><img src="img/pexels-thirdman-7256642.jpg" alt="" ></div><p>Punch needle</p></a>
 
-            <a href="" class="categoryyy"><div class="category-img"><img src="img/vector61-714-01.jpg" alt="" ></div><p>Add category</p></a>
+            <a href="addCategory.html" class="categoryyy"><div class="category-img"><img src="img/vector61-714-01.jpg" alt="" ></div><p>Add category</p></a>
 
         </div>
         
@@ -53,62 +167,84 @@
             <div  class="product-box">
                 <a href="details.html"><img src="img/vector61-714-01.jpg" alt="" class="product-img"></a>
                 <h2 class="product-title">add material</h2>
-                <i class='fa-solid fa-plus add-cart'></i>
+                <i class='bx bx-plus add-cart'></i>
             </div>
             <!-- BOX 2 -->
             <div  class="product-box">
                 <a href="details.html"><img src="img/product2.jpg" alt="" class="product-img"></a>
                 <h2 class="product-title">BACKPACK</h2>
                 <span class="product-price">$59.5</span>
-                <i class='fas fa-edit add-cart'></i>
+                <i class="bx bx-trash add-cart"></i>
             </div>
             <!-- BOX 3 -->
             <div  class="product-box">
                <a href="details.html"> <img src="img/product3.jpg" alt="" class="product-img"></a>
                 <h2 class="product-title">METAL BOTTLE</h2>
                 <span class="product-price">$29.5</span>
-                <i class='bx bx-shopping-bag add-cart'></i>
+                <i class="bx bx-trash add-cart"></i>
             </div>
             <!-- BOX 4 -->
             <div  class="product-box">
                 <a href="details.html"><img src="img/product4.jpg" alt="" class="product-img"></a>
                 <h2 class="product-title">METAL SUNGLASSES</h2>
                 <span class="product-price">$105</span>
-                <i class='bx bx-shopping-bag add-cart'></i>
+                <i class="bx bx-trash add-cart"></i>
             </div>
             <!-- BOX 5 -->
             <div class="product-box">
                <a href="details.html"> <img src="img/product5.jpg" alt="" class="product-img"></a>
                 <h2 class="product-title">PS5 Controller</h2>
                 <span class="product-price">$95</span>
-                <i class='bx bx-shopping-bag add-cart'></i>
+                <i class="bx bx-trash add-cart"></i>
             </div>
             <!-- BOX 6 -->
             <div class="product-box">
                <a href=""> <img src="img/product6.jpg" alt="" class="product-img"></a>
                 <h2 class="product-title">Galaxy Z Fold</h2>
                 <span class="product-price">$1400</span>
-                <i class='bx bx-shopping-bag add-cart'></i>
+                <i class="bx bx-trash add-cart"></i>
             </div>
             <!-- BOX 7 -->
             <div class="product-box">
                 <a href="details.html"><img src="img/product7.jpg" alt="" class="product-img"></a>
                 <h2 class="product-title">Nokon Camera</h2>
                 <span class="product-price">$1700</span>
-                <i class='bx bx-shopping-bag add-cart'></i>
+                <i class="bx bx-trash add-cart"></i>
             </div>
             <!-- BOX 8 -->
             <div class="product-box">
                <a href="details.html"> <img src="img/product8.jpg" alt="" class="product-img"></a>
                 <h2 class="product-title">Apple Watch</h2>
                 <span class="product-price">$110.5</span>
-                <i class='bx bx-shopping-bag add-cart'></i>
+                <i class="bx bx-trash add-cart"></i>
             </div>
         </div>
     </section>
 
-    <!-- link js  -->
-    <script src="Js/mainCart.js"></script>
+   <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+   
+   
+   <script type="text/javascript">
+   $(document).ready(function () {
+             $('#sidebarCollapse').on('click', function () {
+                 $('#sidebar').toggleClass('active');
+                 $('#content').toggleClass('active');
+             });
+             
+              $('.more-button,.body-overlay').on('click', function () {
+                 $('#sidebar,.body-overlay').toggleClass('show-nav');
+             });
+             
+         });
+ 
+  
+ </script>
+   
 </body>
 
 </html>

@@ -1,28 +1,28 @@
 @page
-@model Orion.Pages.Admin.editOrphanageModel
+@model Orion.Pages.Admin.AddOrphanageModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    
-      <!-- Bootstrap CSS -->
-      <link rel="stylesheet" href="css/bootstrap.min.css">
-      <!----css3---->
-      <link rel="stylesheet" href="css/custom.css">
-      <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
-   <!-- box icons  -->
-   <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <!--google material icon-->
- <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
- rel="stylesheet">
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+   
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <!----css3---->
+     <link rel="stylesheet" href="css/custom.css">
+     <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+  <!-- box icons  -->
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--google material icon-->
+<link href="https://fonts.googleapis.com/css2?family=Material+Icons"
+rel="stylesheet">
     <!-- custom css file link  -->
     <link rel="stylesheet" href="css/checkout.css">
-    <title>Edit Orphanage</title>
+    <title>ORPHANAGE FORM </title>
 
 </head>
 <body>
@@ -141,20 +141,28 @@
 
             <div class="col">
 
-                <h3 class="title" id="SigninTT">Edit Orphanage</h3>
+                <h3 class="title" id="SigninTT">New orphanage</h3>
+                <div class="inputBox">
+                    <span>name</span>
+                    <input type="text" placeholder="john deo">
+                </div>
+                <div class="inputBox" >
+                    <span>Region</span>
+                    <select name="" id="">
+                        <option  name="skill">dokki</option>
+                        <option  name="skill">nasr city</option>
+                        <option  name="skill">zamalek</option>
+                        <option  name="skill">faysl</option>
 
-                
+                    </select>
+                </div>
                 <div class="inputBox">
                     <span>about :</span>
                     <textarea type="text" placeholder="express yourself" class="textarea"></textarea>
                 </div>
                 <div class="inputBox">
-                    <span>picture :</span>
+                    <span>logo:</span>
                     <input type="file" placeholder="***********">
-                </div>
-                <div class="inputBox">
-                    <span>Location:</span>
-                    <input type="text" placeholder="dokki/Giza">
                 </div>
                 
         <div class="BTBOT"> <input type="submit" value="Submit" class="button22"></div>
