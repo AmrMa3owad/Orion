@@ -8,6 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Admin\addCategory.cshtml" />
+    <Content Remove="Pages\Admin\addProd.cshtml" />
+    <Content Remove="Pages\Admin\adminMaterial.cshtml" />
+    <Content Remove="Pages\Admin\adminRegister.cshtml" />
+    <Content Remove="Pages\Admin\adminSign.cshtml" />
+    <Content Remove="Pages\Admin\editOrphanage.cshtml" />
+    <Content Remove="Pages\Admin\feedback.cshtml" />
+    <Content Remove="Pages\Admin\newOrphanage.cshtml" />
+    <Content Remove="Pages\Admin\orphanage.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Admin\addCategory.cshtml" />
+    <None Include="Pages\Admin\addProd.cshtml" />
+    <None Include="Pages\Admin\adminMaterial.cshtml" />
+    <None Include="Pages\Admin\adminRegister.cshtml" />
+    <None Include="Pages\Admin\adminSign.cshtml" />
+    <None Include="Pages\Admin\editOrphanage.cshtml" />
+    <None Include="Pages\Admin\feedback.cshtml" />
+    <None Include="Pages\Admin\newOrphanage.cshtml" />
+    <None Include="Pages\Admin\orphanage.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />

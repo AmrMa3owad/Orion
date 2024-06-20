@@ -48,6 +48,17 @@ namespace Orion.Extensions
                     options.Conventions.AddPageRoute("/Supervisor/superProfile", "superProfile.html");
                     options.Conventions.AddPageRoute("/Supervisor/superSignIn", "superSignIn.html");
                     options.Conventions.AddPageRoute("/Supervisor/superSignup", "superSignup.html");
+
+
+                    options.Conventions.AddPageRoute("/Admin/addCategory", "addCategory.html");
+                    options.Conventions.AddPageRoute("/Admin/addProd", "addProd.html");
+                    options.Conventions.AddPageRoute("/Admin/adminMaterial", "adminMaterial.html");
+                    options.Conventions.AddPageRoute("/Admin/adminRegister", "adminRegister.html");
+                    options.Conventions.AddPageRoute("/Admin/editOrphanage", "editOrphanage.html");
+                    options.Conventions.AddPageRoute("/Admin/adminSign", "adminSign.html");
+                    options.Conventions.AddPageRoute("/Admin/feedback", "feedback.html");
+                    options.Conventions.AddPageRoute("/Admin/newOrphanage", "newOrphanage.html");
+                    options.Conventions.AddPageRoute("/Admin/orphanage", "orphanage.html");
               });
         }
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)

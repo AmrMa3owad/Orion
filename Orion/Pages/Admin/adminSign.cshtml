@@ -1,3 +1,6 @@
+@page
+@model adminSignModel
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +16,7 @@
 <body>
 
 <div class="container">
-    <div class="shryta" id="categoryShryta"> <img src="img/mainnpay.jpg" alt="" srcset=""></div>
+    <div class="shryta" id="signinsh"> <img src="img/mainnpay.jpg" alt="" srcset=""></div>
 
     <form action="">
 
@@ -21,21 +24,22 @@
 
             <div class="col">
 
-                <h3 class="title" id="SigninTT">Add category</h3>
+                <h3 class="title" id="SigninTT">Admin Signin</h3>
 
                 
                 <div class="inputBox">
-                    <span>name:</span>
-                    <input type="text" placeholder="john deo">
-
+                    <span>email :</span>
+                    <input type="email" placeholder="example@example.com">
                 </div>
                 <div class="inputBox">
-                    <span>picture :</span>
-                    <input type="file" placeholder="***********">
+                    <span>password :</span>
+                    <input type="password" placeholder="***********">
                 </div>
                 
-        <div class="BTBOT"> <input type="submit" value="Submit" class="button22"></div>
-       
+        <div class="BTBOT"> <input type="submit" value="Signin" class="button22"></div>
+       <div class="forgotpass">
+        <a href="">forgot password ?</a>
+       </div> 
 
     </form>
 
