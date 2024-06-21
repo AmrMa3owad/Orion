@@ -10,6 +10,7 @@ namespace Orion.Domain.Models
         public string? EmployeeStatus { get; set; }
         public string? EmployeeQualifications { get; set; }
 
+        public virtual User User { get; set; }
         public virtual Admin Admin { get; set; }
         public virtual Supervisor Supervisor { get; set; }
         public virtual OfficeWorker OfficeWorker { get; set; }
