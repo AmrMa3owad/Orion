@@ -10,7 +10,7 @@ namespace Orion.Pages.Admin
         [BindProperty]
 
         public User User { get; set; }
-        public Orion.Domain.Models.Admin Admin { get; set; }
+        public Domain.Models.Admin Admin { get; set; }
 
         private readonly IUserService _UserService;
         private readonly IAdminService _AdminService;

@@ -136,37 +136,40 @@
                                 <h4 class="card-title">Orphanages</h4>
                             </div>
                             <div class="card-content table-responsive">
-                                <table class="table table-hover">
-                                    <thead class="text-primary">
-                                        <tr><th>ID</th>
-                                        <th>Name</th>
-                                        <th>Adress</th>
-                                        <th>freelancers</th>
-                                        <th>Delete</th>
-                                        <th id="ADDbtn"><a href="AddOrphanage.html">ADD</a></th>
+                                @if (Model.Orphanages != null)
+                                {
+                                    <table class="table table-hover">
+                                        <thead class="text-primary">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Address</th>
+                                                <th>Freelancers</th>
+                                                <th>Delete</th>
+                                                <th id="ADDbtn"><a href="AddOrphanage.html">ADD</a></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var orphanage in Model.Orphanages)
+                                            {
+                                                <tr>
+                                                    <td>@orphanage.Id</td>
+                                                    <td><a href="orphanage.html">@orphanage.OrphanageName</a></td>
+                                                    <td>@orphanage.OrphanageRegion</td>
+                                                    <td>@orphanage.Freelancers.Count</td>
+                                                    <td id="DELbtn">
+                                                        <form method="post" asp-page-handler="Delete" asp-route-id="@orphanage.Id">
+                                                            <input type="hidden" name="orphanage.Id" value="@orphanage.Id" />
+                                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                        </form>
+                                                    </td>
 
-
-                                    </tr></thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><a href="orphanage.html">DAR el AML</a></td>
-                                            <td>Dokki,Giza</td>
-                                            <td>14</td>
-                                            <td id="DELbtn"><i class="bx bx-trash "></i></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td><a href="orphanage.html">DAR el AML</a></td>
-                                            <td>Dokki,Giza</td>
-                                            <td>14</td>
-                                            <td id="DELbtn"><i class="bx bx-trash "></i></td>
-
-                                        </tr>
-                                       
-                                    </tbody>
-                                </table>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                                
                             </div>
                         </div>
                     </div>

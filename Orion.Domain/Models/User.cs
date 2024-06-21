@@ -5,13 +5,12 @@ namespace Orion.Domain.Models
 {
     public class User : IdentityUser<int> , IBaseEntity<int>
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Gender { get; set; }
-        public string Address { get; set; }
-        public string BirthDate { get; set; }
-        public string Password { get; set; }
-        public string Mail { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Gender { get; set; }
+        public string? Address { get; set; }
+        public string? BirthDate { get; set; }
+        public string? Password { get; set; }
 
         public virtual Freelancer Freelancer { get; set; }
         public virtual Mentor Mentor { get; set; }

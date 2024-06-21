@@ -9,12 +9,12 @@ namespace Orion.Domain.Models
             MaterialVendors = new HashSet<MaterialVendor>();
 
         }
-        public string MaterialName { get; set; }
-        public string MaterialDetails { get; set; }
-        public int MaterialPrice { get; set; }
-        public string Image { get; set; }
-        public int MaterialSizes { get; set; }
-        public int MaterialColors { get; set; }
+        public string? MaterialName { get; set; }
+        public string? MaterialDetails { get; set; }
+        public int? MaterialPrice { get; set; }
+        public byte[]? Image { get; set; }
+        public string? MaterialSizes { get; set; }
+        public string? MaterialColors { get; set; }
 
         //public string MaterialType { get; set; }
 

@@ -39,7 +39,8 @@ namespace Orion.Infrastructure.Extentions
             services.AddScoped<ISponsorAdvertisementService, SponsorAdvertisementService>();
             services.AddScoped<ISupervisorService, SupervisorService>();
             services.AddScoped<IVendorService, VendorService>();
-            services.AddScoped<IWebsiteService, WebsiteService>();                  
+            services.AddScoped<IWebsiteService, WebsiteService>();
+            services.AddScoped<ICategoriesService, CategoryService>();
         }
     }
 }

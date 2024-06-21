@@ -8,9 +8,10 @@ namespace Orion.Pages.Admin
     public class AddOrphanageModel : PageModel
     {
         [BindProperty]
-
         public Orphanage Orphanage { get; set; }
 
+        [BindProperty]
+        public IFormFile OrphanageImageFile { get; set; }
         private readonly IOrphanageService _OrphanageService;
 
         public AddOrphanageModel(IOrphanageService OrphanageService)
@@ -24,7 +25,14 @@ namespace Orion.Pages.Admin
 
         public async Task<IActionResult> OnPostAsync()
         {
-
+            if (OrphanageImageFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await OrphanageImageFile.CopyToAsync(memoryStream);
+                    Orphanage.OrphanageLogo = memoryStream.ToArray();
+                }
+            }
             await _OrphanageService.Create(Orphanage);
 
             return Page();

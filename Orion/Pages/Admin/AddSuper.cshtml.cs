@@ -2,23 +2,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Orion.Domain.Models;
 using Orion.Infrastructure.Services;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Orion.Pages.Admin
 {
     public class AddSuperModel : PageModel
     {
         [BindProperty]
-
         public User User { get; set; }
-        public Orion.Domain.Models.Supervisor Supervisor { get; set; }
 
-        private readonly IUserService _UserService;
-        private readonly ISupervisorService _SupervisorService;
+        [BindProperty]
+        public Domain.Models.Supervisor Supervisor { get; set; }
 
-        public AddSuperModel(IUserService UserService, ISupervisorService supervisorService)
+        [BindProperty]
+        public IFormFile SupervisorImageFile { get; set; }
+
+        private readonly IUserService _userService;
+        private readonly ISupervisorService _supervisorService;
+
+        public AddSuperModel(IUserService userService, ISupervisorService supervisorService)
         {
-            _UserService = UserService;
-            _SupervisorService = supervisorService;
+            _userService = userService;
+            _supervisorService = supervisorService;
         }
 
         public void OnGet()
@@ -28,10 +34,22 @@ namespace Orion.Pages.Admin
         public async Task<IActionResult> OnPostAsync()
         {
 
-            await _UserService.Create(User);
-            await _SupervisorService.Create(Supervisor);
+            await _userService.Create(User);
 
-            return Page();
+            Supervisor.EmployeeId = User.Id;
+
+            if (SupervisorImageFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await SupervisorImageFile.CopyToAsync(memoryStream);
+                    Supervisor.SupervisorPhoto = memoryStream.ToArray();
+                }
+            }
+
+            await _supervisorService.Create(Supervisor);
+
+            return RedirectToPage("/Admin/Dashboard");
         }
     }
 }

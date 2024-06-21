@@ -8,9 +8,10 @@ namespace Orion.Pages.Admin
     public class addCategoryModel : PageModel
     {
         [BindProperty]
-
         public Category Category { get; set; }
 
+        [BindProperty]
+        public IFormFile CategoryImageFile { get; set; }
         private readonly ICategoriesService _CategoryService;
 
         public addCategoryModel(ICategoriesService CategoryService)
@@ -24,6 +25,14 @@ namespace Orion.Pages.Admin
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (CategoryImageFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await CategoryImageFile.CopyToAsync(memoryStream);
+                    Category.Img = memoryStream.ToArray();
+                }
+            }
 
             await _CategoryService.Create(Category);
 

@@ -66,8 +66,8 @@
                     <ul class="collapse list-unstyled menu" id="pageSubmenu7">
                         <li><a href="adminMaterial.html">Materials</a></li>
                         <li><a href="ContactUs.html">Contact Us</a></li>
-                        <li><a href="details.html">Details</a></li>
-                        <li><a href="orphanage.html">Orphanage</a></li>
+                        <li><a href="detailsAdmin.html">Details</a></li>
+                        <li><a href="orphanageAdmin.html">Orphanage</a></li>
                     </ul>
                 </li>
             </ul>
@@ -92,7 +92,7 @@
         </div>
 
         <div class="container">
-            <form action="">
+            <form method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col">
                         <h3 class="title">Personal Information</h3>
@@ -102,7 +102,7 @@
                         </div>
                         <div class="inputBox">
                             <span>Email</span>
-                            <input type="email" asp-for="User.Mail" placeholder="folan@gmail.com" class="input" required>
+                            <input type="email" asp-for="User.Email" placeholder="folan@gmail.com" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>Password</span>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="inputBox">
                             <span>Confirm Password</span>
-                            <input type="password" asp-for="User.Password" placeholder="********" class="input" required>
+                            <input type="password" placeholder="********" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>Phone Number</span>
@@ -118,7 +118,7 @@
                         </div>
                         <div class="inputBox">
                             <span>Gender</span>
-                            <select name="gender" id="gender" asp-for="User.Gender">
+                            <select asp-for="User.Gender" class="input">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                             </select>
@@ -126,11 +126,11 @@
                         <div class="flex">
                             <div class="inputBox">
                                 <span>Date of Birth</span>
-                                <input type="date" asp-for="User.BirthDate" placeholder="30/3/2003" class="input" required>
+                                <input type="date" asp-for="User.BirthDate" class="input" required>
                             </div>
                             <div class="inputBox">
                                 <span>Profile Image</span>
-                                <input type="file" asp-for="Supervisor.SupervisorPhoto" placeholder="Enter Your Image" class="input" required>
+                                <input type="file" asp-for="SupervisorImageFile" class="input" required>
                             </div>
                         </div>
                     </div>
@@ -139,14 +139,14 @@
                         <h3 class="title">Skill Information</h3>
                         <div class="inputBox">
                             <span>Responsible Region</span>
-                            <select name="region" id="region" asp-for="Supervisor.SupervisorRegion">
+                            <select asp-for="Supervisor.SupervisorRegion" class="input">
                                 <option value="dokki">Dokki</option>
                                 <option value="nasr city">Nasr City</option>
                             </select>
                         </div>
                         <div class="inputBox">
                             <span>Skill</span>
-                            <select name="skill" id="skill" asp-for="Supervisor.SupervisorSkill">
+                            <select asp-for="Supervisor.SupervisorSkill" class="input">
                                 <option value="resin">Resin</option>
                                 <option value="crochet">Crochet</option>
                                 <option value="beads">Beads</option>
@@ -156,17 +156,17 @@
                         </div>
                         <div class="inputBox">
                             <span>Orphanage</span>
-                            <div id="supSiCh" asp-for="Supervisor.SupervisorInfo">
-                                <div class="productCheck" >
-                                    <input type="checkbox" id="check1" class="upcheck">
+                            <div id="supSiCh">
+                                <div class="productCheck">
+                                    <input type="checkbox" id="check1" name="Supervisor.SupervisorInfo" value="Dar el aml" class="upcheck">
                                     <label for="check1">Dar el aml</label>
                                 </div>
                                 <div class="productCheck">
-                                    <input type="checkbox" id="check2" class="upcheck">
+                                    <input type="checkbox" id="check2" name="Supervisor.SupervisorInfo" value="Dar hayah" class="upcheck">
                                     <label for="check2">Dar hayah</label>
                                 </div>
                                 <div class="productCheck">
-                                    <input type="checkbox" id="check3" class="upcheck">
+                                    <input type="checkbox" id="check3" name="Supervisor.SupervisorInfo" value="Little Sparks" class="upcheck">
                                     <label for="check3">Little Sparks</label>
                                 </div>
                             </div>

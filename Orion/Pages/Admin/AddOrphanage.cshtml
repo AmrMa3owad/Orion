@@ -103,10 +103,10 @@ rel="stylesheet">
                                     <a href="ContactUs.html">Contact Us</a>
                                 </li>
                                 <li>
-                                    <a href="details.html">Details</a>
+                                    <a href="detailsAdmin.html">Details</a>
                                 </li>
                                 <li>
-                                    <a href="orphanage.html">Orphanage</a>
+                                    <a href="orphanageAdmin.html">Orphanage</a>
                                 </li>
                             </ul>
                         </li>
@@ -142,7 +142,7 @@ rel="stylesheet">
                 </div>
 <div class="container">
 
-            <form action="" method="post">
+            <form method="post" enctype="multipart/form-data">
 
         <div class="row">
 
@@ -154,14 +154,13 @@ rel="stylesheet">
                     <input type="text" asp-for="Orphanage.OrphanageName" placeholder="john deo" class="input" required>
                 </div>
                 <div class="inputBox" >
-                    <span>Region</span>
-                            <select name="" id="" asp-for="Orphanage.OrphanageRegion">
-                        <option  name="skill">dokki</option>
-                        <option  name="skill">nasr city</option>
-                        <option  name="skill">zamalek</option>
-                        <option  name="skill">faysl</option>
-
-                    </select>
+                            <span>Region</span>
+                            <select asp-for="Orphanage.OrphanageRegion" class="input">
+                                <option value="dokki">Dokki</option>
+                                <option value="nasr city">Nasr City</option>
+                                <option value="zamalek">Zamalek</option>
+                                <option value="faysal">Faysal</option>
+                            </select>
                 </div>
                 <div class="inputBox">
                     <span>about :</span>
@@ -169,7 +168,7 @@ rel="stylesheet">
                 </div>
                 <div class="inputBox">
                     <span>logo:</span>
-                            <input type="file" asp-for="Orphanage.OrphanageLogo" placeholder="***********">
+                            <input type="file" asp-for="OrphanageImageFile" placeholder="***********">
                 </div>
                 
         <div class="BTBOT">

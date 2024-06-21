@@ -90,7 +90,7 @@
         </div>
 
         <div class="container">
-            <form action="" method="post">
+            <form method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col">
                         <h3 class="title">New Material</h3>
@@ -104,47 +104,47 @@
                         </div>
                         <div class="inputBox">
                             <span>Price:</span>
-                            <input type="number" placeholder="5$">
+                            <input type="number" asp-for="Material.MaterialPrice" placeholder="5$">
                         </div>
                         <div class="flex">
                             <div class="inputBox">
                                 <span>Picture:</span>
-                                <input type="file" asp-for="Material.Image" placeholder="Enter Your Picture" class="input" required>
+                                <input type="file" asp-for="MaterialImageFile" placeholder="Enter Your Picture" class="input" required>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col" asp-for="Material.MaterialSizes">
+                    <div class="col">
                         <h3 class="title">Features</h3>
                         <div class="inputBox" id="productCheckboxx">
                             <span>Available Sizes:</span>
                             <div class="productCheck">
-                                <input type="checkbox" id="check1" >
-                                <label for="check1">7</label>
+                                <input type="radio" asp-for="Material.MaterialSizes" value="7cm" id="check1">
+                                <label for="size7">7cm</label>
                             </div>
                             <div class="productCheck">
-                                <input type="checkbox" id="check2" >
-                                <label for="check2">8</label>
+                                <input type="radio" asp-for="Material.MaterialSizes" value="8cm" id="check2">
+                                <label for="size8">8cm</label>
                             </div>
                             <div class="productCheck">
-                                <input type="checkbox" id="check3" >
-                                <label for="check3">9</label>
+                                <input type="radio" asp-for="Material.MaterialSizes" value="9cm" id="check3">
+                                <label for="size9">9cm</label>
                             </div>
                         </div>
 
-                        <div class="inputBox" id="productCheckboxx" asp-for="Material.MaterialColors">
+                        <div class="inputBox" id="productCheckboxx">
                             <span>Available Colors:</span>
                             <div class="productCheck">
-                                <input type="checkbox" id="red" >
-                                <label for="red">Red</label>
+                                <input type="radio" asp-for="Material.MaterialColors" value="red" id="red">
+                                <label for="colorRed">Red</label>
                             </div>
                             <div class="productCheck">
-                                <input type="checkbox" id="blue" >
-                                <label for="blue">Blue</label>
+                                <input type="radio" asp-for="Material.MaterialColors" value="blue" id="blue">
+                                <label for="colorBlue">Blue</label>
                             </div>
                             <div class="productCheck">
-                                <input type="checkbox" id="green" >
-                                <label for="green">Green</label>
+                                <input type="radio" asp-for="Material.MaterialColors" value="green" id="green">
+                                <label for="colorGreen">Green</label>
                             </div>
                         </div>
                     </div>
