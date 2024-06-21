@@ -1,5 +1,10 @@
 @page
 @model Orion.Pages.Admin.AddAdminModel
+@{
+    ViewData["Title"] = "Add Admin";
+}
+
+
 <html lang="en">
 
 <head>
@@ -25,6 +30,9 @@
 </head>
 
 <body>
+    <div class="Add-Admin">
+        
+    </div>
     <div class="wrapper">
         <div class="body-overlay"></div>
 
@@ -115,45 +123,48 @@
         </div>
 
         <div class="container">
-            <form action="">
+            <form method="post"  action="">
                 <div class="row">
                     <div class="col">
                         <h3 class="title">Personal information</h3>
                         <div class="inputBox">
                             <span>full name</span>
-                            <input type="text" placeholder="john deo">
+                            <input type="text" asp-for="User.FirstName" placeholder="Your Name" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>email</span>
-                            <input type="email" placeholder="example@example.com">
+                            <input type="email" asp-for="User.Mail" placeholder="folan@gmail.com" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>password:</span>
-                            <input type="password" placeholder="********">
+                            <input type="password" asp-for="User.Password" placeholder="********" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>confirm password</span>
-                            <input type="password" placeholder="********">
+                            <input type="password" asp-for="User.Password" placeholder="********" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>phone number</span>
-                            <input type="text" placeholder="0123456789">
+                            <input type="text" asp-for="User.PhoneNumber" placeholder="0123456789" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>Gender</span>
                             <select name="" id="">
-                                <option value="male" name="Gender">Male</option>
-                                <option value="female" name="Gender">Female</option>
+                                @* <input type="radio" asp-for="User.Gender" value="Male" id="genderMale" class="input" required>
+                                <label for="genderMale">Male</label> *@
+
+                                <option asp-for="User.Gender" value="male" name="Gender">Male</option>
+                                <option asp-for="User.Gender"  value="female" name="Gender">Female</option>
                             </select>
                         </div>
                         <div class="flex">
                             <div class="inputBox">
                                 <span>date of birth</span>
-                                <input type="date" placeholder="30/3/2003">
+                                <input type="date" asp-for="User.BirthDate" placeholder="30/3/2003" class="input" required>
                             </div>
                             <div class="inputBox">
                                 <span>profile image</span>
-                                <input type="file">
+                                <input type="file" asp-for="Admin.Image" placeholder="Enter Your Image" class="input" required>
                             </div>
                         </div>
                     </div>

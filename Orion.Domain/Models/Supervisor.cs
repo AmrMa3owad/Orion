@@ -2,7 +2,7 @@
 
 namespace Orion.Domain.Models
 {
-    public class Supervisor: BaseEmployee<int>
+    public class Supervisor : BaseEmployee<int>
     {
         public Supervisor()
         {

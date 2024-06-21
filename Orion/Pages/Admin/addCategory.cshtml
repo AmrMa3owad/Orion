@@ -135,7 +135,7 @@
                 </div>
 <div class="container">
 
-    <form action="">
+            <form action="" method="post">
 
         <div class="row">
 
@@ -146,15 +146,18 @@
                 
                 <div class="inputBox">
                     <span>name:</span>
-                    <input type="text" placeholder="john deo">
+
+                    <input type="text" asp-for="Category.Name" placeholder="john deo" class="input" required>
 
                 </div>
                 <div class="inputBox">
                     <span>picture :</span>
-                    <input type="file" placeholder="***********">
+                            <input type="file" asp-for="Category.Img" placeholder="***********" required>
                 </div>
-                
-        <div class="BTBOT"> <input type="submit" value="Add" class="button22"></div>
+
+                        <div class="BTBOT"> 
+                            <input type="submit"value="Add" class="button22" >
+                        </div>
        
 
     </form>

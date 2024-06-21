@@ -10,6 +10,7 @@ namespace Orion.Domain.Models
             ContactUses = new HashSet<ContactUs>();
             Categories = new HashSet<Category>();
         }
+        public string Image { get; set; }     
         public int? WebsiteId { get; set; }
         public int? DeviceId { get; set; }
    

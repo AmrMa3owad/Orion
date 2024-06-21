@@ -55,6 +55,7 @@ namespace Orion.Extensions
                     options.Conventions.AddPageRoute("/Admin/addMaterial", "addMaterial.html");
                     options.Conventions.AddPageRoute("/Admin/AddOrphanage", "AddOrphanage.html");
                     options.Conventions.AddPageRoute("/Admin/AddSuper", "AddSuper.html");
+
                     options.Conventions.AddPageRoute("/Admin/adminMaterial", "adminMaterial.html");
                     options.Conventions.AddPageRoute("/Admin/adminSignIn", "adminSignIn.html");
                     options.Conventions.AddPageRoute("/Admin/childProfileAdmin", "childProfileAdmin.html");

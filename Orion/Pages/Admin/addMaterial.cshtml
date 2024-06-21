@@ -90,17 +90,17 @@
         </div>
 
         <div class="container">
-            <form action="">
+            <form action="" method="post">
                 <div class="row">
                     <div class="col">
                         <h3 class="title">New Material</h3>
                         <div class="inputBox">
                             <span>Material Name:</span>
-                            <input type="text" placeholder="beaded bracelet">
+                            <input type="text" asp-for="Material.MaterialName" placeholder="beaded bracelet" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>Material Details:</span>
-                            <input type="email" placeholder="beaded bracelet made with love, joy and little sprinkles">
+                            <input type="text" asp-for="Material.MaterialDetails" placeholder="beaded bracelet made with love, joy and little sprinkles" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>Price:</span>
@@ -109,40 +109,41 @@
                         <div class="flex">
                             <div class="inputBox">
                                 <span>Picture:</span>
-                                <input type="file">
+                                <input type="file" asp-for="Material.Image" placeholder="Enter Your Picture" class="input" required>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col">
+                    <div class="col" asp-for="Material.MaterialSizes">
                         <h3 class="title">Features</h3>
                         <div class="inputBox" id="productCheckboxx">
                             <span>Available Sizes:</span>
                             <div class="productCheck">
-                                <input type="checkbox" id="check1">
+                                <input type="checkbox" id="check1" >
                                 <label for="check1">7</label>
                             </div>
                             <div class="productCheck">
-                                <input type="checkbox" id="check2">
+                                <input type="checkbox" id="check2" >
                                 <label for="check2">8</label>
                             </div>
                             <div class="productCheck">
-                                <input type="checkbox" id="check3">
+                                <input type="checkbox" id="check3" >
                                 <label for="check3">9</label>
                             </div>
                         </div>
-                        <div class="inputBox" id="productCheckboxx">
+
+                        <div class="inputBox" id="productCheckboxx" asp-for="Material.MaterialColors">
                             <span>Available Colors:</span>
                             <div class="productCheck">
-                                <input type="checkbox" id="red">
+                                <input type="checkbox" id="red" >
                                 <label for="red">Red</label>
                             </div>
                             <div class="productCheck">
-                                <input type="checkbox" id="blue">
+                                <input type="checkbox" id="blue" >
                                 <label for="blue">Blue</label>
                             </div>
                             <div class="productCheck">
-                                <input type="checkbox" id="green">
+                                <input type="checkbox" id="green" >
                                 <label for="green">Green</label>
                             </div>
                         </div>

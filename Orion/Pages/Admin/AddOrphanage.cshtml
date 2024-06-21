@@ -1,5 +1,12 @@
 @page
 @model Orion.Pages.Admin.AddOrphanageModel
+@{
+    ViewData["Title"] = "Add Orphanage";
+}
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -135,7 +142,7 @@ rel="stylesheet">
                 </div>
 <div class="container">
 
-    <form action="">
+            <form action="" method="post">
 
         <div class="row">
 
@@ -144,11 +151,11 @@ rel="stylesheet">
                 <h3 class="title" id="SigninTT">New orphanage</h3>
                 <div class="inputBox">
                     <span>name</span>
-                    <input type="text" placeholder="john deo">
+                    <input type="text" asp-for="Orphanage.OrphanageName" placeholder="john deo" class="input" required>
                 </div>
                 <div class="inputBox" >
                     <span>Region</span>
-                    <select name="" id="">
+                            <select name="" id="" asp-for="Orphanage.OrphanageRegion">
                         <option  name="skill">dokki</option>
                         <option  name="skill">nasr city</option>
                         <option  name="skill">zamalek</option>
@@ -158,14 +165,16 @@ rel="stylesheet">
                 </div>
                 <div class="inputBox">
                     <span>about :</span>
-                    <textarea type="text" placeholder="express yourself" class="textarea"></textarea>
+                            <textarea asp-for="Orphanage.OrphanageInfo" placeholder="Express Yourself" required></textarea>
                 </div>
                 <div class="inputBox">
                     <span>logo:</span>
-                    <input type="file" placeholder="***********">
+                            <input type="file" asp-for="Orphanage.OrphanageLogo" placeholder="***********">
                 </div>
                 
-        <div class="BTBOT"> <input type="submit" value="Submit" class="button22"></div>
+        <div class="BTBOT">
+                            <button type="submit" class="button22">Send</button>
+           @*  <input type="submit" value="Submit" class="button22"></div> *@
        
 
     </form>
@@ -177,9 +186,9 @@ rel="stylesheet">
    <script src="js/popper.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
    <script src="js/jquery-3.3.1.min.js"></script>
-  
-  
-  <script type="text/javascript">
+
+
+        <script type="text/javascript" asp-append-version="true">
   $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
