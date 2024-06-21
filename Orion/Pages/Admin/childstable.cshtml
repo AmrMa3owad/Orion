@@ -159,11 +159,12 @@
                                             @foreach (var freelancer in Model.Freelancers)
                                             {
                                                 <tr>
-                                                    <td><a href="childProfile.html">@freelancer.User.FirstName</a></td>
-                                                    <td><a href="orphanage.html">@freelancer.Orphanage.OrphanageName</a></td>
+                                                    <td>@freelancer.UserId</td>
+                                                    <td><a href="childProfileAdmin.html">@freelancer.User.FirstName</a></td>
+                                                    <td><a href="orphanageAdmin.html">@freelancer.Orphanage.OrphanageName</a></td>
                                                     <td>@freelancer.Skill</td>
                                                     <td>@freelancer.Products.Count</td>
-                                                    <td><a href="superProfile.html">@freelancer.Supervisor.Employee.User.FirstName</a></td>
+                                                    <td><a href="superProfileAdmin.html">@freelancer.Supervisor.Employee.User.FirstName</a></td>
                                                     <td id="DELbtn">
                                                         <form method="post" asp-page-handler="Delete" asp-route-id="@freelancer.UserId">
                                                             <input type="hidden" name="freelancer.Id" value="@freelancer.UserId" />

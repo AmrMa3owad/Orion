@@ -9,11 +9,11 @@ namespace Orion.Domain.Models
             SponsorAdvertisements = new HashSet<SponsorAdvertisement>();
 
         }
-        public string SponsorName { get; set; }
-        public string SponsorEmail { get; set; }
-        public int SponsorPhone { get; set; }
-        public string SponsorAddress { get; set; }
-        public string BusinessType { get; set; }
+        public string? SponsorName { get; set; }
+        public string? SponsorEmail { get; set; }
+        public int? SponsorPhone { get; set; }
+        public string? SponsorAddress { get; set; }
+        public string? BusinessType { get; set; }
         public int? DonationId { get; set; }
         public int? EventId { get; set; }
 
