@@ -26,7 +26,7 @@ namespace Orion.Pages.Supervisor
         public List<User> Users { get; set; }
         public List<Product> Products { get; set; }
         public IEnumerable<int> ProductsNum { get; set; }
-        public IEnumerable<string> FreelancerAge { get; set; }
+        public IEnumerable<DateTime?> FreelancerAge { get; set; }
         public IEnumerable<byte[]> FreelancerImg { get; set; }
         public IEnumerable<int> FreelancerId { get; set; }
         public IEnumerable<string?> FreelancerInfo { get; set; }

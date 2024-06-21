@@ -14,7 +14,6 @@ namespace Orion.Context
 
         // DbSets for your entities
         public DbSet<Admin> Admins { get; set; }
-        public DbSet<Review> Reviews { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<Booth> Booths { get; set; }
