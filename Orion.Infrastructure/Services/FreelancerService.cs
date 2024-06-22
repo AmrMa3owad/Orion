@@ -20,7 +20,11 @@ namespace Orion.Infrastructure.Services
         {
             return await _context.Freelancers
                 .Include(f => f.Orphanage)
-                .Include(f => f.Products) 
+                .Include(f => f.Products)
+                .Include(f => f.User)
+                .Include(f => f.Supervisor)
+                .ThenInclude(s => s.Employee)
+                .ThenInclude(e => e.User)
                 .FirstOrDefaultAsync(f => f.UserId == id, cancellationToken);
         }
         public async Task<List<Freelancer>> GetAllInclude(CancellationToken cancellationToken)
@@ -28,6 +32,10 @@ namespace Orion.Infrastructure.Services
             return await _context.Freelancers
                 .Include(f => f.Orphanage)
                 .Include(f => f.Products)
+                .Include(f => f.User)
+                .Include(f => f.Supervisor)
+                .ThenInclude(s => s.Employee)
+                .ThenInclude(e => e.User)
                 .ToListAsync(cancellationToken);
         }
     }

@@ -6,5 +6,8 @@ namespace Orion.Infrastructure.Services
     public interface ISupervisorService :
         IBaseServiceEmployee<Supervisor, int>
     {
+        Task<Supervisor> GetSupervisorAsync(int id, CancellationToken cancellationToken);
+        Task<List<Supervisor>> GetAllInclude(CancellationToken cancellationToken);
+
     }
 }

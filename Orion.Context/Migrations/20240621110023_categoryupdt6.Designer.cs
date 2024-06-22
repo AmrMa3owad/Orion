@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Orion.Context;
@@ -11,9 +12,11 @@ using Orion.Context;
 namespace Orion.Context.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240621110023_categoryupdt6")]
+    partial class categoryupdt6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -745,13 +748,10 @@ namespace Orion.Context.Migrations
                     b.Property<string>("MaterialName")
                         .HasColumnType("text");
 
-                    b.Property<double?>("MaterialPrice")
-                        .HasColumnType("double precision");
+                    b.Property<int?>("MaterialPrice")
+                        .HasColumnType("integer");
 
                     b.Property<string>("MaterialSizes")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MaterialType")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -1046,6 +1046,7 @@ namespace Orion.Context.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("BusinessType")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("Deleted")
@@ -1058,15 +1059,18 @@ namespace Orion.Context.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("SponsorAddress")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SponsorEmail")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("SponsorName")
+                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("SponsorPhone")
+                    b.Property<int>("SponsorPhone")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -1121,7 +1125,12 @@ namespace Orion.Context.Migrations
                     b.Property<string>("SupervisorSkill")
                         .HasColumnType("text");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("EmployeeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Supervisors");
                 });
@@ -1166,8 +1175,8 @@ namespace Orion.Context.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("BirthDate")
+                        .HasColumnType("text");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -1529,13 +1538,11 @@ namespace Orion.Context.Migrations
 
             modelBuilder.Entity("Orion.Domain.Models.Employee", b =>
                 {
-                    b.HasOne("Orion.Domain.Models.User", "User")
+                    b.HasOne("Orion.Domain.Models.User", null)
                         .WithOne("Employee")
                         .HasForeignKey("Orion.Domain.Models.Employee", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Feedback", b =>
@@ -1732,7 +1739,15 @@ namespace Orion.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Orion.Domain.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Employee");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.SupervisorOrphanage", b =>

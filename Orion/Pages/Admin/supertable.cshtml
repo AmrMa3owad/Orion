@@ -136,38 +136,39 @@
                                 <h4 class="card-title">Supervisors</h4>
                             </div>
                             <div class="card-content table-responsive">
-                                <table class="table table-hover">
-                                    <thead class="text-primary">
-                                        <tr><th>ID</th>
-                                        <th>Name</th>
-                                        <th>region</th>
-                                        <th>freelancers</th>
-                                        <th>Delete</th>
-                                        <td id="ADDbtn"><a href="AddSuper.html">ADD</a></td>
+                                @if (Model.Supervisors != null)
+                                {
+                                    <table class="table table-hover">
+                                        <thead class="text-primary">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>region</th>
+                                                <th>freelancers</th>
+                                                <th>Delete</th>
+                                                <th id="ADDbtn"><a href="AddSuper.html">ADD</a></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var supervisor in Model.Supervisors)
+                                            {
+                                                <tr>
+                                                    <td>@supervisor.EmployeeId</td>
+                                                    <td><a href="superProfileAdmin.html">@supervisor.Employee.User.FirstName</a></td>
+                                                    <td>@supervisor.SupervisorRegion</td>
+                                                    <td>@supervisor.Freelancers.Count</td>
+                                                    <td id="DELbtn">
+                                                        <form method="post" asp-page-handler="Delete" asp-route-id="@supervisor.EmployeeId">
+                                                            <input type="hidden" name="freelancer.Id" value="@supervisor.EmployeeId" />
+                                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                        </form>
+                                                    </td>
 
-
-                                    </tr></thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><a href="superProfile.html">Ammar</a></td>
-                                            <td>Dokki,Giza</td>
-                                            <td>14</td>
-                                            <td id="DELbtn"><i class="bx bx-trash "></i></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td><a href="superProfile.html"> AML</a></td>
-                                            <td>Dokki,Giza</td>
-                                            <td>14</td>
-
-                                            <td id="DELbtn"><i class="bx bx-trash "></i></td>
-
-                                        </tr>
-                                       
-                                    </tbody>
-                                </table>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
                             </div>
                         </div>
                     </div>

@@ -138,47 +138,45 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="card" style="min-height: 485px">
                             <div class="card-header card-header-text">
-                                <h4 class="card-title">Supervisors</h4>
+                                <h4 class="card-title">Freelancers</h4>
                             </div>
                             <div class="card-content table-responsive">
-                                <table class="table table-hover">
-                                    <thead class="text-primary">
-                                        <tr><th>ID</th>
-                                        <th>Name</th>
-                                        <th>orphanage</th>
-                                        <th>skill</th>
-                                        <th>products</th>
-                                        <th>supervisor</th>
-                                        <th>Delete</th>
+                                @if (Model.Freelancers != null)
+                                {
+                                    <table class="table table-hover">
+                                        <thead class="text-primary">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>orphanage</th>
+                                                <th>skill</th>
+                                                <th>products</th>
+                                                <th>supervisor</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var freelancer in Model.Freelancers)
+                                            {
+                                                <tr>
+                                                    <td>@freelancer.UserId</td>
+                                                    <td><a href="childProfileAdmin.html">@freelancer.User.FirstName</a></td>
+                                                    <td><a href="orphanageAdmin.html">@freelancer.Orphanage.OrphanageName</a></td>
+                                                    <td>@freelancer.Skill</td>
+                                                    <td>@freelancer.Products.Count</td>
+                                                    <td><a href="superProfileAdmin.html">@freelancer.Supervisor.Employee.User.FirstName</a></td>
+                                                    <td id="DELbtn">
+                                                        <form method="post" asp-page-handler="Delete" asp-route-id="@freelancer.UserId">
+                                                            <input type="hidden" name="freelancer.Id" value="@freelancer.UserId" />
+                                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                        </form>
+                                                    </td>
 
-                                    </tr></thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><a href="childProfile.html">logy</a></td>
-                                            <td><a href="orphanage.html">dar el aml</a></td>
-                                            <td>crochet </td>
-
-                                            <td>14</td>
-                                            <td><a href="superProfile.html"> AML</a></td>
-                                            <td id="DELbtn"><i class="bx bx-trash "></i></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><a href="childProfile.html">logy</a></td>
-                                            <td><a href="orphanage.html">dar el aml</a></td>
-                                            <td>crochet </td>
-
-                                            <td>14</td>
-                                            <td><a href="superProfile.html"> AML</a></td>
-                                            <td id="DELbtn"><i class="bx bx-trash "></i></td>
-
-                                        </tr>
-                                        
-                                       
-                                    </tbody>
-                                </table>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
                             </div>
                         </div>
                     </div>
