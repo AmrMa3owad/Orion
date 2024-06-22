@@ -100,7 +100,7 @@ body{
     background-image: linear-gradient(45deg, #111, #666);
 }
 
-.logo{
+.Dlogo{
     position: absolute;
     width: 100px;
     left: 20px;
@@ -401,7 +401,7 @@ body{
         line-height: 40px;
     }
 
-    .logo{
+    .Dlogo{
         width: 70px;
     }
 }
@@ -473,7 +473,7 @@ body{
         line-height: 35px;
     }
 
-    .logo{
+    .Dlogo{
         width: 60px;
         top: 10px;
         left: 10px;

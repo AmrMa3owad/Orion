@@ -17,7 +17,7 @@
 <div class="container">
     <div class="shryta" id="signinsh"> <img src="img/mainnpay.jpg" alt="" srcset=""></div>
 
-    <form action="">
+        <form method="post" asp-page-handler="SignIn" class="sign-in-form">
 
         <div class="row">
 
@@ -28,12 +28,12 @@
                 
                 <div class="inputBox">
                     <span>email :</span>
-                    <input type="email" placeholder="example@example.com">
-                </div>
+                        <input type="email" name="Email" placeholder="example@example.com">
+                 </div>
                 <div class="inputBox">
                     <span>password :</span>
-                    <input type="password" placeholder="***********">
-                </div>
+                        <input type="password" name="Password" placeholder="***********">
+                    </div>
                 
         <div class="BTBOT"> <input type="submit" value="Signin" class="button22"></div>
        <div class="forgotpass">

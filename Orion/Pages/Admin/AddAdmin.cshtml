@@ -123,29 +123,37 @@
         </div>
 
         <div class="container">
-            <form method="post"  action="">
+            <form method="post" asp-page-handler="Admin" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col">
                         <h3 class="title">Personal information</h3>
                         <div class="inputBox">
-                            <span>full name</span>
-                            <input type="text" asp-for="User.FirstName" placeholder="Your Name" class="input" required>
+                            <span>user name</span>
+                            <input type="text" asp-for="FirstName" placeholder="Your Name" class="input" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>first name</span>
+                            <input type="text" asp-for="LastName" placeholder="Your Name" class="input" required>
+                        </div>
+                        <div class="inputBox">
+                            <span>last name</span>
+                            <input type="text" asp-for="Username" placeholder="Your Name" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>email</span>
-                            <input type="email" asp-for="User.Email" placeholder="folan@gmail.com" class="input" required>
+                            <input type="email" asp-for="Email" placeholder="folan@gmail.com" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>password:</span>
-                            <input type="password" asp-for="User.Password" placeholder="********" class="input" required>
+                            <input type="password" asp-for="Password" placeholder="********" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>confirm password</span>
-                            <input type="password" asp-for="User.Password" placeholder="********" class="input" required>
+                            <input type="password" placeholder="********" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>phone number</span>
-                            <input type="text" asp-for="User.PhoneNumber" placeholder="0123456789" class="input" required>
+                            <input type="text" asp-for="PhoneNumber" placeholder="0123456789" class="input" required>
                         </div>
                         <div class="inputBox">
                             <span>Gender</span>
@@ -153,18 +161,18 @@
                                 @* <input type="radio" asp-for="User.Gender" value="Male" id="genderMale" class="input" required>
                                 <label for="genderMale">Male</label> *@
 
-                                <option asp-for="User.Gender" value="male" name="Gender">Male</option>
-                                <option asp-for="User.Gender"  value="female" name="Gender">Female</option>
+                                <option asp-for="Gender" value="male" name="Gender">Male</option>
+                                <option asp-for="Gender" value="female" name="Gender">Female</option>
                             </select>
                         </div>
                         <div class="flex">
                             <div class="inputBox">
                                 <span>date of birth</span>
-                                <input type="date" asp-for="User.BirthDate" placeholder="30/3/2003" class="input" required>
+                                <input type="date" asp-for="DateOfBirth" placeholder="30/3/2003" class="input" required>
                             </div>
                             <div class="inputBox">
                                 <span>profile image</span>
-                                <input type="file" asp-for="Admin.Image" placeholder="Enter Your Image" class="input" required>
+                                <input type="file" asp-for="ProfileImage" placeholder="Enter Your Image" class="input" required>
                             </div>
                         </div>
                     </div>
