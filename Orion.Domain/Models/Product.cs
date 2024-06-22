@@ -7,6 +7,7 @@ namespace Orion.Domain.Models
         public Product()
         {
             CustomerProducts = new HashSet<CustomerProduct>();
+            Feedbacks = new HashSet<Feedback>();
         }
         public string? ProductName { get; set; }
         public byte[]? ProductImage { get; set; }
@@ -27,6 +28,7 @@ namespace Orion.Domain.Models
         public virtual Cart Cart { get; set; }
 
         public virtual ICollection<CustomerProduct> CustomerProducts { get; set; }
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
 
     }
 }
