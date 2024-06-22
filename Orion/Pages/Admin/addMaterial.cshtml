@@ -106,10 +106,14 @@
                             <span>Price:</span>
                             <input type="number" asp-for="Material.MaterialPrice" placeholder="5$">
                         </div>
+                        <div class="inputBox">
+                            <span>Material Type:</span>
+                            <input type="text" asp-for="Material.MaterialType" placeholder="beaded bracelet" class="input" required>
+                        </div>
                         <div class="flex">
                             <div class="inputBox">
                                 <span>Picture:</span>
-                                <input type="file" asp-for="MaterialImageFile" placeholder="Enter Your Picture" class="input" required>
+                                <input type="file" asp-for="Material.Image" placeholder="Enter Your Picture" class="input" required>
                             </div>
                         </div>
                     </div>

@@ -108,6 +108,7 @@ rel="stylesheet">
         
                 <!-- Page Content  -->
                 <div id="content">
+           
                 
                 <div class="top-navbar">
                     <nav class="navbar navbar-expand-lg">
@@ -136,34 +137,80 @@ rel="stylesheet">
     <!-- SHOP SECTION  -->
     <section class="shop-container">
         <div class="orion-categ">
-            <a href="" class="categoryyy"> <div class="category-img"><img src="img/pexels-cottonbro-studio-3838692.jpg" alt=""></div><p>Beads</p></a>
-        
-            <a href="" class="categoryyy"><div class="category-img"><img src="img/pexels-miriam-alonso-7585238.jpg" alt="" ></div><p>Crochet</p></a>
-        
-            <a href="" class="categoryyy"><div class="category-img"><img src="img/pexels-miriam-alonso-7585704.jpg" alt="" ></div><p>Resin</p></a>
-        
-            <a href="" class="categoryyy"><div class="category-img"><img src="img/pexels-thirdman-7256642.jpg" alt="" ></div><p>Punch needle</p></a>
-
-            <a href="addCategory.html" class="categoryyy"><div class="category-img"><img src="img/vector61-714-01.jpg" alt="" ></div><p>Add category</p></a>
-
+            <form method="get" id="productTypeForm">
+                <input type="hidden" name="SearchQuery" value="@Model.SearchQuery" />
+                <button type="submit" name="materialType" value="Beads" class="categoryyy">
+                    <div class="category-img">
+                        <img src="img/pexels-cottonbro-studio-3838692.jpg" alt="">
+                    </div>
+                    <p>Beads</p>
+                </button>
+                <button type="submit" name="materialType" value="Crochet" class="categoryyy">
+                    <div class="category-img">
+                        <img src="img/pexels-miriam-alonso-7585238.jpg" alt="">
+                    </div>
+                    <p>Crochet</p>
+                </button>
+                <button type="submit" name="materialType" value="Resin" class="categoryyy">
+                    <div class="category-img">
+                        <img src="img/pexels-miriam-alonso-7585704.jpg" alt="">
+                    </div>
+                    <p>Resin</p>
+                </button>
+                <button type="submit" name="materialType" value="Punch needle" class="categoryyy">
+                    <div class="category-img">
+                        <img src="img/pexels-thirdman-7256642.jpg" alt="">
+                    </div>
+                    <p>Punch needle</p>
+                </button>
+                <button type="submit" name="category" value="add category" class="categoryyy">
+                    <div class="category-img">
+                        <img src="img/vector61-714-01.jpg" alt="">
+                    </div>
+                    <p>Add category</p>
+                </button>
+            </form>
         </div>
-        
     
             <!-- ------------------------categories end search start-------------------------------------- -->
-            <div class="container-search">
-                <input type="text" placeholder="Search" name="text" class="input-search">
-                <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M790.588 1468.235c-373.722 0-677.647-303.924-677.647-677.647 0-373.722 303.925-677.647 677.647-677.647 373.723 0 677.647 303.925 677.647 677.647 0 373.723-303.924 677.647-677.647 677.647Zm596.781-160.715c120.396-138.692 193.807-319.285 193.807-516.932C1581.176 354.748 1226.428 0 790.588 0S0 354.748 0 790.588s354.748 790.588 790.588 790.588c197.647 0 378.24-73.411 516.932-193.807l516.028 516.142 79.963-79.963-516.142-516.028Z" fill-rule="evenodd"></path>
-              </svg>
-              </div>
-    
+           
+        <div class="container-search">
+            @* Slow Rendering *@
+            <form method="get">
+                <input type="text" placeholder="Search" name="SearchQuery" class="input-search" value="@Model.SearchQuery">
+                <input type="hidden" name="MaterialType" value="@Model.MaterialType" />
+                <button type="submit">
+                    <svg fill="#000000" width="20px" height="20px" viewBox="0 0 1920 1920" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M790.588 1468.235c-373.722 0-677.647-303.924-677.647-677.647 0-373.722 303.925-677.647 677.647-677.647 373.723 0 677.647 303.925 677.647 677.647 0 373.723-303.924 677.647-677.647 677.647Zm596.781-160.715c120.396-138.692 193.807-319.285 193.807-516.932C1581.176 354.748 1226.428 0 790.588 0S0 354.748 0 790.588s354.748 790.588 790.588 790.588c197.647 0 378.24-73.411 516.932-193.807l516.028 516.142 79.963-79.963-516.142-516.028Z" fill-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+
               <!-- ----------------------------------search end subcategory start--------------------------------  -->
             
         <h2 class="section-title">Shop materials</h2>
 
         <!-- CONTENT  -->
         <div class="shop-content">
-            <!-- BOX 1 -->
+            @for (int i = 0; i < Model.Material.Count; i++)
+            {
+                var name = Model.Material[i].MaterialName;
+                var img = Model.Material[i].Image;
+                var price = Model.Material[i].MaterialPrice;
+                var id = Model.Material[i].Id;
+                var imgSrc = img != null ? $"data:image/jpg;base64,{Convert.ToBase64String(img)}" : "img/product1.jpg"; // Fallback image
+
+                <div class="Material-box">
+                    <a href="/Admin/adminMaterial?MaterialId=@id"><img src="@imgSrc" alt="" class="Material-img"></a>
+                    <h2 class="Material-title">@name</h2>
+                    <span class="Material-price">$@price</span>
+                    <span class="Material-id">@id</span>
+                  @*   <i class='bx bx-shopping-bag add-cart'></i> *@
+                </div>
+            }
+            @* <!-- BOX 1 -->
             <div  class="product-box">
                 <a href="details.html"><img src="img/vector61-714-01.jpg" alt="" class="product-img"></a>
                 <h2 class="product-title">add material</h2>
@@ -217,7 +264,7 @@ rel="stylesheet">
                 <h2 class="product-title">Apple Watch</h2>
                 <span class="product-price">$110.5</span>
                 <i class="bx bx-trash add-cart"></i>
-            </div>
+            </div> *@
         </div>
     </section>
 
