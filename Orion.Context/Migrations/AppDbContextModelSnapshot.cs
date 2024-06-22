@@ -34,7 +34,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("EventsId");
 
-                    b.ToTable("CustomerEvent");
+                    b.ToTable("CustomerEvent", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -189,7 +189,7 @@ namespace Orion.Context.Migrations
                     b.HasIndex("WebsiteId")
                         .IsUnique();
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admins", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Advertisement", b =>
@@ -213,7 +213,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Advertisements");
+                    b.ToTable("Advertisements", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Booth", b =>
@@ -245,7 +245,7 @@ namespace Orion.Context.Migrations
                     b.HasIndex("EventId")
                         .IsUnique();
 
-                    b.ToTable("Booths");
+                    b.ToTable("Booths", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.BoothOrder", b =>
@@ -271,7 +271,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("BoothOrders");
+                    b.ToTable("BoothOrders", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Cart", b =>
@@ -293,7 +293,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Category", b =>
@@ -323,7 +323,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("AdminId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.ContactUs", b =>
@@ -357,7 +357,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("ContactUs");
+                    b.ToTable("ContactUs", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Craft", b =>
@@ -381,7 +381,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Crafts");
+                    b.ToTable("Crafts", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Customer", b =>
@@ -416,7 +416,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("WebsiteId");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.CustomerAdvertisement", b =>
@@ -442,7 +442,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomerAdvertisements");
+                    b.ToTable("CustomerAdvertisements", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.CustomerProduct", b =>
@@ -468,7 +468,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CustomerProducts");
+                    b.ToTable("CustomerProducts", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Delivery", b =>
@@ -494,7 +494,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Deliveries");
+                    b.ToTable("Deliveries", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.DeliveryOrder", b =>
@@ -526,7 +526,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("DeliveryOrders");
+                    b.ToTable("DeliveryOrders", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Device", b =>
@@ -569,7 +569,7 @@ namespace Orion.Context.Migrations
                     b.HasIndex("OfficeWorkerId")
                         .IsUnique();
 
-                    b.ToTable("Devices");
+                    b.ToTable("Devices", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Donation", b =>
@@ -600,7 +600,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Donations");
+                    b.ToTable("Donations", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Employee", b =>
@@ -625,7 +625,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Event", b =>
@@ -656,7 +656,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Feedback", b =>
@@ -700,7 +700,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Feedbacks", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Freelancer", b =>
@@ -732,7 +732,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("Freelancers");
+                    b.ToTable("Freelancers", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Material", b =>
@@ -769,7 +769,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Materials");
+                    b.ToTable("Materials", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.MaterialVendor", b =>
@@ -795,7 +795,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("VendorId");
 
-                    b.ToTable("MaterialVendors");
+                    b.ToTable("MaterialVendors", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Mentor", b =>
@@ -820,7 +820,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("CraftId");
 
-                    b.ToTable("Mentors");
+                    b.ToTable("Mentors", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.OfficeWorker", b =>
@@ -837,7 +837,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("OfficeWorkers");
+                    b.ToTable("OfficeWorkers", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Order", b =>
@@ -877,7 +877,7 @@ namespace Orion.Context.Migrations
                     b.HasIndex("CustomerId")
                         .IsUnique();
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Orphanage", b =>
@@ -905,7 +905,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orphanages");
+                    b.ToTable("Orphanages", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Payment", b =>
@@ -931,7 +931,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.PreCommunity", b =>
@@ -947,7 +947,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PreCommunities");
+                    b.ToTable("PreCommunities", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Product", b =>
@@ -1010,7 +1010,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Sponsor", b =>
@@ -1051,7 +1051,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("EventId");
 
-                    b.ToTable("Sponsors");
+                    b.ToTable("Sponsors", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.SponsorAdvertisement", b =>
@@ -1077,7 +1077,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("SponsorId");
 
-                    b.ToTable("SponsorAdvertisements");
+                    b.ToTable("SponsorAdvertisements", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Supervisor", b =>
@@ -1099,7 +1099,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.ToTable("Supervisors");
+                    b.ToTable("Supervisors", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.SupervisorOrphanage", b =>
@@ -1125,7 +1125,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("SupervisorOrphanage");
+                    b.ToTable("SupervisorOrphanage", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.User", b =>
@@ -1234,7 +1234,7 @@ namespace Orion.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vendors");
+                    b.ToTable("Vendors", (string)null);
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Website", b =>
@@ -1262,7 +1262,7 @@ namespace Orion.Context.Migrations
 
                     b.HasIndex("OfficeWorkerId");
 
-                    b.ToTable("Websites");
+                    b.ToTable("Websites", (string)null);
                 });
 
             modelBuilder.Entity("CustomerEvent", b =>
@@ -1849,6 +1849,8 @@ namespace Orion.Context.Migrations
             modelBuilder.Entity("Orion.Domain.Models.Product", b =>
                 {
                     b.Navigation("CustomerProducts");
+
+                    b.Navigation("Feedbacks");
                 });
 
             modelBuilder.Entity("Orion.Domain.Models.Sponsor", b =>
