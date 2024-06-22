@@ -135,7 +135,8 @@
                 </div>
 <div class="container">
 
-    <form action="">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Orphanage.Id" />
 
         <div class="row">
 
@@ -143,18 +144,21 @@
 
                 <h3 class="title" id="SigninTT">Edit Orphanage</h3>
 
-                
-                <div class="inputBox">
-                    <span>about :</span>
-                    <textarea type="text" placeholder="express yourself" class="textarea"></textarea>
+                  <div class="inputBox">
+                   <span>Name :</span>
+                  <input asp-for="Orphanage.OrphanageName" placeholder="express yourself">
                 </div>
                 <div class="inputBox">
-                    <span>picture :</span>
-                    <input type="file" placeholder="***********">
+                    <span>About :</span>
+                   <textarea asp-for="Orphanage.OrphanageInfo" placeholder="express yourself" class="textarea"></textarea>
+                </div>
+                <div class="inputBox">
+                    <span>Picture :</span>
+                   <input type="file" asp-for="ProfilePicture" placeholder="***********">
                 </div>
                 <div class="inputBox">
                     <span>Location:</span>
-                    <input type="text" placeholder="dokki/Giza">
+                  <input asp-for="Orphanage.OrphanageRegion" placeholder="dokki/Giza">
                 </div>
                 
         <div class="BTBOT"> <input type="submit" value="Submit" class="button22"></div>
