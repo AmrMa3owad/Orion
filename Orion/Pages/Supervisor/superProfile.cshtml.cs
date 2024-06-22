@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Orion.Domain.Models;
 using Orion.Infrastructure.Services;
 using System.Collections.Generic;
@@ -12,50 +13,45 @@ namespace Orion.Pages.Supervisor
 {
     public class superProfileModel : PageModel
     {
-        private readonly IProductService _productService;
-        private readonly IFreelancerService _freelancerService;
         private readonly ISupervisorService _supervisorService;
-        private readonly IUserService _userService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public superProfileModel(
-            IProductService productService,
-            IFreelancerService freelancerService,
-            ISupervisorService supervisorService,
-            IUserService userService)
+            ISupervisorService supervisorService, IHttpContextAccessor httpContextAccessor
+)
         {
-            _productService = productService;
-            _freelancerService = freelancerService;
+            _httpContextAccessor = httpContextAccessor;
             _supervisorService = supervisorService;
-            _userService = userService;
         }
 
         [BindProperty(SupportsGet = true)]
         public List<Domain.Models.Supervisor> Supervisors { get; set; }
+        public Domain.Models.Supervisor Supervisor { get; set; }
 
         public List<Freelancer> Freelancers { get; set; }
         public List<User> Users { get; set; }
         public List<Product> Products { get; set; }
-        public IEnumerable<int> ProductsNum { get; set; }
-        public IEnumerable<int> FreelancerNum { get; set; }
-        public IEnumerable<int> SupervisorId { get; set; }
-        public IEnumerable<byte[]?> SupervisorImg { get; set; }
-        public IEnumerable<string?> SupervisorInfo { get; set; }
-        public IEnumerable<ICollection<Freelancer?>> SupervisorFreelancer { get; set; }
+        public int ProductsNum { get; set; }
+        public int FreelancerNum { get; set; }
+        public int SupervisorId { get; set; }
+        public byte[]? SupervisorImg { get; set; }
+        public string? SupervisorInfo { get; set; }
+        public ICollection<Freelancer?> SupervisorFreelancer { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            Users = await _userService.GetAll(CancellationToken.None).ToListAsync();
-            Products = await _productService.GetAll(CancellationToken.None).ToListAsync();
-            Freelancers = await _freelancerService.GetAll(CancellationToken.None).ToListAsync();
-            Supervisors = await _supervisorService.GetAll(CancellationToken.None).ToListAsync();
+            var supervisorId = _httpContextAccessor.HttpContext.Session.GetInt32("SupervisorID");
 
-            ProductsNum = Supervisors.Select(x => x.Products.Count);
-            FreelancerNum = Supervisors.Select(x => x.Freelancers.Count);
-            SupervisorImg = Supervisors.Select(x => x.SupervisorPhoto);
-            SupervisorInfo = Supervisors.Select(x => x.SupervisorInfo);
-            SupervisorId = Supervisors.Select(x => x.EmployeeId);
+            Supervisor = await _supervisorService.Get(supervisorId.GetValueOrDefault(), new CancellationToken());
 
-            SupervisorFreelancer = Supervisors.Select(x => x.Freelancers);
+
+            ProductsNum = Supervisor.Products.Count;
+            FreelancerNum = Supervisor.Freelancers.Count;
+            SupervisorImg = Supervisor.SupervisorPhoto;
+            SupervisorInfo = Supervisor.SupervisorInfo;
+            SupervisorId = Supervisor.EmployeeId;
+
+            SupervisorFreelancer = Supervisor.Freelancers;
             return Page();
         }
     }

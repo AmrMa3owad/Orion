@@ -9,6 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Add session services
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.ConfigureRouter();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OrionDB")));
@@ -42,6 +51,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// Use session
+app.UseSession();
+
 app.MapRazorPages();
 app.MapControllers();
 

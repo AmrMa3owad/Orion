@@ -35,11 +35,7 @@ namespace Orion.Pages.Supervisor
         }
 
         public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        {         
 
             if (ProfilePicture != null && ProfilePicture.Length > 0)
             {
