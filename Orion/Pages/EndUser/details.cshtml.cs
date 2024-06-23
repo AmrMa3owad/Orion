@@ -30,7 +30,7 @@ namespace Orion.Pages.EndUser
         public async Task<IActionResult> OnGetAsync()
         {          
 
-            Product = await _productService.Get(productId, new CancellationToken());
+            Product = await _productService.Get(ProductId, new CancellationToken());
             Feedbacks = await _feedbackService.GetAll(new CancellationToken()).ToListAsync();          
 
             return Page();
@@ -50,7 +50,7 @@ namespace Orion.Pages.EndUser
                 await _productService.Update(freelancer);
             }
 
-            return Page();
+            return RedirectToPage();
         }
 
     }
