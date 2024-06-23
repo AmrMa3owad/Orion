@@ -23,12 +23,16 @@ namespace Orion.Infrastructure.Services
                 .Include(f => f.Employee)
                 .ThenInclude(e => e.User)
                 .Include(f => f.Products)
+                .Include(f=>f.Freelancers)
+                .ThenInclude(e => e.User)
 
                 .FirstOrDefaultAsync(f => f.EmployeeId == id, cancellationToken);
         }
         public async Task<List<Supervisor>> GetAllInclude(CancellationToken cancellationToken)
         {
             return await _context.Supervisors
+                .Include(f => f.Freelancers)
+                .ThenInclude(e => e.User)
                 .Include(f => f.Employee)
                 .ThenInclude(e => e.User)
                 .Include(f => f.Products)

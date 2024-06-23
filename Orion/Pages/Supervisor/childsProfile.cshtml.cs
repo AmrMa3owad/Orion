@@ -23,31 +23,47 @@ namespace Orion.Pages.Supervisor
         }
 
         public List<Freelancer> Freelancers { get; set; }
+        public Freelancer Freelancer { get; set; }
+
         public List<User> Users { get; set; }
         public List<Product> Products { get; set; }
-        public IEnumerable<int> ProductsNum { get; set; }
-        public IEnumerable<DateTime?> FreelancerAge { get; set; }
-        public IEnumerable<byte[]> FreelancerImg { get; set; }
-        public IEnumerable<int> FreelancerId { get; set; }
-        public IEnumerable<string?> FreelancerInfo { get; set; }
-        public IEnumerable<ICollection<Product?>> FreelancerProduct { get; set; }
-        public IEnumerable<string> FreelancerOrphanage { get; set; }
+        public int ProductsNum { get; set; }
+        public DateTime? FreelancerAge { get; set; }
+        public byte[] FreelancerImg { get; set; }
+        public int FreelancerId { get; set; }
+        public string? FreelancerInfo { get; set; }
+        public ICollection<Product?> FreelancerProduct { get; set; }
+        public string FreelancerOrphanage { get; set; }
+        public int Age { get; set; }
 
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(int freelancerId)
         {
-            Users = await _userService.GetAll(CancellationToken.None).ToListAsync();
-            Products = await _productService.GetAll(CancellationToken.None).ToListAsync();
-            Freelancers = await _freelancerService.GetAllInclude(CancellationToken.None);
+            Freelancer = await _freelancerService.GetFreelancerWithOrphanageAsync(freelancerId, new CancellationToken());
 
-            ProductsNum = Freelancers.Select(x=>x.Products.Count);
-            FreelancerAge = Users.Select(x => x.BirthDate);
-            FreelancerImg = Freelancers.Select(x => x.StarPhoto);
-            FreelancerInfo = Freelancers.Select(x => x.FreelancerDescription);
-            FreelancerId = Freelancers.Select(x => x.UserId);
-            FreelancerProduct = Freelancers.Select(x => x.Products);
-            FreelancerOrphanage = Freelancers.Select(x => x.Orphanage.OrphanageName);
+            ProductsNum = Freelancer.Products.Count;
+            FreelancerAge = Freelancer.User.BirthDate;
+            FreelancerImg = Freelancer.StarPhoto;
+            FreelancerInfo = Freelancer.FreelancerDescription;
+            FreelancerId = Freelancer.UserId;
+            FreelancerProduct = Freelancer.Products;
+            FreelancerOrphanage = Freelancer.Orphanage.OrphanageName;
+
+            if (FreelancerAge.HasValue)
+            {
+                Age = CalculateAge(FreelancerAge.Value);
+            }
             return Page();
+        }
+        private int CalculateAge(DateTime birthDate)
+        {
+            DateTime today = DateTime.Today;
+            int age = today.Year - birthDate.Year;
+            if (birthDate > today.AddYears(-age))
+            {
+                age--;
+            }
+            return age;
         }
     }
 }

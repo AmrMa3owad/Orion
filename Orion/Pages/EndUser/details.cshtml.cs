@@ -30,7 +30,7 @@ namespace Orion.Pages.EndUser
         public async Task<IActionResult> OnGetAsync()
         {          
 
-            Product = await _productService.Get(ProductId, new CancellationToken());
+            Product = await _productService.Get(productId, new CancellationToken());
             Feedbacks = await _feedbackService.GetAll(new CancellationToken()).ToListAsync();          
 
             return Page();

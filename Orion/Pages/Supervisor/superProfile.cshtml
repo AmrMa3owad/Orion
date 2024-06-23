@@ -22,7 +22,7 @@
                     {
                         <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.SupervisorImg)" alt="Supervisor Photo" />
                     }
-                    <h2>Ammar Ali</h2>
+                    <h2>@Model.SupervisorName</h2>
                     <p>Supervisor</p>
 
                     <ul class="about">
@@ -50,7 +50,7 @@
                     {
                         <div class="cardShop">
                             <div class="imgbx">
-                                <img src="img/Screenshot_27-3-2024_84220_www.pexels.com.jpeg" alt="">
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(@freelancer.StarPhoto)" alt="Freelancer Photo" />
                             </div>
                             <div class="content">
                                 <div class="details">
@@ -58,7 +58,7 @@
                                         <h2>@freelancer.User.FirstName <br><span>@freelancer.Skill</span></h2>
                                     </div>
                                     <div class="prod-btn">
-                                        <button class="button22c">View profile</button>
+                                        <a href="childsProfile.html?freelancerId=@freelancer.UserId" class="button22c">View profile</a>
                                     </div>
                                 </div>
                             </div>

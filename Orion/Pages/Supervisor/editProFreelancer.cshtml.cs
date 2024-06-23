@@ -31,7 +31,8 @@ namespace Orion.Pages.Supervisor
 
         public async Task<IActionResult> OnPostAsync()
         {
-            
+            Freelancer = await _freelancerService.Get(Freelancer.UserId, new CancellationToken());
+
             if (ProfilePicture != null && ProfilePicture.Length > 0)
             {
                 using (var memoryStream = new MemoryStream())
@@ -50,7 +51,7 @@ namespace Orion.Pages.Supervisor
                 return Page();
             }
 
-            return RedirectToPage("/Supervisor/childsProfile"); // Redirect to profile page
+            return RedirectToPage("/Supervisor/childsProfile", new { freelancerId = Freelancer.UserId }); // Redirect to profile page
         }
     }
 }
