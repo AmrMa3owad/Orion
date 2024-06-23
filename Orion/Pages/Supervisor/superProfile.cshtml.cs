@@ -38,6 +38,8 @@ namespace Orion.Pages.Supervisor
         public string? SupervisorInfo { get; set; }
         public string? SupervisorName { get; set; }
         public ICollection<Freelancer?> SupervisorFreelancer { get; set; }
+        //Freelancers = await _supervisorService.Getall( new CancellationToken()).tolist();
+
 
         public async Task<IActionResult> OnGetAsync()
         {
