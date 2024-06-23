@@ -8,7 +8,9 @@ namespace Orion.Pages.EndUser
     public class SignModel : PageModel
     {
         private readonly IUserService _userService;
+        private readonly ICustomerService _customerService;
 
+        public Customer Customer { get; set; }
         [BindProperty]
         public string Username { get; set; }
 
@@ -18,9 +20,10 @@ namespace Orion.Pages.EndUser
         [BindProperty]
         public string Email { get; set; }
 
-        public SignModel(IUserService userService)
+        public SignModel(IUserService userService, ICustomerService customerService)
         {
             _userService = userService;
+            _customerService = customerService;
         }
 
         public void OnGet()
@@ -32,12 +35,14 @@ namespace Orion.Pages.EndUser
             var result = await _userService.SignIn(Email, Password, new CancellationToken());
             if (result.Succeeded)
             {
-                return RedirectToPage("/EndUser/Home");
-            }
-            else
-            {
-                return Page();
-            }
+                var user = await _userService.GetByEmail(Email, new CancellationToken());
+                if (user != null)
+                {
+                    HttpContext.Session.SetInt32("CustomerID", user.Id);
+                    return RedirectToPage("/EndUser/Home");
+                }
+            }          
+              return Page();           
         }
 
         public async Task<IActionResult> OnPostSignUpAsync()
@@ -46,35 +51,25 @@ namespace Orion.Pages.EndUser
             {
                 UserName = Username,
                 Email = Email,
-                // Note: Storing passwords as plain text is not secure.
-                // You should hash passwords before storing them.
-                // Example: user.PasswordHash = _passwordHasher.HashPassword(user, Password);
-                PasswordHash = Password // This should be securely hashed.
+                PasswordHash = Password 
             };
 
             var result = await _userService.Create(user, Password);
+            var customer = new Customer
+            {
+                UserId = user.Id
+            };
+            Customer = await _customerService.Create(customer);
+
             if (result.Succeeded)
             {
-                // Optionally, you might want to automatically sign in the user after successful registration.
                 var signInResult = await _userService.SignIn(user.Email, Password, new CancellationToken());
                 if (signInResult.Succeeded)
                 {
-                    return RedirectToPage("/EndUser/Home");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Failed to sign in after registration.");
                     return Page();
-                }
+                }               
             }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-                return Page();
-            }
+            return Page();
         }
     }
 }

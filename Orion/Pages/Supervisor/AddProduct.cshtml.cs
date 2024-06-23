@@ -51,7 +51,7 @@ namespace Orion.Pages.Supervisor
                 await _freelancerService.Update(freelancer);
             }
 
-            return RedirectToPage("/Supervisor/childsProfile"); 
+            return RedirectToPage("/Supervisor/childsProfile", new { freelancerId = FreelancerId }); 
         }
     }
 }
