@@ -1,5 +1,5 @@
 @page
-@model SignModel
+@model Orion.Pages.EndUser.SignModel
 @{
     Layout = "~/pages/shared/_layout.cshtml";
 }
@@ -18,41 +18,49 @@
     <div class="container-sign">
         <div class="forms-container">
             <div class="signin-signup">
+                <!-- Sign In Form -->
                 <form method="post" asp-page-handler="SignIn" class="sign-in-form">
                     <h2 class="title-sign">Sign in</h2>
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" name="Email" placeholder="Email" />
+                        <input type="text" name="Email" placeholder="Email" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="Password" placeholder="Password" />
+                        <input type="password" name="Password" placeholder="Password" asp-for="Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <input type="submit" value="Login" class="btn solid" />
                     <p class="social-text"><a href="" style="color:#7e6e95;">Forgot password?</a></p>
-                   
                 </form>
+
+                <!-- Sign Up Form -->
                 <form method="post" asp-page-handler="SignUp" class="sign-up-form">
                     <h2 class="title">Sign up</h2>
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="input-field">
                         <i class="fas fa-user"></i>
-                        <input type="text" name="Username" placeholder="Username" />
+                        <input type="text" name="Username" placeholder="Username" asp-for="Username" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" name="Email" placeholder="Email" />
+                        <input type="email" name="Email" placeholder="Email" asp-for="Email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="Password" placeholder="Password" />
+                        <input type="password" name="Password" placeholder="Password" asp-for="Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="input-field">
                         <i class="fas fa-lock"></i>
-                        <input type="password" name="Password" placeholder="confirm password" />
+                        <input type="password" name="ConfirmPassword" placeholder="Confirm Password" asp-for="ConfirmPassword" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
                     <input type="submit" class="btn" value="Sign up" />
-                    <p class="social-text"><a href="">Forgot password?</a></p>
-                    
                 </form>
             </div>
         </div>

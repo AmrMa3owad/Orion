@@ -15,8 +15,8 @@
   <body>
     <div class="header__wrapper">
       <header></header>
-        <input type="hidden" asp-for="Freelancer.UserId" />
-      <div class="cols__container">
+         <input type="hidden" asp-for="Freelancer.UserId" />
+       <div class="cols__container">
         <div class="left__col">
                 <div class="img__container">
                     @if (Model.FreelancerImg != null && Model.FreelancerImg.Any())
@@ -72,6 +72,10 @@
                         </div>
                     }
 
+                </div>
+                <div class="marks">
+                    <h2>Star Marks:</h2>
+                    <input type="file" style="background-color: #ed927e; border-radius: 30px; padding: 1rem; border: solid 1px #7e6e95;margin-bottom: 1rem;">
                 </div>
         </div>
       </div>

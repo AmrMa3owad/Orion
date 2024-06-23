@@ -1,9 +1,5 @@
 @page
 @model checkoutModel
-
-@section PageScripts {
-    <script src='~/'></script>
-}
 @{
     Layout = "~/pages/shared/_Layout-Dark.cshtml";
 }
@@ -14,8 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="/cssEndUser/checkout.css">
-    <link rel="stylesheet" href="/cssEndUser/layout.css">
+    <link rel="stylesheet" href="/cssEndUser/checkouttt.css">
     <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.min.css">
 
     <title>Checkout </title>
@@ -25,12 +20,11 @@
     
 
     <div class="container-donate">
-        <div class="shryta"> <img src="img/mainnpay.jpg" alt="" srcset=""></div>
-
-        <form action="">
-
+        <div class="shryta">
+            <img src="img/mainnpay.jpg" alt="Donation Banner">
+        </div>
+        <form method="post">
             <div class="row">
-
                 <div class="col">
 
                     <h3 class="title">billing address</h3>
@@ -54,8 +48,8 @@
 
                     <div class="flex">
                         <div class="inputBox">
-                            <span>state :</span>
-                            <input type="text" placeholder="india">
+                            <span>Donation:</span>
+                            <input type="number" placeholder="10LE">
                         </div>
                         <div class="inputBox">
                             <span>zip code</span>
@@ -64,50 +58,65 @@
                     </div>
 
                 </div>
-
                 <div class="col">
+                    <h3 class="title">Payment method</h3>
+                    <div class="payment-methods">
+                        <div class="category">
+                            <label for="visa" class="visaMethod">
+                                <input type="radio" name="payment" id="visa" value="visa">
+                                <a href="visa.html">
+                                    <div class="imgName">
+                                        <div class="imgContainer visa">
+                                            <img src="https://i.ibb.co/vjQCN4y/Visa-Card.png" alt="Visa">
+                                        </div>
+                                        <span class="name">VISA</span>
+                                    </div>
+                                </a>
+                                <span class="check"><i class="fa-solid fa-circle-check" style="color: #6064b6;"></i></span>
+                            </label>
 
-                    <h3 class="title">payment</h3>
+                            <label for="mastercard" class="mastercardMethod">
+                                <input type="radio" name="payment" id="mastercard" value="fawry">
+                                <div class="imgName">
+                                    <div class="imgContainer mastercard">
+                                        <img src="img/idCbZQ9q4z_logos.png" alt="Fawry">
+                                    </div>
+                                    <span class="name">Fawry</span>
+                                </div>
+                                <span class="check"><i class="fa-solid fa-circle-check" style="color: #6064b6;"></i></span>
+                            </label>
 
-                    <div class="inputBox">
-                        <span>cards accepted :</span>
-                        <a href="visa.html"> <img src="img/card_img.png" alt=""></a>
-                    </div>
-                    <div class="inputBox">
-                        <span>Fawry code :</span>
-                        <input type="text" placeholder="1111-2222-3333-4444">
-                    </div>
-                    <div class="inputBox">
-                        <span>Aman code :</span>
-                        <input type="number" placeholder="1111-2222-3333-4444">
-                    </div>
-                    <div class="inputBox">
-                        <span>Donate for Orion stars :</span>
-                        <input type="text" placeholder="5 LE">
-                    </div>
+                            <label for="paypal" class="paypalMethod">
+                                <input type="radio" name="payment" id="paypal" value="aman">
+                                <div class="imgName">
+                                    <div class="imgContainer paypal">
+                                        <img src="img/unnamed.png" alt="Aman">
+                                    </div>
+                                    <span class="name">Aman</span>
+                                </div>
+                                <span class="check"><i class="fa-solid fa-circle-check" style="color: #6064b6;"></i></span>
+                            </label>
 
-                    <div class="flex">
-                        <div class="inputBox">
-                            <span>passcode</span>
-                            <input type="number" placeholder="2022">
+                            <label for="AMEX" class="amexMethod">
+                                <input type="radio" name="payment" id="AMEX" value="cash">
+                                <div class="imgName">
+                                    <div class="imgContainer AMEX">
+                                        <img src="img/pound.png" alt="Cash">
+                                    </div>
+                                    <span class="name">Cash</span>
+                                </div>
+                                <span class="check"><i class="fa-solid fa-circle-check" style="color: #6064b6;"></i></span>
+                            </label>
                         </div>
-                        <div class="inputBox">
-                            <span>none :</span>
-                            <input type="text" placeholder="1234">
-                        </div>
                     </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="BTBOT"> <input type="submit" value="Checkout" class="button22"></div>
+                    <div class="BTBOT">
+                        <button type="submit" class="button22">Checkout</button>
+                    </div>
 
         </form>
-
     </div>
-   
+    </div>
+    </div>
     <!-- link js -->
     <script src="~/js/mainCart.js" asp-append-version="true"></script>
 

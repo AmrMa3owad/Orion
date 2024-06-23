@@ -765,21 +765,23 @@ justify-content: space-evenly;
 }
 
 
+/*----------------------------------------responsive last edition----------------------------------*/
+
+@media (max-width: 844px){
+   .orion-categ{
+       margin-top:20%;
+   }
+}
 
 
 
 
-
-
-
-  .shop-container{
+.shop-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
-
-  }
+}
 /*  --------------------------------------new updates-----------------------------------------------------*/
 .orion-categ button.categoryyy {
     border: none;

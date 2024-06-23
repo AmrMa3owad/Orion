@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="cssAdmin/bootstrap.min.css">
       <!----css3---->
     <link rel="stylesheet" href="cssAdmin/custom.css">
+    <link rel="stylesheet" href="cssAdmin/checkout.css">
       <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
    <!-- box icons  -->
    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
@@ -21,7 +22,7 @@
  <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
  rel="stylesheet">
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/checkout.css">
+   
     <title>Supervisor Signin </title>
 
 </head>
@@ -30,110 +31,108 @@
 
 
         <div class="body-overlay"></div>
-        
-        
-                <!-- Sidebar  -->
-                <nav id="sidebar">
-                    <div class="sidebar-header">
-                        <h3><img src="img/GRAD logo dark.png" class="img-fluid"/><span id="admoon">Welcome Amr</span></h3>
+
+
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3><img src="img/GRAD logo dark.png" class="img-fluid" /><span id="admoon">Welcome Amr</span></h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="Dashboard.html" class="dashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="material-icons">border_color</i><span>forms</span>
+                    </a>
+                    <ul class="collapse list-unstyled menu" id="pageSubmenu5">
+                        <li>
+                            <a href="AddAdmin.html">Add admin</a>
+                        </li>
+                        <li>
+                            <a href="addCategory.html">Add category</a>
+                        </li>
+                        <li>
+                            <a href="addMaterial.html">Add material</a>
+                        </li>
+                        <li>
+                            <a href="AddSuper.html">Add Supervisors</a>
+                        </li>
+                        <li>
+                            <a href="AddOrphanage.html">Add Orphanage</a>
+                        </li>
+                        <li>
+                            <a href="editOrphanage.html">Edit Orphanage</a>
+                        </li>
+                        <li>
+                            <a href="EditMaterial.html">Edit material</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#pageSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="material-icons">grid_on</i><span>tables</span>
+                    </a>
+                    <ul class="collapse list-unstyled menu" id="pageSubmenu6">
+                        <li>
+                            <a href="orphanageSSS.html">Orphanages table</a>
+                        </li>
+                        <li>
+                            <a href="supertable.html">Supervisors table</a>
+                        </li>
+                        <li>
+                            <a href="childstable.html">stars table</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="material-icons">content_copy</i><span>Pages</span>
+                    </a>
+                    <ul class="collapse list-unstyled menu" id="pageSubmenu7">
+                        <li>
+                            <a href="adminMaterial.html">Materials</a>
+                        </li>
+                        <li>
+                            <a href="ContactUs.html">Contact Us</a>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+
+
+        </nav>
+
+
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <div class="top-navbar">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+
+                        <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none">
+                            <span class="material-icons">arrow_back_ios</span>
+                        </button>
+
+                        <a class="navbar-brand" href="#"> Dashboard </a>
+
+                        <button class="d-inline-block d-lg-none ml-auto more-button" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="material-icons">more_vert</span>
+                        </button>
+
+
                     </div>
-                    <ul class="list-unstyled components">
-                    <li  class="active">
-                            <a href="Dashboard.html" class="dashboard"><i class="material-icons">dashboard</i><span>Dashboard</span></a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="material-icons">border_color</i><span>forms</span></a>
-                            <ul class="collapse list-unstyled menu" id="pageSubmenu5">
-                                <li>
-                                    <a href="AddAdmin.html">Add admin</a>
-                                </li>
-                                <li>
-                                    <a href="addCategory.html">Add category</a>
-                                </li>
-                                <li>
-                                    <a href="addProd.html">Add products</a>
-                                </li>
-                                <li>
-                                    <a href="AddSuper.html">Add Supervisors</a>
-                                </li>
-                                <li>
-                                    <a href="AddOrphanage.html">Add Orphanage</a>
-                                </li>
-                                <li>
-                                    <a href="editOrphanage.html">Edit Orphanage</a>
-                                </li>
-                                <li>
-                                    <a href="EditProd.html">Edit Products</a>
-                                </li>
-                            </ul>
-                        </li>
-                   
-                       <li class="dropdown">
-                            <a href="#pageSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="material-icons">grid_on</i><span>tables</span></a>
-                            <ul class="collapse list-unstyled menu" id="pageSubmenu6">
-                                <li>
-                                    <a href="#">Page 1</a>
-                                </li>
-                                <li>
-                                    <a href="#">Page 2</a>
-                                </li>
-                                <li>
-                                    <a href="#">Page 3</a>
-                                </li>
-                            </ul>
-                        </li>
-                   
-                         <li class="dropdown">
-                            <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                            <i class="material-icons">content_copy</i><span>Pages</span></a>
-                            <ul class="collapse list-unstyled menu" id="pageSubmenu7">
-                                <li>
-                                    <a href="adminMaterial.html">Materials</a>
-                                </li>
-                                <li>
-                                    <a href="ContactUs.html">Contact Us</a>
-                                </li>
-                                <li>
-                                    <a href="detailsAdmin.html">Details</a>
-                                </li>
-                                <li>
-                                    <a href="orphanageAdmin.html">Orphanage</a>
-                                </li>
-                            </ul>
-                        </li>
-                 </ul>
-        
-                   
                 </nav>
-                
-                
-        
-                <!-- Page Content  -->
-                <div id="content">
-                
-                <div class="top-navbar">
-                    <nav class="navbar navbar-expand-lg">
-                        <div class="container-fluid">
-        
-                            <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none">
-                                <span class="material-icons">arrow_back_ios</span>
-                            </button>
-                            
-                            <a class="navbar-brand" href="#">Orphanages</a>
-                            
-                            <button class="d-inline-block d-lg-none ml-auto more-button" type="button" data-toggle="collapse"
-                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="material-icons">more_vert</span>
-                            </button>
-        
-                           
-                        </div>
-                    </nav>
-                </div>
-                </div>
-<div class="container">
+            </div>
+
+            <div class="container">
 
             <form action="" method="post" enctype="multipart/form-data">
 
@@ -152,7 +151,7 @@
                 </div>
                 <div class="inputBox">
                     <span>picture :</span>
-                            <input type="file" asp-for="Category.Img" placeholder="***********" required>
+                            <input type="file" asp-for="CategoryImageFile" placeholder="***********" required>
                 </div>
 
                         <div class="BTBOT"> 

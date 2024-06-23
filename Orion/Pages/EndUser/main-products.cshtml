@@ -12,8 +12,8 @@
     <!-- box icons -->
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <!-- styles -->
-    <link rel="stylesheet" href="~/cssEndUser/main-product.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/fontawesome-free-6.4.0-web/css/all.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/cssEndUser/main-products.css" >
+    <link rel="stylesheet" href="~/fontawesome-free-6.4.0-web/css/all.min.css">
   
     <title>Products</title>
 </head>
@@ -29,7 +29,7 @@
                 <input type="hidden" name="SearchQuery" value="@Model.SearchQuery" />
                 <button type="submit" name="ProductType" value="Beads" class="categoryyy">
                     <div class="category-img">
-                        <img src="img/pexels-cottonbro-studio-3838692.jpg" alt="">
+                        <img src="img/pexels-miriam-alonso-7585704.jpg" alt="">
                     </div>
                     <p>Beads</p>
                 </button>
@@ -41,13 +41,13 @@
                 </button>
                 <button type="submit" name="ProductType" value="Resin" class="categoryyy">
                     <div class="category-img">
-                        <img src="img/pexels-miriam-alonso-7585704.jpg" alt="">
+                        <img src="img/pexels-thirdman-7256642.jpg" alt="">
                     </div>
                     <p>Resin</p>
                 </button>                
                 <button type="submit" name="ProductType" value="Clay art" class="categoryyy">
                     <div class="category-img">
-                        <img src="img/pexels-thirdman-7256642.jpg" alt="">
+                        <img src="img/clsay.jpg" alt="">
                     </div>
                     <p>Clay art</p>
                 </button>
@@ -82,7 +82,7 @@
                 var imgSrc = img != null ? $"data:image/jpg;base64,{Convert.ToBase64String(img)}" : "img/product1.jpg"; // Fallback image
 
                 <div class="product-box">
-                    <a href="/EndUser/details?productId=@id"><img src="@imgSrc" alt="" class="product-img"></a>
+                    <a href="details.html?productId=@id"><img src="@imgSrc" alt="" class="product-img"></a>
                     <h2 class="product-title">@name</h2>
                     <span class="product-price">$@price</span>
                     <span class="product-id">@id</span>
@@ -92,51 +92,7 @@
         </div>
     </section>
 
-    <!-- footer -->
-    <footer class="footer">
-        <div class="fcontainer">
-            <div class="row">
-                <div class="footer-col">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Our services</a></li>
-                        <li><a href="#">Privacy policy</a></li>
-                        <li><a href="#">Affiliate program</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Get help</h4>
-                    <ul>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Shipping</a></li>
-                        <li><a href="#">Returns</a></li>
-                        <li><a href="#">Order status</a></li>
-                        <li><a href="#">Payment options</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Online shop</h4>
-                    <ul>
-                        <li><a href="#">Watch</a></li>
-                        <li><a href="#">Bag</a></li>
-                        <li><a href="#">Shoes</a></li>
-                        <li><a href="#">Dress</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Follow us</h4>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- link js -->
+   
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="Js/mainCartProducts.js"></script>
 </body>

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="/cssEndUser/checkout.css">
+    <link rel="stylesheet" href="/cssEndUser/checkouttt.css">
     <link rel="stylesheet" href="/cssEndUser/layout.css">
     <link rel="stylesheet" href="fontawesome-free-6.4.0-web/css/all.min.css">
 
@@ -22,32 +22,35 @@
         <div class="shryta">
             <img src="img/mainnpay.jpg" alt="Donation Banner">
         </div>
+        <form method="post">
         <div class="row">
             <div class="col">
                 <h3 class="title">Donation details</h3>
-                <form method="post">
+               
                     <div class="flex">
                         <div class="inputBox">
                             <span>Donation:</span>
                             <input asp-for="Quantity" type="number" placeholder="10LE" class="form-control">
                         </div>
                     </div>
-                    <br><br>
-                    <h5 style="color: #ed927e; text-align: center; text-decoration: wavy;">
+                    
+                    <h5 style="color: #ed927e; text-align: center; text-decoration: wavy; margin-top:5rem;">
                         "Thank you for shining your light on our project and helping our little stars sparkle brighter."
                     </h5>
-
+                    </div>
+                    <div class="col">
                     <h3 class="title">Donation way</h3>
                     <div class="payment-methods">
                         <div class="category">
                             <label for="visa" class="visaMethod">
                                 <input type="radio" name="payment" id="visa" value="visa">
-                                <div class="imgName">
+                                <a href="visa.html"><div class="imgName">
                                     <div class="imgContainer visa">
                                         <img src="https://i.ibb.co/vjQCN4y/Visa-Card.png" alt="Visa">
                                     </div>
                                     <span class="name">VISA</span>
-                                </div>
+                                    </div>
+                                </a>
                                 <span class="check"><i class="fa-solid fa-circle-check" style="color: #6064b6;"></i></span>
                             </label>
 
@@ -88,6 +91,7 @@
                     <div class="BTBOT">
                         <button type="submit" class="button22">Donate</button>
                     </div>
+                    
                 </form>
             </div>
         </div>
