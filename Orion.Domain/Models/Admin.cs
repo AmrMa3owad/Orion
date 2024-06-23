@@ -5,7 +5,7 @@ namespace Orion.Domain.Models
     public class Admin : BaseEmployee<int>
     {
         public Admin()
-        {
+        {  
             Feedbacks = new HashSet<Feedback>();
             ContactUses = new HashSet<ContactUs>();
             Categories = new HashSet<Category>();
