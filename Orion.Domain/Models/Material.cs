@@ -17,9 +17,8 @@ namespace Orion.Domain.Models
         public string? MaterialColors { get; set; }
 
         public string? MaterialType { get; set; }
-
-        //public int MaterialQuantity { get; set; }
         public virtual ICollection<MaterialVendor> MaterialVendors { get; set; }
 
+       
     }
 }

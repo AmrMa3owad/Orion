@@ -9,69 +9,69 @@ namespace Orion.Pages.EndUser
 {
     public class rawModel : PageModel
     {
-        private readonly IProductService _productService;
+        private readonly IMaterialService _materialService;
         private readonly ICartService _cartService;
 
         public Cart Cart { get; set; }
-        public List<Product> Products { get; set; }
-        public IEnumerable<string> ProNames { get; set; }
-        public IEnumerable<byte[]?> ProductImg { get; set; }
-        public IEnumerable<double?> ProductPrice { get; set; }
+        public List<Material> Materials { get; set; }
+        public IEnumerable<string> MaterialNames { get; set; }
+        public IEnumerable<byte[]?> MaterialImg { get; set; }
+        public IEnumerable<double?> MaterialPrice { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string SearchQuery { get; set; }
 
         [BindProperty(SupportsGet = true)]
-        public string ProductType { get; set; }
+        public string MaterialType { get; set; }
 
-        public rawModel(IProductService productService, ICartService cartService)
+        public rawModel(IMaterialService materialService, ICartService cartService)
         {
-            _productService = productService;
+            _materialService = materialService;
             _cartService = cartService;
         }
 
         public async Task<IActionResult> OnGet()
         {
-            var allProducts = await _productService.GetAll(new CancellationToken()).ToListAsync();
+            var allMaterials = await _materialService.GetAll(new CancellationToken()).ToListAsync();
 
             if (!string.IsNullOrEmpty(SearchQuery))
             {
-                allProducts = allProducts.Where(p => p.ProductName.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+                allMaterials = allMaterials.Where(p => p.MaterialName.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-            if (!string.IsNullOrEmpty(ProductType))
+            if (!string.IsNullOrEmpty(MaterialType))
             {
-                allProducts = allProducts.Where(p => p.ProductType.Equals(ProductType, StringComparison.OrdinalIgnoreCase)).ToList();
+                allMaterials = allMaterials.Where(p => p.MaterialType.Equals(MaterialType, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
-            Products = allProducts;
-            ProNames = Products.Select(x => x.ProductName);
-            ProductImg = Products.Select(x => x.ProductImage);
-            ProductPrice = Products.Select(x => x.ProductPrice);
+            Materials = allMaterials;
+            MaterialNames = Materials.Select(x => x.MaterialName);
+            MaterialImg = Materials.Select(x => x.Image);
+            MaterialPrice = Materials.Select(x => x.MaterialPrice);
 
             return Page();
         }
 
-        public async Task<JsonResult> OnPostAddToCartAsync([FromBody] CartProduct cartProduct)
-        {
-            var product = await _productService.Get(cartProduct.ProductId, new CancellationToken());
+        //public async Task<JsonResult> OnPostAddToCartAsync([FromBody] CartProduct cartMaterial)
+        //{
+        //    var material = await _materialService.Get(cartMaterial.MaterialId, new CancellationToken());
 
-            if (!cartProduct.CartId.HasValue)
-            {
-                Cart = new Cart();
-                Cart = await _cartService.Create(Cart);
-            }
-            else
-            {
-                Cart = await _cartService.Get(cartProduct.CartId.Value, new CancellationToken());
-            }
+        //    if (!cartMaterial.CartId.HasValue)
+        //    {
+        //        Cart = new Cart();
+        //        Cart = await _cartService.Create(Cart);
+        //    }
+        //    else
+        //    {
+        //        Cart = await _cartService.Get(cartMaterial.CartId.Value, new CancellationToken());
+        //    }
 
-            Cart.Products.Add(product);
-            Cart.NumberOfProducts = Cart.Products.Count;
-            Cart.TotalPrice = Cart.Products.Sum(p => p.ProductPrice);
-            await _cartService.Update(Cart);
+        //    Cart.Materials.Add(Material);
+        //    Cart.NumberOfMaterials = Cart.Materials.Count;
+        //    Cart.TotalPrice = Cart.Materials.Sum(p => p.MaterialPrice);
+        //    await _cartService.Update(Cart);
 
-            return new JsonResult(new { CartId = Cart.Id, Products = Cart.Products.Select(p => new { ProductId = p.Id }).ToList() });
-        }
+        //    return new JsonResult(new { CartId = Cart.Id, Materials = Cart.Materials.Select(p => new { MaterialId = p.Id }).ToList() });
+        //}
     }
 }
