@@ -24,9 +24,12 @@
 </head>
 <body>
     <div class="wrapper">
+
+
         <div class="body-overlay"></div>
 
-        <!-- Sidebar -->
+
+        <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
                 <h3><img src="img/GRAD logo dark.png" class="img-fluid" /><span id="admoon">Welcome Amr</span></h3>
@@ -37,59 +40,96 @@
                 </li>
                 <li class="dropdown">
                     <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="material-icons">border_color</i><span>Forms</span>
+                        <i class="material-icons">border_color</i><span>forms</span>
                     </a>
                     <ul class="collapse list-unstyled menu" id="pageSubmenu5">
-                        <li><a href="AddAdmin.html">Add Admin</a></li>
-                        <li><a href="addCategory.html">Add Category</a></li>
-                        <li><a href="addProd.html">Add Materials</a></li>
-                        <li><a href="AddSuper.html">Add Supervisors</a></li>
-                        <li><a href="AddOrphanage.html">Add Orphanage</a></li>
-                        <li><a href="editOrphanage.html">Edit Orphanage</a></li>
-                        <li><a href="EditProd.html">Edit Materials</a></li>
+                        <li>
+                            <a href="AddAdmin.html">Add admin</a>
+                        </li>
+                        <li>
+                            <a href="addCategory.html">Add category</a>
+                        </li>
+                        <li>
+                            <a href="addMaterial.html">Add material</a>
+                        </li>
+                        <li>
+                            <a href="AddSuper.html">Add Supervisors</a>
+                        </li>
+                        <li>
+                            <a href="AddOrphanage.html">Add Orphanage</a>
+                        </li>
+                        <li>
+                            <a href="editOrphanage.html">Edit Orphanage</a>
+                        </li>
+                        <li>
+                            <a href="EditMaterial.html">Edit material</a>
+                        </li>
                     </ul>
                 </li>
+
                 <li class="dropdown">
                     <a href="#pageSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="material-icons">grid_on</i><span>Tables</span>
+                        <i class="material-icons">grid_on</i><span>tables</span>
                     </a>
                     <ul class="collapse list-unstyled menu" id="pageSubmenu6">
-                        <li><a href="#">Page 1</a></li>
-                        <li><a href="#">Page 2</a></li>
-                        <li><a href="#">Page 3</a></li>
+                        <li>
+                            <a href="orphanageSSS.html">Orphanages table</a>
+                        </li>
+                        <li>
+                            <a href="supertable.html">Supervisors table</a>
+                        </li>
+                        <li>
+                            <a href="childstable.html">stars table</a>
+                        </li>
                     </ul>
                 </li>
+
                 <li class="dropdown">
                     <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                         <i class="material-icons">content_copy</i><span>Pages</span>
                     </a>
                     <ul class="collapse list-unstyled menu" id="pageSubmenu7">
-                        <li><a href="adminMaterial.html">Materials</a></li>
-                        <li><a href="ContactUs.html">Contact Us</a></li>
+                        <li>
+                            <a href="adminMaterial.html">Materials</a>
+                        </li>
+                        <li>
+                            <a href="ContactUs.html">Contact Us</a>
+                        </li>
+
                     </ul>
                 </li>
             </ul>
+
+
         </nav>
 
-        <!-- Page Content -->
+
+
+        <!-- Page Content  -->
         <div id="content">
+
             <div class="top-navbar">
                 <nav class="navbar navbar-expand-lg">
                     <div class="container-fluid">
-                        <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-none d-none">
+
+                        <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none">
                             <span class="material-icons">arrow_back_ios</span>
                         </button>
-                        <a class="navbar-brand" href="#">Orphanages</a>
+
+                        <a class="navbar-brand" href="#"> Dashboard </a>
+
                         <button class="d-inline-block d-lg-none ml-auto more-button" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="material-icons">more_vert</span>
                         </button>
+
+
                     </div>
                 </nav>
             </div>
-        </div>
 
-        <div class="container">
+
+            <div class="container">
             <form method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col">
@@ -113,7 +153,7 @@
                         <div class="flex">
                             <div class="inputBox">
                                 <span>Picture:</span>
-                                <input type="file" asp-for="MaterialImageFile" placeholder="Enter Your Picture">
+                                <input type="file" asp-for="Material.Image" placeholder="Enter Your Picture" class="input" required>
                             </div>
                         </div>
                     </div>

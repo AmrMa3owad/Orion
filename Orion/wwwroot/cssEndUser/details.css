@@ -26,6 +26,7 @@ body{
     align-items: center;
     padding: 10px;
     overflow: hidden;
+    flex-direction:column;
 }
 
 .card{

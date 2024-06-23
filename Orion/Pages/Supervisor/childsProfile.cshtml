@@ -15,29 +15,30 @@
   <body>
     <div class="header__wrapper">
       <header></header>
-      <div class="cols__container">
+         <input type="hidden" asp-for="Freelancer.UserId" />
+       <div class="cols__container">
         <div class="left__col">
                 <div class="img__container">
                     @if (Model.FreelancerImg != null && Model.FreelancerImg.Any())
                     {
-                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.FreelancerImg.FirstOrDefault())" alt="Freelancer Photo" />
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.FreelancerImg)" alt="Freelancer Photo" />
                     }
           <h2>Logy Ali</h2>
           <p>Crochet artist</p>
-                    <p><a href="/orphanage.html?freelancerId=@Model.FreelancerId.FirstOrDefault()">@Model.FreelancerOrphanage.FirstOrDefault()</a></p>
+                    <p><a href="/orphanage.html?freelancerId=@Model.FreelancerId">@Model.FreelancerOrphanage</a></p>
 
           <ul class="about">
-            <li><span>@Model.FreelancerAge.FirstOrDefault()</span>years old</li>
-            <li><span>@Model.ProductsNum.FirstOrDefault()</span>products</li>
+            <li><span>@Model.Age</span>years old</li>
+            <li><span>@Model.ProductsNum</span>products</li>
             <li><span>11</span>sold</li>
           </ul>
 
           <div class="content">
             <p>
-               @Model.FreelancerInfo.FirstOrDefault()
+               @Model.FreelancerInfo
             </p>
               <div class="editProfileBtn">
-               <a href="editProFreelancer.html?freelancerId=@Model.FreelancerId.FirstOrDefault()" class="editProfile"><i class="fas fa-edit"></i>Edit profile</a>
+               <a href="editProFreelancer.html?freelancerId=@Model.FreelancerId" class="editProfile"><i class="fas fa-edit"></i>Edit profile</a>
             </div>
           </div> 
             
@@ -50,11 +51,11 @@
 
           <div class="photos">
                     <div class="product-box">
-                        <a href="AddProduct.html?freelancerId=@Model.FreelancerId.FirstOrDefault()"><img src="img/vector61-714-01.jpg" alt="" class="product-img"></a>
+                        <a href="AddProduct.html?freelancerId=@Model.FreelancerId"><img src="img/vector61-714-01.jpg" alt="" class="product-img"></a>
                         <h2 class="product-title" id="addpro">Add product</h2>
-                        <a href="AddProduct.html?freelancerId=@Model.FreelancerId.FirstOrDefault()"><i class="fa-solid fa-plus add-cart"></i></a>
+                        <a href="AddProduct.html?freelancerId=@Model.FreelancerId"><i class="fa-solid fa-plus add-cart"></i></a>
                     </div>
-                    @foreach (var product in Model.FreelancerProduct.FirstOrDefault())
+                    @foreach (var product in Model.FreelancerProduct)
                     {
                         var name = product.ProductName;
                         var img = product.ProductImage;
@@ -63,14 +64,18 @@
                         var imgSrc = img != null ? $"data:image/jpg;base64,{Convert.ToBase64String(img)}" : "img/product1.jpg"; // Fallback image
 
                         <div class="product-box">
-                            <a href="details.html?id=@id"><img src="@imgSrc" alt="@name" class="product-img"></a>
+                            <a href="details.html?productId=@id"><img src="@imgSrc" alt="@name" class="product-img"></a>
                             <h2 class="product-title">@name</h2>
                             <span class="product-price">$@price</span>
-                            <input type="hidden" value="@id" class="product-id">
+                            <input value="@id" class="product-id">
                             <i class='bx bx-shopping-bag add-cart'></i>
                         </div>
                     }
 
+                </div>
+                <div class="marks">
+                    <h2>Star Marks:</h2>
+                    <input type="file" style="background-color: #ed927e; border-radius: 30px; padding: 1rem; border: solid 1px #7e6e95;margin-bottom: 1rem;">
                 </div>
         </div>
       </div>

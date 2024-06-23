@@ -26,16 +26,13 @@ namespace Orion.Pages.Supervisor
         {
             Supervisor = await _supervisorService.Get(supervisorId,new CancellationToken());
 
-            if (Supervisor == null)
-            {
-                return NotFound();
-            }
-
+          
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
-        {         
+        {
+            Supervisor = await _supervisorService.Get(Supervisor.EmployeeId, new CancellationToken());
 
             if (ProfilePicture != null && ProfilePicture.Length > 0)
             {

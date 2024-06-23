@@ -62,7 +62,7 @@ namespace Orion.Pages.EndUser
             }
             else
             {
-                Cart = await _cartService.Get(cartProduct.CartId.Value, new CancellationToken());
+                Cart = await _cartService.GetCartIncludeAsync(cartProduct.CartId.Value, new CancellationToken());
             }
 
             Cart.Products.Add(product);

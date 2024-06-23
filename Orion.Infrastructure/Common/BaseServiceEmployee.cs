@@ -26,11 +26,8 @@ namespace Orion.Infrastructure.Common
         public async Task<bool> Update(T entity)
         {
             Context.Update(entity);
-            if(SaveChanges())
-            {
-                return true;
-            }
-            return false;
+            await Context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> Delete(T entity)

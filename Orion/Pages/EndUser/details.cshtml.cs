@@ -1,57 +1,46 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Orion.Domain.Models;
 using Orion.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 
-namespace Orion.Pages.EndUser
+namespace Orion.Pages.EndUser;
+public class detailsModel : PageModel
 {
-    public class detailsModel : PageModel
+    private readonly IProductService _productService;
+    private readonly IFeedbackService _feedbackService;
+    public Product Product { get; set; }
+    public List<Feedback> Feedbacks { get; set; }
+    [BindProperty]
+    public Feedback Feedback { get; set; }
+    [BindProperty(SupportsGet = true)]
+    public int ProductId { get; set; }
+
+    public detailsModel(IProductService productService, IFeedbackService feedbackService)
     {
-        private readonly IProductService _productService;
-        private readonly IFeedbackService _feedbackService;
-        public Product Product { get; set; }
-        public List<Feedback> Feedbacks { get; set; }
-        [BindProperty]
+        _productService = productService;
+        _feedbackService = feedbackService;
+    }
 
-        public Feedback Feedback { get; set; }
+    public async Task<IActionResult> OnGetAsync()
+    {
+        Product = await _productService.Get(ProductId, new CancellationToken());
+        Feedbacks = await _feedbackService.GetAll(new CancellationToken()).ToListAsync();
+        return Page();
+    }
 
-        [BindProperty(SupportsGet = true)]
-        public int ProductId { get; set; }
-        public IEnumerable<string> Mail { get; set; }
-        public IEnumerable<string> Msg { get; set; }
+    public async Task<IActionResult> OnPostAsync()
+    {
+        Feedback.ProductId = ProductId;
+        await _feedbackService.Create(Feedback);
 
-        public detailsModel(IProductService productService, IFeedbackService feedbackService)
+        var product = await _productService.Get(ProductId, new CancellationToken());
+        if (product != null)
         {
-            _productService = productService;
-            _feedbackService = feedbackService;
+            product.Feedbacks.Add(Feedback);
+            await _productService.Update(product);
         }
 
-        public async Task<IActionResult> OnGetAsync()
-        {          
-
-            Product = await _productService.Get(ProductId, new CancellationToken());
-            Feedbacks = await _feedbackService.GetAll(new CancellationToken()).ToListAsync();          
-
-            return Page();
-        }
-
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-
-            await _feedbackService.Create(Feedback);
-            Feedback.ProductId = ProductId;
-
-            var freelancer = await _productService.Get(ProductId, new System.Threading.CancellationToken());
-            if (freelancer != null)
-            {
-                freelancer.Feedbacks.Add(Feedback);
-                await _productService.Update(freelancer);
-            }
-
-            return Page();
-        }
-
+        return RedirectToPage();
     }
 }

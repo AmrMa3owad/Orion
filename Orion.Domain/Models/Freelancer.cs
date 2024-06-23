@@ -10,6 +10,7 @@ namespace Orion.Domain.Models
         }
         public int? Earnings { get; set; }
         public byte[]? StarPhoto { get; set; }
+        public byte[]? Mark { get; set; }
         public string? Skill { get; set; }
         public int? SupervisorId { get; set; }
         public int? OrphanageId { get; set; }

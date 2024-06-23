@@ -36,13 +36,14 @@ namespace Orion.Pages.Supervisor
         public int SupervisorId { get; set; }
         public byte[]? SupervisorImg { get; set; }
         public string? SupervisorInfo { get; set; }
+        public string? SupervisorName { get; set; }
         public ICollection<Freelancer?> SupervisorFreelancer { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
             var supervisorId = _httpContextAccessor.HttpContext.Session.GetInt32("SupervisorID");
 
-            Supervisor = await _supervisorService.Get(supervisorId.GetValueOrDefault(), new CancellationToken());
+            Supervisor = await _supervisorService.GetSupervisorAsync(supervisorId.GetValueOrDefault(), new CancellationToken());
 
 
             ProductsNum = Supervisor.Products.Count;
@@ -50,7 +51,7 @@ namespace Orion.Pages.Supervisor
             SupervisorImg = Supervisor.SupervisorPhoto;
             SupervisorInfo = Supervisor.SupervisorInfo;
             SupervisorId = Supervisor.EmployeeId;
-
+            SupervisorName = Supervisor.Employee.User.FirstName;
             SupervisorFreelancer = Supervisor.Freelancers;
             return Page();
         }
