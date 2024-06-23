@@ -12,6 +12,47 @@ let cartId = undefined;
     closeNavMenu.addEventListener("click", toggleNav);
     // close the navMenu by clicking outside
     menuOverlay.addEventListener("click", toggleNav);
+    loadCart();
+
+    function loadCart() {
+        $.ajax({
+            type: "GET",
+            url: "/main-products.html" + '?handler=CartProducts',
+            contentType: "application/json",
+            success: function (data) {
+                cartId = data.cartId;
+
+                if (data.products) {
+                    const cartContent = cart.querySelector(".cart-content");
+
+                    data.products.forEach(product => {
+                        let title = product.productName;
+                        let price = product.productPrice;
+                        let imgSrc = product.productImage;
+                        let newToAdd = {
+                            title,
+                            price,
+                            imgSrc,
+                        };
+
+                        itemsAdded.push(newToAdd);
+
+                        let cartBoxElement = CartBoxComponent(title, price, imgSrc);
+                        let newNode = document.createElement("div");
+                        newNode.innerHTML = cartBoxElement;
+                        cartContent.appendChild(newNode);
+
+                    });
+
+                    // Add product to cart
+                    update();
+                }
+
+            }
+        });
+
+    }
+
     function toggleNav() {
         navMenu.classList.toggle("open");
         menuOverlay.classList.toggle("active");

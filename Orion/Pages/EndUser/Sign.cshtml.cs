@@ -62,6 +62,7 @@ namespace Orion.Pages.EndUser
                     if (customer != null)
                     {
                         HttpContext.Session.SetInt32("CustomerID", user.Id);
+                        HttpContext.Session.SetInt32("CartId", 0);
                         return RedirectToPage("/EndUser/Home");
                     }
                     else

@@ -1,3 +1,5 @@
+const { forEach } = require("../fontawesome-free-6.4.0-web/js/v4-shims");
+
 let cartId = undefined;
 
 (() => {
@@ -12,6 +14,7 @@ let cartId = undefined;
     closeNavMenu.addEventListener("click", toggleNav);
     // close the navMenu by clicking outside
     menuOverlay.addEventListener("click", toggleNav);
+
     function toggleNav() {
         navMenu.classList.toggle("open");
         menuOverlay.classList.toggle("active");

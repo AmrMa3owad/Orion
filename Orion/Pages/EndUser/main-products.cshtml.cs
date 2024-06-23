@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -30,8 +31,10 @@ namespace Orion.Pages.EndUser
             _cartService = cartService;
         }
 
+
         public async Task<IActionResult> OnGet()
         {
+         
             var allProducts = await _productService.GetAll(new CancellationToken()).ToListAsync();
 
             if (!string.IsNullOrEmpty(SearchQuery))
@@ -51,14 +54,29 @@ namespace Orion.Pages.EndUser
 
             return Page();
         }
+        public async Task<JsonResult> OnGetCartProductsAsync()
+        {
+            int? CartId = HttpContext.Session.GetInt32("CartId");
+            if (CartId != null  && CartId != 0)
+            {
+                Cart = await _cartService.GetCartIncludeAsync(CartId.Value, new CancellationToken());
+                return new JsonResult(new { CartId = Cart.Id, Products = Cart.Products.Select(p => new { ProductId = p.Id, ProductName = p.ProductName, ProductPrice = p.ProductPrice, ProductImage = p.ProductImage }).ToList() });
+
+            }
+            return new JsonResult(new { CartId = 0});
+
+        }
+
         public async Task<JsonResult> OnPostAddToCartAsync([FromBody] CartProduct cartProduct)
         {
             var product = await _productService.Get(cartProduct.ProductId, new CancellationToken());
 
-            if (!cartProduct.CartId.HasValue)
+            if (!cartProduct.CartId.HasValue || cartProduct.CartId == 0)
             {
                 Cart = new Cart();
                 Cart = await _cartService.Create(Cart);
+                HttpContext.Session.SetInt32("CartId", Cart.Id);
+
             }
             else
             {
@@ -66,7 +84,7 @@ namespace Orion.Pages.EndUser
             }
 
             Cart.Products.Add(product);
-            Cart.NumberOfProducts = Cart.Products.Count;
+            Cart.NumberOfProducts = Cart.Products.Count  ;
             Cart.TotalPrice = Cart.Products.Sum(p => p.ProductPrice);
             await _cartService.Update(Cart);
 
