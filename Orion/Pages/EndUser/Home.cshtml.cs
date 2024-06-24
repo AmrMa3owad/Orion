@@ -3,45 +3,48 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Orion.Domain.Models;
 using Orion.Infrastructure.Services;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Orion.Pages.EndUser
 {
     public class HomeModel : PageModel
     {
-        public List<Freelancer> freelancers { get; set; }
-        public List<Product> products { get; set; }
-        public List<Orphanage> orphanages { get; set; }
-        public int orphanagesNum { get; set; }
-        public int productsNum { get; set; }
-        public int freelancerNum { get; set; }
-
+        public List<Freelancer> Freelancer { get; set; } = new List<Freelancer>();
+        public List<Product> Products { get; set; } = new List<Product>();
+        public List<Orphanage> Orphanages { get; set; } = new List<Orphanage>();
+        public int OrphanagesNum { get; set; }
+        public int ProductsNum { get; set; }
+        public int FreelancerNum { get; set; }
 
         private readonly IOrphanageService _orphanageService;
         private readonly IProductService _productService;
         private readonly IFreelancerService _freelancerService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public HomeModel(IOrphanageService orphanageService,
-            IProductService productService,
-            IFreelancerService freelancerService) : base()
+                         IProductService productService,
+                         IFreelancerService freelancerService,
+                         IHttpContextAccessor httpContextAccessor)
         {
             _orphanageService = orphanageService;
             _productService = productService;
             _freelancerService = freelancerService;
-
+            _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<IActionResult> OnGet()
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            orphanages = await _orphanageService
-                .GetAll(new CancellationToken()).ToListAsync();
-            products = await _productService
-                .GetAll(new CancellationToken()).ToListAsync();
-            freelancers = await _freelancerService
-               .GetAll(new CancellationToken()).ToListAsync();
+            var cancellationToken = _httpContextAccessor.HttpContext.RequestAborted;
 
-            orphanagesNum = orphanages.Count;
-            productsNum = products.Count;
-            freelancerNum = freelancers.Count;
+            Orphanages = await _orphanageService.GetAll(cancellationToken).ToListAsync();
+            Products = await _productService.GetAll(cancellationToken).ToListAsync();
+            Freelancer = await _freelancerService.GetAll(cancellationToken).ToListAsync();
 
+            OrphanagesNum = Orphanages.Count;
+            ProductsNum = Products.Count;
+            FreelancerNum = Freelancer.Count;
 
             return Page();
         }

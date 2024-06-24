@@ -93,7 +93,49 @@
         </div>
 
         <div class="container">
-            <form action="">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Material.Id" />
+
+                <div class="row">
+
+                    <div class="col">
+
+                        <h3 class="title" id="SigninTT">Edit Material</h3>
+
+                        <div class="inputBox">
+                            <span>Name :</span>
+                            <input asp-for="Material.MaterialName" placeholder="express yourself">
+                        </div>
+                        <div class="inputBox">
+                            <span>About :</span>
+                            <textarea asp-for="Material.MaterialDetails" placeholder="express yourself" class="textarea"></textarea>
+                        </div>
+                        <div class="inputBox">
+                            <span>Picture :</span>
+                            <input type="file" asp-for="MaterialPicture" placeholder="***********">
+                        </div>
+                        <div class="inputBox">
+                            <span>Location:</span>
+                            <input asp-for="Material.MaterialPrice" placeholder="dokki/Giza">
+                        </div>
+                        <div class="inputBox">
+                            <span>Location:</span>
+                            <input asp-for="Material.MaterialSizes" placeholder="dokki/Giza">
+                        </div>
+                        <div class="inputBox">
+                            <span>Location:</span>
+                            <input asp-for="Material.MaterialColors" placeholder="dokki/Giza">
+                        </div>
+                        <div class="inputBox">
+                            <span>Location:</span>
+                            <input asp-for="Material.MaterialType" placeholder="dokki/Giza">
+                        </div>
+
+                        <div class="BTBOT"> <input type="submit" value="Submit" class="button22"></div>
+
+
+            </form>
+            @* <form action="">
                 <div class="row">
                     <div class="col">
                         <h3 class="title">Edit Material</h3>
@@ -154,7 +196,7 @@
                 <div class="BTBOT">
                     <input type="submit" value="Edit" class="button22">
                 </div>
-            </form>
+            </form> *@
         </div>
     </div>
 

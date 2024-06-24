@@ -29,6 +29,6 @@ namespace Orion.Domain.Models
 
         public virtual ICollection<CustomerProduct> CustomerProducts { get; set; }
         public virtual ICollection<Feedback> Feedbacks { get; set; }
-
+        public double? MaterialPrice { get; set; }
     }
 }

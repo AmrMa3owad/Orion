@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Orion.Context;
@@ -11,9 +12,11 @@ using Orion.Context;
 namespace Orion.Context.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623144111_Updateall2")]
+    partial class Updateall2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -746,9 +749,6 @@ namespace Orion.Context.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("integer");
-
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
@@ -774,8 +774,6 @@ namespace Orion.Context.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CartId");
 
                     b.ToTable("Materials");
                 });
@@ -1578,15 +1576,6 @@ namespace Orion.Context.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Orion.Domain.Models.Material", b =>
-                {
-                    b.HasOne("Orion.Domain.Models.Cart", "Cart")
-                        .WithMany("Materials")
-                        .HasForeignKey("CartId");
-
-                    b.Navigation("Cart");
-                });
-
             modelBuilder.Entity("Orion.Domain.Models.MaterialVendor", b =>
                 {
                     b.HasOne("Orion.Domain.Models.Material", "Material")
@@ -1767,8 +1756,6 @@ namespace Orion.Context.Migrations
 
             modelBuilder.Entity("Orion.Domain.Models.Cart", b =>
                 {
-                    b.Navigation("Materials");
-
                     b.Navigation("Products");
                 });
 

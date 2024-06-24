@@ -162,12 +162,16 @@ rel="stylesheet">
                     </div>
                     <p>Punch needle</p>
                 </button>
-                <button type="submit" name="category" value="add category" class="categoryyy">
-                    <div class="category-img">
-                        <img src="img/vector61-714-01.jpg" alt="">
-                    </div>
-                    <p>Add category</p>
-                </button>
+                <a href="addCategory.html" class="categoryyy">
+                    <button type="button">
+                        <div class="category-img">
+                            <img src="img/vector61-714-01.jpg" alt="">
+                        </div>
+                        <p>Add category</p>
+                    </button>
+                </a>
+
+
             </form>
         </div>
     
@@ -192,7 +196,7 @@ rel="stylesheet">
         <h2 class="section-title">Shop materials</h2>
 
         <!-- CONTENT  -->
-        <div class="shop-content">
+                <div class="shop-content">
             @for (int i = 0; i < Model.Material.Count; i++)
             {
                 var name = Model.Material[i].MaterialName;
@@ -205,10 +209,12 @@ rel="stylesheet">
                     <a href="/Admin/adminMaterial?MaterialId=@id"><img src="@imgSrc" alt="" class="Material-img"></a>
                     <h2 class="Material-title">@name</h2>
                     <span class="Material-price">$@price</span>
-                    <span class="Material-id">@id</span>
+                     <span class="Material-id">@id</span> 
                   @*   <i class='bx bx-shopping-bag add-cart'></i> *@
                 </div>
             }
+
+
             @* <!-- BOX 1 -->
             <div  class="product-box">
                 <a href="details.html"><img src="img/vector61-714-01.jpg" alt="" class="product-img"></a>
