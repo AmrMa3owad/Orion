@@ -15,18 +15,19 @@
     font-family: 'Poppins', sans-serif;
 }
 
-body{
+body {
     background-color: #e2dfe6;
+ 
 }
 
 .pdetail-container{
-    min-height: 100vh;
+    min-height: 120vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
     overflow: hidden;
-    flex-direction:column;
+  
 }
 
 .card{
@@ -362,7 +363,7 @@ body{
 
 @media (max-width: 1070px){
     .shoe{
-        width: 135%;
+        width: 100%;
     }
 }
 
@@ -377,8 +378,10 @@ body{
         width: 100%;
         box-shadow: none;
     }
-
-    .shoe{
+    .pdetail-container {
+        min-height:200vh;
+    }
+        .shoe{
         width: 70%;
         transform: rotate(-5deg) translateY(-50%);
         top: 55%;
@@ -605,6 +608,8 @@ width: 90%;
     padding: 20px;
     max-width: 320px;
     margin: 3%;
+    width:40rem;
+   height:max-content;
     
   }
   
@@ -655,4 +660,15 @@ width: 90%;
 }
 
 
- 
+
+
+.feedback-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+align-items:center;
+}
+.review-form-container{
+    display:flex;
+    justify-content:center;
+}
