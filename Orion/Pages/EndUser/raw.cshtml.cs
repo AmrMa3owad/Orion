@@ -52,26 +52,41 @@ namespace Orion.Pages.EndUser
             return Page();
         }
 
-        //public async Task<JsonResult> OnPostAddToCartAsync([FromBody] CartProduct cartProduct)
-        //{
-        //    var product = await _productService.Get(cartProduct.ProductId, new CancellationToken());
+        public async Task<JsonResult> OnGetCartProductsAsync()
+        {
+            int? CartId = HttpContext.Session.GetInt32("CartId");
+            if (CartId != null && CartId != 0)
+            {
+                Cart = await _cartService.GetCartIncludeAsync(CartId.Value, new CancellationToken());
+                return new JsonResult(new { CartId = Cart.Id, Materials = Cart.Materials.Select(p => new { MaterialId = p.Id, MaterialName = p.MaterialName, MaterialPrice = p.MaterialPrice, MaterialImage = p.Image }).ToList() });
 
-        //    if (!cartProduct.CartId.HasValue)
-        //    {
-        //        Cart = new Cart();
-        //        Cart = await _cartService.Create(Cart);
-        //    }
-        //    else
-        //    {
-        //        Cart = await _cartService.Get(cartProduct.CartId.Value, new CancellationToken());
-        //    }
+            }
+            return new JsonResult(new { CartId = 0 });
 
-        //    Cart.Products.Add(product);
-        //    Cart.NumberOfProducts = Cart.Products.Count;
-        //    Cart.TotalPrice = Cart.Products.Sum(p => p.ProductPrice);
-        //    await _cartService.Update(Cart);
+        }
 
-        //    return new JsonResult(new { CartId = Cart.Id, Products = Cart.Products.Select(p => new { ProductId = p.Id }).ToList() });
-        //}
+        public async Task<JsonResult> OnPostAddToCartAsync([FromBody] CartProduct cartProduct)
+        {
+            var product = await _productService.Get(cartProduct.MaterialId, new CancellationToken());
+
+            if (!cartProduct.CartId.HasValue || cartProduct.CartId == 0)
+            {
+                Cart = new Cart();
+                Cart = await _cartService.Create(Cart);
+                HttpContext.Session.SetInt32("CartId", Cart.Id);
+
+            }
+            else
+            {
+                Cart = await _cartService.GetCartIncludeAsync(cartProduct.CartId.Value, new CancellationToken());
+            }
+
+            Cart.Materials.Add(product);
+            Cart.NumberOfProducts = Cart.Materials.Count;
+            Cart.TotalPrice = Cart.Materials.Sum(p => p.MaterialPrice) + Cart.Products.Sum(m => m.ProductPrice);
+            await _cartService.Update(Cart);
+
+            return new JsonResult(new { CartId = Cart.Id, Materials = Cart.Materials.Select(p => new { MaterialId = p.Id }).ToList() });
+        }
     }
 }

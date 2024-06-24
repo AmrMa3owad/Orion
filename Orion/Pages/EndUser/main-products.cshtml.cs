@@ -85,7 +85,7 @@ namespace Orion.Pages.EndUser
 
             Cart.Products.Add(product);
             Cart.NumberOfProducts = Cart.Products.Count  ;
-            Cart.TotalPrice = Cart.Products.Sum(p => p.ProductPrice);
+            Cart.TotalPrice = Cart.Products.Sum(p => p.ProductPrice) + Cart.Materials.Sum(m=>m.MaterialPrice);
             await _cartService.Update(Cart);
 
             return new JsonResult(new { CartId = Cart.Id, Products = Cart.Products.Select(p => new { ProductId = p.Id }).ToList() });
