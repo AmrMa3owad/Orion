@@ -63,14 +63,14 @@ namespace Orion.Infrastructure.Services
         {
             User user = await GetByEmail(email, cancellationToken);
             bool lockedOut = await UserManager.IsLockedOutAsync(user);
-            bool emailConfirmed = await UserManager.IsEmailConfirmedAsync(user);
+            //bool emailConfirmed = await UserManager.IsEmailConfirmedAsync(user);
 
-            if (!emailConfirmed)
-            {
-                return SignInResult.NotAllowed;
-                // return Email Not comfirmed
-            }
-            else if (lockedOut)
+            //if (!emailConfirmed)
+            //{
+            //    return SignInResult.NotAllowed;
+            //    // return Email Not comfirmed
+            //}
+            if (lockedOut)
             {
                 return SignInResult.LockedOut;
 

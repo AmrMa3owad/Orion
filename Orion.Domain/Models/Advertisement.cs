@@ -10,6 +10,8 @@ namespace Orion.Domain.Models
             SponsorAdvertisements = new HashSet<SponsorAdvertisement>();
         }
         public string AdvertisementType { get; set; }
+        public string AdvertisementPeriod { get; set; }
+
         public virtual ICollection<CustomerAdvertisement> CustomerAdvertisements { get; set; }
         public virtual ICollection<SponsorAdvertisement> SponsorAdvertisements { get; set; }
     }

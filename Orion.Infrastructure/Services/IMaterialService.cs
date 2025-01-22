@@ -6,5 +6,6 @@ namespace Orion.Infrastructure.Services
     public interface IMaterialService :
         IBaseService<Material, int>
     {
+        Task Get(object materialId, CancellationToken cancellationToken);
     }
 }

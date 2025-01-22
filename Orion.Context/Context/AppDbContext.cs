@@ -1,17 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Orion.Domain.Models;
 
 namespace Orion.Context
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
-        public AppDbContext(
-            DbContextOptions<AppDbContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
-        public DbSet<Above12> Above12s { get; set; }
+
+        // DbSets for your entities
         public DbSet<Admin> Admins { get; set; }
+        public DbSet<Cart> Carts { get; set; }
         public DbSet<Advertisement> Advertisements { get; set; }
         public DbSet<Booth> Booths { get; set; }
         public DbSet<BoothOrder> BoothOrders { get; set; }
@@ -35,16 +38,12 @@ namespace Orion.Context
         public DbSet<Orphanage> Orphanages { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PreCommunity> PreCommunities { get; set; }
-        public DbSet<PremiumUser> PremiumUsers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Sponsor> Sponsors { get; set; }
         public DbSet<SponsorAdvertisement> SponsorAdvertisements { get; set; }
         public DbSet<Supervisor> Supervisors { get; set; }
-        public DbSet<Under12> Under12s { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
         public DbSet<Website> Websites { get; set; }
-
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

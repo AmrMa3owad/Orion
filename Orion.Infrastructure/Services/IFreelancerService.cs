@@ -4,7 +4,9 @@ using Orion.Infrastructure.Common;
 namespace Orion.Infrastructure.Services
 {
     public interface IFreelancerService :
-        IBaseService<Freelancer, int>
+        IBaseServiceUser<Freelancer, int>
     {
+        Task<List<Freelancer>> GetAllInclude(CancellationToken cancellationToken);
+        Task<Freelancer> GetFreelancerWithOrphanageAsync(int id, CancellationToken cancellationToken);
     }
 }

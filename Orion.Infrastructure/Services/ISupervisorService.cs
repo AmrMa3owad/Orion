@@ -4,7 +4,10 @@ using Orion.Infrastructure.Common;
 namespace Orion.Infrastructure.Services
 {
     public interface ISupervisorService :
-        IBaseService<Supervisor, int>
+        IBaseServiceEmployee<Supervisor, int>
     {
+        Task<Supervisor> GetSupervisorAsync(int id, CancellationToken cancellationToken);
+        Task<List<Supervisor>> GetAllInclude(CancellationToken cancellationToken);
+
     }
 }

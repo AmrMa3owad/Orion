@@ -5,7 +5,7 @@ using Orion.Domain.Models;
 namespace Orion.Infrastructure.Services
 {
     public class OfficeWorkerService
-        : BaseService<OfficeWorker, int>,
+        : BaseServiceEmployee<OfficeWorker, int>,
             IOfficeWorkerService
     {
         public OfficeWorkerService(

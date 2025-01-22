@@ -14,5 +14,10 @@ namespace Orion.Infrastructure.Services
         {
 
         }
+
+        public Task Get(object materialId, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,5 +1,5 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
 using Orion.Context;
 using Orion.Domain.Models;
 using Orion.Extensions;
@@ -7,10 +7,26 @@ using Orion.Infrastructure.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddMvc();
+
+// Add session services
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+builder.Services.ConfigureRouter();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("OrionDB")));
+
+// Add Identity services
+builder.Services.AddIdentity<User, IdentityRole<int>>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureMapper();
 builder.Services.AddControllersWithViews();
@@ -18,15 +34,7 @@ builder.Services.ConfigureHttpContext();
 builder.Services.ConfigureInfrastructure();
 builder.Services.ConfigureApiVersions();
 builder.Services.ConfigureWebApi(builder.Configuration);
-builder.Services.ConfigureDbContext(builder.Configuration);
-//builder.Services.ConfigureJWT(builder.Configuration);
-builder.Services.ConfigureMapper();
 builder.Services.ConfigureEmailSender(builder.Configuration);
-
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orion", Version = "v1" });
-});
 
 var app = builder.Build();
 
@@ -39,18 +47,20 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+// Set up default file to serve index.html
+app.UseDefaultFiles(new DefaultFilesOptions
+{
+    DefaultFileNames = new List<string> { "index.html" }
+});
+app.UseStaticFiles();
+
 app.UseRouting();
 
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 
-app.UseSwagger();
-
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Orion v1");
-    c.RoutePrefix = string.Empty;
-});
+// Use session
+app.UseSession();
 
 app.MapRazorPages();
 app.MapControllers();

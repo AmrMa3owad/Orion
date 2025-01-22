@@ -9,7 +9,7 @@ namespace Orion.Domain.Models
             Mentors = new HashSet<Mentor>();
         }
         public string CraftName { get; set; }
-        public string CraftItem { get; set; }
+        public string CraftType { get; set; }
 
         public virtual ICollection<Mentor> Mentors { get; set; }
     }
