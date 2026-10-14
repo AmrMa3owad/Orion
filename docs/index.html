@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Orion — Handmade marketplace & social impact</title>
+  <meta name="description" content="Orion is a marketplace that empowers orphaned children by teaching them crafts and helping them sell handmade products. Browse features, screenshots and run instructions here." />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>Orion</h1>
+      <p class="tagline">Handmade marketplace — empowering kids through craft and entrepreneurship</p>
+      <nav>
+        <a href="https://github.com/AmrMa3owad/Orion" target="_blank" rel="noopener">Repository</a>
+        <a href="https://github.com/AmrMa3owad/Orion/blob/master/README.md" target="_blank" rel="noopener">README</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h2>Project overview</h2>
+      <p>Orion is a full-stack ASP.NET Core web application (Razor Pages) with PostgreSQL and ASP.NET Identity. It combines an e-commerce storefront, artisan profiles, donation flows and admin dashboards. This page is a GitHub Pages-friendly project landing page for your portfolio.</p>
+      <p class="cta">To preview the live app, deploy the backend (Azure, Railway, Render or similar) — this static page is for the portfolio and docs.</p>
+    </section>
+
+    <section class="features">
+      <h3>Highlights</h3>
+      <ul>
+        <li>Product catalog with search and categories</li>
+        <li>Freelancer / artisan profiles with photos</li>
+        <li>Shopping cart and checkout flow</li>
+        <li>Admin & supervisor dashboards</li>
+        <li>SendGrid email notifications and JWT authentication</li>
+      </ul>
+    </section>
+
+    <section class="screenshots">
+      <h3>Screenshots / Demo</h3>
+      <p>Add screenshots to <code>docs/assets/</code> and update this page to show them. Example filenames: <code>home.png</code>, <code>products.png</code>, <code>admin.png</code>.</p>
+    </section>
+
+    <section class="run">
+      <h3>Run locally</h3>
+      <ol>
+        <li>Clone the repo: <code>git clone https://github.com/AmrMa3owad/Orion.git</code></li>
+        <li>See <code>appsettings.example.json</code> in the repo and configure your PostgreSQL connection string.</li>
+        <li>Run migrations and start: <code>dotnet ef database update --project Orion.Context --startup-project Orion</code> then <code>dotnet run --project Orion</code></li>
+      </ol>
+    </section>
+
+    <section class="pages-setup">
+      <h3>Enable GitHub Pages</h3>
+      <ol>
+        <li>Go to your repository on GitHub: <code>Settings &gt; Pages</code>.</li>
+        <li>Under "Source" choose the <strong>branch</strong> (master) and the <strong>/docs</strong> folder, then Save.</li>
+        <li>The site will be available at <code>https://AmrMa3owad.github.io/Orion/</code> (it may take a minute to publish).</li>
+      </ol>
+    </section>
+
+    <footer>
+      <p>Want a live demo deployed? I can add deployment config (GitHub Actions + Azure) next — say the word.</p>
+    </footer>
+  </main>
+</body>
+</html>
