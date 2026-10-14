@@ -22,7 +22,7 @@ function renderHome(){
   demoData.freelancers.forEach(f => {
     const el = document.createElement('div');
     el.className = 'card';
-    el.innerHTML = `<img src="${f.photo}" alt="${f.firstName}" loading="lazy" /><h3>${f.firstName}</h3><p>${f.skill}</p><p><a href="/Orion/docs/demo/profile.html?id=${f.id}">View profile</a></p>`;
+    el.innerHTML = `<img src="${f.photo}" alt="${f.firstName}" loading="lazy" /><h3>${f.firstName}</h3><p>${f.skill}</p><p><a href="profile.html?id=${f.id}">View profile</a></p>`;
     container.appendChild(el);
   });
 }
@@ -33,7 +33,7 @@ function renderProducts(){
   demoData.products.forEach(p => {
     const box = document.createElement('div');
     box.className = 'product-box';
-    box.innerHTML = `<a href="/Orion/docs/demo/details.html?id=${p.id}"><img src="${p.image}" alt="${p.name}" loading="lazy"></a><h4>${p.name}</h4><div>$${p.price}</div>`;
+    box.innerHTML = `<a href="details.html?id=${p.id}"><img src="${p.image}" alt="${p.name}" loading="lazy"></a><h4>${p.name}</h4><div>$${p.price}</div>`;
     grid.appendChild(box);
   });
 }
@@ -47,12 +47,12 @@ function renderDetails(){
   const id = parseInt(getQueryParam('id') || '1', 10);
   const p = demoData.products.find(x => x.id === id) || demoData.products[0];
   const container = document.getElementById('detail-container');
-  container.innerHTML = `<div class="detail"><div><img src="${p.image}" alt="${p.name}"/></div><div><h2>${p.name}</h2><p>Price: $${p.price}</p><p>Lorem ipsum dolor sit amet, handmade product description to showcase the UI.</p><p><a href="/Orion/docs/demo/products.html">Back to products</a></p></div></div>`;
+  container.innerHTML = `<div class="detail"><div><img src="${p.image}" alt="${p.name}"/></div><div><h2>${p.name}</h2><p>Price: $${p.price}</p><p>Lorem ipsum dolor sit amet, handmade product description to showcase the UI.</p><p><a href="products.html">Back to products</a></p></div></div>`;
 }
 
 function renderProfile(){
   const id = parseInt(getQueryParam('id') || '1', 10);
   const f = demoData.freelancers.find(x => x.id === id) || demoData.freelancers[0];
   const container = document.getElementById('profile-container');
-  container.innerHTML = `<div class="card"><img src="${f.photo}" alt="${f.firstName}"/><h2>${f.firstName}</h2><h4>${f.skill}</h4><p>${f.bio}</p><p><a href="/Orion/docs/demo/index.html">Back to home</a></p></div>`;
+  container.innerHTML = `<div class="card"><img src="${f.photo}" alt="${f.firstName}"/><h2>${f.firstName}</h2><h4>${f.skill}</h4><p>${f.bio}</p><p><a href="index.html">Back to home</a></p></div>`;
 }
